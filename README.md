@@ -1,6 +1,6 @@
 # Pokemon Showdown Teams Builder
 
-This is a Full Stack Web App made in .NET to help users build and persist their Pokemon teams to a backend. 
+This is a front-end project built with .NET, aimed at providing users with a platform to create and save their Pokémon teams by interacting with a backend system via UI.
 
 ## Project Members
 - Eduard Carrillo
@@ -17,10 +17,6 @@ This is a Full Stack Web App made in .NET to help users build and persist their 
 ## Tech Stack
 
 - React/JS (Front End)
-- C# (Back End Programming Language)
-- SQL Server (Azure Hosted)
-- EF Core (ORM Tech)
-- ASP.NET (Web API Framework)
 - HTML, CSS
     - Bootstrap? Tailwind? 
 
@@ -51,3 +47,13 @@ This is a Full Stack Web App made in .NET to help users build and persist their 
 - User authentication and password encryption
 - Login using google, facebook account
 - Possibly implement Dockersize for packaging application
+
+## MockUp of UI Design
+- Homepage/Landing Page where User can sign in or sign up
+![alt text](image.png)
+
+- Edit/Delete Team page where User can edit/delete teams they have created
+![alt text](image-1.png)
+
+- Team creation page where User can create team and import/copy team to Pokemon Showdown
+![alt text](image-2.png)
