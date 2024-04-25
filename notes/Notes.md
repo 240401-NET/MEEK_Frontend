@@ -1,3 +1,9 @@
+## When first downloading front end project:
+- cd into vite-project folder
+    - run npm install - to install all dependencies for the project
+- npm run build to compile and build project
+- npm run preview to view changes (locally hosted)
+
 ## Implementing a new feature:
 - git pull
 - git checkout -b nameOfMybranch
