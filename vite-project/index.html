@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/Poké_Ball_icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokemon Team Builder</title>
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+  <footer>  
+    <script>
+  
+      let signupBtn = document.getElementById("signupBtn");
+      let signinBtn = document.getElementById("signinBtn");
+      let nameField = document.getElementById("nameField");
+      let title = document.getElementById("title");
+      signinBtn.onclick = ()=>{
+        nameField.style.maxHeight = "0";
+        title.innerHTML = "Sign In";
+        signupBtn.classList.add("disable");
+        signinBtn.classList.remove("disable");
+      }
+      signupBtn.onclick = ()=>{
+        nameField.style.maxHeight = "60px";
+        title.innerHTML = "Sign Up";
+        signupBtn.classList.remove("disable");
+        signinBtn.classList.add("disable");
+      }
+
+    </script>
+  </footer>
+  </html>
