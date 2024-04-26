@@ -12,6 +12,11 @@ export function TeamBuilder()
             <Link to="/">
                 <button>Logout</button>
             </Link>
+            <div id="teamBuildingContainer">
+                <div id="currentActiveTeamMembers">
+                    
+                </div>
+            </div>
         </div>
     )
 }

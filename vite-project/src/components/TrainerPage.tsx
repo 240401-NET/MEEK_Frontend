@@ -25,21 +25,27 @@ export function TrainerPage()
             <div className="trainerTeamContainer" >
                 <div className="teamMember">
                     <p>team member 1</p>
+                    <p>sprite:</p>
                 </div>
                 <div className="teamMember">
                     <p>team member 2</p>
+                    <p>sprite:</p>
                 </div>
                 <div className="teamMember">
                     <p>team member 3</p>
+                    <p>sprite:</p>
                 </div>
                 <div className="teamMember">
                     <p>team member 4</p>
+                    <p>sprite:</p>
                 </div>
                 <div className="teamMember">
                     <p>team member 5</p>
+                    <p>sprite:</p>
                 </div>
                 <div className="teamMember">
                     <p>team member 6</p>
+                    <p>sprite:</p>
                 </div>
                 <div className='teamOptionsDiv'>
                     <Link to="/teambuilder">
