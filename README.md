@@ -50,10 +50,10 @@ This is a front-end project built with .NET, aimed at providing users with a pla
 
 ## MockUp of UI Design
 - Homepage/Landing Page where User can sign in or sign up
-![alt text](image.png)
+![alt text](./images/image.png)
 
 - Edit/Delete Team page where User can edit/delete teams they have created
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 - Team creation page where User can create team and import/copy team to Pokemon Showdown
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
