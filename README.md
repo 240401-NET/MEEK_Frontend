@@ -31,7 +31,7 @@ This is a front-end project built with .NET, aimed at providing users with a pla
 - User should be able to have all data needed to import their team to Pokemon Showdown
 
 ## Tables
-![PokemonDB](./DB.png)
+![PokemonDB](./images/DB.png)
 
 ## MVP Goals
 - Trainer(s) can create a new team with up to six pokemon

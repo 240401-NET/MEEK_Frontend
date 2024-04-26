@@ -19,6 +19,5 @@
 - To get back to main:
 - git checkout main
 
--- Testing Main protection settings
-
-Testing!
+-- Testing Main protection setting
+- 04/26/2024: Trainer Page production
