@@ -1,12 +1,17 @@
 import './TrainerPage.css';
 import Search from '../assets/search.png';
 import JSON from '../assets/json.png';
-// import './TrainerPageLogic';
+import {TrainerPageLogic} from './TrainerPageLogic'
 // import {NavLink as Link} from "react-router-dom"
-// import { useState, useEffect} from 'react';
+import {useEffect} from 'react';
 
 export function TrainerPage()
 {
+    
+    useEffect(() => {
+        // Call your logic function here
+        TrainerPageLogic();
+    }, []); 
 
     return (
         <div>
@@ -14,7 +19,7 @@ export function TrainerPage()
                 <section className="table__header">
                     <h1>Pokemon Teams</h1>
                     <div className="input-group">
-                        <input type="search" placeholder='SEARCH TEAM BY ID/NAME' />
+                        <input type="search" placeholder='SEARCH TEAM BY ID/NAME'/>
                         <img src={Search} alt=""/>
                     </div>
                     <div className="export__file">
@@ -41,7 +46,7 @@ export function TrainerPage()
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td><a href="https://pokemondb.net/pokedex/charizard"><img src="https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/charizard.png" alt="Charizard"/></a> Charizard</td>
+                                <td><a href="https://pokemondb.net/pokedex/charizard"><img src="https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/charizard.png" alt="Charizard"/></a>Charizard</td>
                                 <td>Fire / Flying</td>
                                 <td>Blaze</td>
                                 <td>
@@ -55,10 +60,10 @@ export function TrainerPage()
                                 </td>
                             </tr>
                             <tr>
-                                <td> 2</td>
+                                <td>2</td>
                                 <td><a href="https://pokemondb.net/pokedex/swampert"><img src="https://img.pokemondb.net/sprites/black-white/normal/swampert.png" alt="Swampert"/></a>Swampert</td>
-                                <td> Type 1/ Type 2 </td>
-                                <td> Ability </td>
+                                <td>Water / Ground</td>
+                                <td>Damp</td>
                                 <td>
                                     <p className="egg-group water1">Water1</p>
                                 </td>
@@ -70,10 +75,10 @@ export function TrainerPage()
                                 </td>
                             </tr>
                             <tr>
-                                <td> 3</td>
+                                <td>3</td>
                                 <td><a href="https://pokemondb.net/pokedex/tyranitar"><img src="https://img.pokemondb.net/sprites/diamond-pearl/normal/tyranitar.png" alt="Tyranitar"/></a>Tyranitar</td>
-                                <td> Type 1/ Type 2 </td>
-                                <td> Ability </td>
+                                <td>Rock / Dark</td>
+                                <td>Sandstream</td>
                                 <td>
                                     <p className="egg-group field">Field</p>
                                 </td>
@@ -85,25 +90,25 @@ export function TrainerPage()
                                 </td>
                             </tr>
                             <tr>
-                                <td> 4</td>
+                                <td>4</td>
                                 <td><a href="https://pokemondb.net/pokedex/empoleon"><img src="https://img.pokemondb.net/sprites/x-y/normal/empoleon.png" alt="Empoleon"/></a>Empoleon</td>
-                                <td> Type 1/ Type 2 </td>
-                                <td> Ability </td>
+                                <td>Water / Steel</td>
+                                <td>Torrent</td>
                                 <td>
                                     <p className="egg-group water2">Water2</p>
                                 </td>
                                 <td>    
-                                    Move 1
+                                     Move 1
                                 <br/>Move 2
                                 <br/>Move 3
-                                <br/> Move 4
+                                <br/>Move 4
                                 </td>
                             </tr>
                             <tr>
-                                <td> 5</td>
-                                <td><a href="https://pokemondb.net/pokedex/incineroar"><img src="https://img.pokemondb.net/sprites/sword-shield/normal/incineroar.png" alt="Incineroar"/></a> Incineroar</td>
-                                <td> Type 1/ Type 2 </td>
-                                <td> Ability </td>
+                                <td>5</td>
+                                <td><a href="https://pokemondb.net/pokedex/incineroar"><img src="https://img.pokemondb.net/sprites/sword-shield/normal/incineroar.png" alt="Incineroar"/></a>Incineroar</td>
+                                <td>Fire / Dark</td>
+                                <td>Intimidate</td>
                                 <td>
                                     <p className="egg-group human-like">Human-Like</p>
                                 </td>
@@ -115,15 +120,15 @@ export function TrainerPage()
                                 </td>
                             </tr>
                             <tr>
-                                <td> 6</td>
-                                <td><a href="https://pokemondb.net/pokedex/mew"><img src="https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/mew.png" alt="Mew"/></a> Mew</td>
-                                <td> Type 1/ Type 2 </td>
-                                <td> Ability </td>
+                                <td>6</td>
+                                <td><a href="https://pokemondb.net/pokedex/mew"><img src="https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/mew.png" alt="Mew"/></a>Mew</td>
+                                <td>Psychic</td>
+                                <td>Synchronize</td>
                                 <td>
                                     <p className="egg-group undiscovered">Undiscovered</p>
                                 </td>
                                 <td>    
-                                    Move 1
+                                     Move 1
                                 <br/>Move 2
                                 <br/>Move 3
                                 <br/>Move 4
@@ -134,5 +139,6 @@ export function TrainerPage()
                 </section>
             </main>
         </div>
+        
     )
 }
