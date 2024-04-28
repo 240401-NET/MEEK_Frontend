@@ -59,7 +59,7 @@ const MoveSlotSelector : React.FC<MoveSlotProps> = ({moveNames}) => {
                         <h2>All Items</h2>
                         <ul>
                             {moveNames.map((moveName, index) =>
-                                <li key={index}>{moveName}</li>
+                                <li key={index} onClick={()=>{handlePokemonMoveSelection(moveName), handleCloseModal()}}>{moveName}</li>
                             )}
                         </ul>
                     </div>

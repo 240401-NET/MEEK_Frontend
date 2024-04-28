@@ -28,8 +28,6 @@ const PokemonTeamCreator : React.FC = () => {
             console.error("Invalid search! No Pokèmon exists with that name!", error)
         }
     }
-
-
     const handlePokemonSearchInput = (e : React.ChangeEvent<HTMLInputElement>) => {
         setSearchedPokemon(e.target.value);
     }
