@@ -1,4 +1,5 @@
 import './DisplayPokemon.css'
+import HeldItemList from './HeldItemList'
 // import { useEffect, useState } from 'react'
 // import { NavLink as Link } from 'react-router-dom';
 import React, {useState, useEffect} from 'react'
@@ -113,6 +114,7 @@ const TeamCreator: React.FC = () => {
                         value={pokemonLevel}
                         onChange={handlePokemonLevelChange}
                     />
+                <HeldItemList />
                 </div>
                 // in terms of items, holdable items (starting from index 69 up to 173 that are battle items) does not include berries
             )}
