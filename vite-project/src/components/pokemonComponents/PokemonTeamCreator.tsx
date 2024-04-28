@@ -1,5 +1,7 @@
 import './PokemonTeamCreator.css';
 import React, {useState, useEffect} from 'react';
+import AbilitiesSelector from './AbilitiesSelector';
+import SpriteSelector from './SpriteSelector';
 
 interface Pokemon {
     name: string
@@ -15,18 +17,17 @@ interface ability{
     flavor_Text: string
 }
 
-
 const PokemonTeamCreator : React.FC = () => {
 
     const [searchedPokemon, setSearchedPokemon] = useState('');
     const [pokemonData, setPokemonData] = useState<Pokemon | null>(null);
-    const [selectedSprite, setSelectedSprite] = useState<"front_default" | "front_shiny">("front_default")
+    // const [selectedSprite, setSelectedSprite] = useState<"front_default" | "front_shiny">("front_default")
     const [abilities, setAbilities] = useState<Array<ability>>([])
-    const [selectedAbility, setSelectedAbility] = useState(abilities.length > 0 ? abilities[0].name : "");
+    // const [selectedAbility, setSelectedAbility] = useState(abilities.length > 0 ? abilities[0].name : "");
 
-    useEffect(() => {
-        setSelectedSprite("front_default")
-    }, [pokemonData])
+    // useEffect(() => {
+    //     setSelectedSprite("front_default")
+    // }, [pokemonData])
 
     useEffect(() => {
         if(pokemonData) {
@@ -73,12 +74,12 @@ const PokemonTeamCreator : React.FC = () => {
         e.preventDefault();
         fetchPokemonData();
     }
-    const handlePokemonSpriteSelection = (e : React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedSprite(e.target.value as "front_default" || "front_shiny");
-    }
-    const handlePokemonAbilitySelection = (e : React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedAbility(e.target.value);
-    }
+    // const handlePokemonSpriteSelection = (e : React.ChangeEvent<HTMLInputElement>) => {
+    //     setSelectedSprite(e.target.value as "front_default" || "front_shiny");
+    // }
+    // const handlePokemonAbilitySelection = (abilityName : string) => {
+    //     setSelectedAbility(abilityName);
+    // }
 
     return (
         <div>
@@ -92,14 +93,14 @@ const PokemonTeamCreator : React.FC = () => {
                 <div>
                     {/* display searched pokemon's name */}
                     <h2>{searchedPokemon}</h2>
-
+                <SpriteSelector sprites={pokemonData.sprites}></SpriteSelector>
                     {/* displays options for selecting sprites */}
-                    {pokemonData.sprites[selectedSprite] ? (
+                    {/* {pokemonData.sprites[selectedSprite] ? (
                         <img src={pokemonData.sprites[selectedSprite]} alt="" />
                     ) : (
                         <p>no sprite available</p>
-                    )}
-                    <div>
+                    )} */}
+                    {/* <div>
                         <label>
                             <input 
                                 type="radio"
@@ -118,24 +119,10 @@ const PokemonTeamCreator : React.FC = () => {
                                 />
                                 Front Shiny
                         </label>
-                    </div>
+                    </div> */}
 
-                    {/* display selection options for pokemon abilities + description */}
-                    <h3>Abilities</h3>
-                    {abilities.map((ability, index) =>(
-                        <div key = {index}>
-                            <input 
-                            type="radio" 
-                            id={`ability-${index}`}
-                            name="ability"
-                            value={ability.name}
-                            checked={selectedAbility === ability.name}
-                            onChange={handlePokemonAbilitySelection}
-                            />
-                            <label htmlFor={`ability-${index}`}>{ability.name}</label>
-                            <p>{ability.flavor_Text}</p>
-                        </div>
-                    ))}
+                    {/* display selection options for pokemon abilities + description  by importing component in charge of this function*/}
+                    <AbilitiesSelector abilities={abilities}></AbilitiesSelector>
                 </div>
             )}
         </div>
