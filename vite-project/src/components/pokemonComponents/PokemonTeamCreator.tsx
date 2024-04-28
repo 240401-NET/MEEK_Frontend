@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import AbilitiesSelector from './AbilitiesSelector';
 import SpriteSelector from './SpriteSelector';
 import MoveSlotSelector from './MoveSlotSelector';
+import HeldItemList from '../testComponents/HeldItemList';
 
 interface Pokemon {
     name: string
@@ -59,6 +60,7 @@ const PokemonTeamCreator : React.FC = () => {
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
+                    <HeldItemList></HeldItemList>
                 </div>
             )}
         </div>

@@ -12,6 +12,7 @@ const HeldItemList : React.FC = () => {
     const [heldItems, setItems] = useState<HeldItem[]>([]);
     const [searchedItem, setSearchedItem] = useState<string>('');
     const [showAllItems, setShowAllItems] = useState<boolean>(false);
+    const [selectedItem, setSelectedItem] = useState<string>('');
 
     // useEffect statement to handle api call when the page is rendered
     useEffect(() => {
@@ -67,6 +68,11 @@ const HeldItemList : React.FC = () => {
         item.name.toLowerCase().includes(searchedItem.toLowerCase())
     )
 
+    const handleItemSelection = (itemName : string) => {
+        setSelectedItem(itemName);
+        setSearchedItem('');
+    }
+
     // handlers for opening and closing modal of items.
     const handleShowAllItems = () => {
         setShowAllItems(true);
@@ -78,12 +84,11 @@ const HeldItemList : React.FC = () => {
     // returns html text that we want to render on the screen
     return (
         <div>
-            <h3>Item Search</h3>
             <input type="text" placeholder='Search for holdable item...' value={searchedItem} onChange={handleItemSearch}/>
             {searchedItem && (
                 <ul>
                     {filterSearchedItems.map((item, index) => (
-                        <li key={index}>
+                        <li key={index} onClick={()=>handleItemSelection(item.name)}>
                             <button>{item.name}</button>
                         </li>
                     ))}
@@ -101,12 +106,13 @@ const HeldItemList : React.FC = () => {
                         <h2>All Items</h2>
                         <ul>
                             {heldItems.map((item, index) =>
-                                <li key={index}>{item.name}</li>
+                                <li key={index} onClick={() => {handleCloseModal(), handleItemSelection(item.name) }}>{item.name}</li>
                             )}
                         </ul>
                     </div>
                 </div>
             )}
+            <p>Selected item: {selectedItem}</p>
         </div>
     )
 }
