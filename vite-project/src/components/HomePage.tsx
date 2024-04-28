@@ -1,4 +1,5 @@
 import './HomePage.css'
+import {NavLink as Link} from 'react-router-dom'
 // import { useState, useEffect} from 'react';
 
 export function HomePage() {
@@ -50,6 +51,21 @@ export function HomePage() {
           
   return (
     <div>
+      <Link to="/displaypokemon">
+      <button className='navButtons'>
+        Display pokemon
+      </button>
+      </Link>
+      <Link to="/trainer">
+      <button className='navButtons'>
+        Trainer Team View
+      </button>
+      </Link>
+      <Link to="/teambuilder">
+      <button className='navButtons'>
+        Team Builder
+      </button>
+      </Link>
       <div className="container">
         <div className="form-box">
           <h1 id="title">Sign Up</h1>

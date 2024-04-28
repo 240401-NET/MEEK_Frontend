@@ -2,7 +2,7 @@ import './TrainerPage.css';
 import Search from '../assets/search.png';
 import JSON from '../assets/json.png';
 import {TrainerPageLogic} from './TrainerPageLogic'
-// import {NavLink as Link} from "react-router-dom"
+import {NavLink as Link} from "react-router-dom"
 import {useEffect} from 'react';
 
 export function TrainerPage()
@@ -15,6 +15,9 @@ export function TrainerPage()
 
     return (
         <div>
+            <Link to="/">
+                <button>Logout</button>
+            </Link>
             <main className="table" id="pokemon_table">
                 <section className="table__header">
                     <h1>Pokemon Teams</h1>
