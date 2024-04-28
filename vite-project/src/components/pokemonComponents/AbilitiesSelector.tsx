@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+import React , {useState, useEffect} from 'react'
 
 interface Ability {
     name: string
@@ -6,16 +6,41 @@ interface Ability {
 }
 
 interface Props {
-    abilities : Ability[]
+    abilityUrls : string[]
 }
 
-const AbilitiesSelector : React.FC<Props> = ({abilities}) => {
+const AbilitiesSelector : React.FC<Props> = ({abilityUrls}) => {
 
     const [selectedAbility, setSelectedAbility] = useState("");
+    const [abilities, setAbilities] = useState<Array<Ability>>([])
 
     const handlePokemonAbilitySelection = (abilityName : string) => {
         setSelectedAbility(abilityName);
     }
+
+    useEffect(() => {
+            const fetchAbilityData = async () => {
+                try{
+                    const abilitiesData = await Promise.all(abilityUrls.map(async (url) => {
+                        const abilityResponse = await fetch(url);
+                        const abilityData = await abilityResponse.json();
+                        const flavorTextEntries = abilityData.flavor_text_entries.filter(
+                            (entry : {language: {name: string} }) => entry.language.name === "en"
+                        );
+                        const flavorText = flavorTextEntries.length > 0 ? flavorTextEntries[0].flavor_text : "Flavor text not available"
+                        return {
+                            name: abilityData.name,
+                            flavor_Text: flavorText
+                        };
+                    })
+                );
+                setAbilities(abilitiesData);
+                } catch (error) {
+                console.error("Error fetching ability information...", error);
+            }
+        };
+        fetchAbilityData();
+    },[abilityUrls])
 
     return (
         <div>
