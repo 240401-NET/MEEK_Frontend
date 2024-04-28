@@ -1,7 +1,7 @@
 import './DisplayPokemon.css'
 import HeldItemList from './HeldItemList'
 // import { useEffect, useState } from 'react'
-// import { NavLink as Link } from 'react-router-dom';
+import { NavLink as Link } from 'react-router-dom';
 import React, {useState, useEffect} from 'react'
 
 // define what a pokemon object is
@@ -14,6 +14,8 @@ interface Pokemon {
 }
 
 const TeamCreator: React.FC = () => {
+
+    // useState statements to set the original state/properties of these variables
     const [pokemonName, setPokemonName] = useState('');
     const [pokemonData, setPokemonData] = useState<Pokemon | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -21,6 +23,7 @@ const TeamCreator: React.FC = () => {
     const [baseStatTotal, setBaseStatTotal] = useState<number>(0);
     const [pokemonLevel, setPokemonLevel] = useState<number>(50);
 
+    // if pokemon data exists when the page renders and refreshes, calculate and set the base stat total of a pokemon
     useEffect(() => {
         if(pokemonData)
             {
@@ -29,6 +32,7 @@ const TeamCreator: React.FC = () => {
             }
     })
 
+    // case insenstive get request for pokemon name
     const fetchPokemonData = async () => {
         try{
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`)
@@ -46,6 +50,8 @@ const TeamCreator: React.FC = () => {
             setPokemonData(null);
         }
     }
+
+    // Event handlers for different inputs, forms and select elements
     const handlePokemonSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPokemonName(e.target.value);
     }
@@ -60,10 +66,14 @@ const TeamCreator: React.FC = () => {
         setPokemonLevel(parseInt(e.target.value));
     }
 
+    // returns the html to be rendered on the webpage
     return(
         <div>
+            <Link to="/">
+                <button>Logout</button>
+            </Link>
             <form onSubmit={handlePokemonSearchSubmit}>
-                <input type="text" value={pokemonName} onChange={handlePokemonSearchInput} />
+                <input type="text" placeholder="Enter pokemon name" value={pokemonName} onChange={handlePokemonSearchInput} />
                 <button type="submit">Search</button>
             </form>
 
@@ -114,9 +124,11 @@ const TeamCreator: React.FC = () => {
                         value={pokemonLevel}
                         onChange={handlePokemonLevelChange}
                     />
+                    
+                {/* imports component that allows for item searches and display all items/searched items */}
                 <HeldItemList />
                 </div>
-                // in terms of items, holdable items (starting from index 69 up to 173 that are battle items) does not include berries
+                
             )}
         </div>
     );

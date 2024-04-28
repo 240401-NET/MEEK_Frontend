@@ -8,24 +8,30 @@ interface HeldItem {
 
 const HeldItemList : React.FC = () => {
     
+    // useState statements to set intial state of all these state variables
     const [heldItems, setItems] = useState<HeldItem[]>([]);
     const [searchedItem, setSearchedItem] = useState<string>('');
     const [showAllItems, setShowAllItems] = useState<boolean>(false);
 
+    // useEffect statement to handle api call when the page is rendered
     useEffect(() => {
         fetchItems();
     }, []);
 
     const fetchItems = async () => {
         try{
+            // async calls to two api endpoints searching for items within each category
             const response1 = await fetch(`https://pokeapi.co/api/v2/item-attribute/holdable`);
             const response2 = await fetch(`https://pokeapi.co/api/v2/item-attribute/holdable-active/`)
             if (!response1.ok || !response2)
                 {
                     throw new Error('Item list not found!')
                 }
+            // set each item related data to response once we convert it to json
             const itemData1 = await response1.json();
             const itemData2 = await response2.json();
+
+            // maps through each data response setting the name and url to the item name and url of the response body
             const helditemsList1 = itemData1.items.map((item : {name : string; url : string}) => ({
                 name: item.name,
                 url: item.url
@@ -34,12 +40,17 @@ const HeldItemList : React.FC = () => {
                 name: item.name,
                 url: item.url
             }))
+
+            // consolidates both responses into an array called all items
             const allItems = [...helditemsList1, ...helditemsList2]
+
+            // filters through the all items away, creates a new array of only unique items (no duplicates)
             const uniquieItems = allItems.filter((item, index, self) =>
                 index === self.findIndex((t) => (
                     t.name === item.name
                 ))
             )
+            // set the originally empty heldItems array to whatever items are in the uniqueItems array
             setItems(uniquieItems);
         }
         catch(error)
@@ -48,12 +59,15 @@ const HeldItemList : React.FC = () => {
         }
     }
 
+    // Event handler for specific search input
     const handleItemSearch = (e : React.ChangeEvent<HTMLInputElement>) => {
         setSearchedItem(e.target.value)
     }
     const filterSearchedItems = heldItems.filter(item =>
         item.name.toLowerCase().includes(searchedItem.toLowerCase())
     )
+
+    // handlers for opening and closing modal of items.
     const handleShowAllItems = () => {
         setShowAllItems(true);
     }
@@ -61,6 +75,7 @@ const HeldItemList : React.FC = () => {
         setShowAllItems(false);
     }
 
+    // returns html text that we want to render on the screen
     return (
         <div>
             <h3>Item Search</h3>

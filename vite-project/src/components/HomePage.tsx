@@ -52,8 +52,18 @@ export function HomePage() {
   return (
     <div>
       <Link to="/displaypokemon">
-      <button>
+      <button className='navButtons'>
         Display pokemon
+      </button>
+      </Link>
+      <Link to="/trainer">
+      <button className='navButtons'>
+        Trainer Team View
+      </button>
+      </Link>
+      <Link to="/teambuilder">
+      <button className='navButtons'>
+        Team Builder
       </button>
       </Link>
       <div className="container">
