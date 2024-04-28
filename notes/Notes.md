@@ -43,6 +43,9 @@
                 ComponentName()
             }, [Array of dependencies if you have any; otherwise leave it as an empty array])
             
+
+- I added buttons on top of each web page that will help you navigate to different pages that we are working on right now; this way it makes it easier than having to type in the url of the page you want to go to each time
+
 -- Testing Main protection setting
 - 04/26/2024: Trainer Page production
 - 04/26/2024: Refactored code to enable sorting and looking up information based on input and table components
