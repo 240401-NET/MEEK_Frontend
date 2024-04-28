@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import '../testComponents/HeldItemList.css'
 
 
@@ -8,16 +8,21 @@ interface MoveSlotProps {
 
 
 const MoveSlotSelector : React.FC<MoveSlotProps> = ({moveNames}) => {
-    const [selectedMove, setSelectedMove] = useState('');
+    const [searchedMove, setSearchedMove] = useState('');
+    const [selectedMove, setSelectedMove] = useState<string>('');
     const [showAllMoves, setShowAllMoves] = useState<boolean>(false);
 
 
-    const handlePokemonMoveSelection = (e : React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedMove(e.target.value);
+    const handlePokemonMoveSearch = (e : React.ChangeEvent<HTMLInputElement>) => {
+        setSearchedMove(e.target.value);
+    }
+    const handlePokemonMoveSelection = (moveName : string) => {
+        setSelectedMove(moveName);
+        setSearchedMove('')
     }
 
     const filterMoves = moveNames.filter(move => 
-        move.toLowerCase().includes(selectedMove.toLowerCase())
+        move.toLowerCase().includes(searchedMove.toLowerCase())
     )
     const handleShowAllMoves = () => {
         setShowAllMoves(true);
@@ -32,17 +37,17 @@ const MoveSlotSelector : React.FC<MoveSlotProps> = ({moveNames}) => {
             <input 
                 type="text"
                 placeholder="Search for a valid move..." 
-                value={selectedMove}
-                onChange={handlePokemonMoveSelection}
+                value={searchedMove}
+                onChange={handlePokemonMoveSearch}
             />
-            {selectedMove && (
-                <ul>
+            {searchedMove && (
+                <ul style={{ display: filterMoves.length > 0 ? 'block' : 'none'}}>
                     {filterMoves.map(move => (
-                        <li key={move}>{move}</li>
+                        <li key={move} onClick={() => handlePokemonMoveSelection(move)}>{move}</li>
                     ))}
                 </ul>
             )}
-            {!selectedMove && (
+            {!searchedMove && (
                 <div>
                     <button onClick={handleShowAllMoves}>Show All Moves</button>
                 </div>  
@@ -60,6 +65,7 @@ const MoveSlotSelector : React.FC<MoveSlotProps> = ({moveNames}) => {
                     </div>
                 </div>
             )}
+            <p>Selected Move: {selectedMove}</p>
         </div>
     )
 }
