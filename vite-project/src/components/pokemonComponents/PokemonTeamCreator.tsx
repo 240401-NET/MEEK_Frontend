@@ -2,6 +2,7 @@ import './PokemonTeamCreator.css';
 import React, {useState} from 'react';
 import AbilitiesSelector from './AbilitiesSelector';
 import SpriteSelector from './SpriteSelector';
+import MoveSlotSelector from './MoveSlotSelector';
 
 interface Pokemon {
     name: string
@@ -55,6 +56,8 @@ const PokemonTeamCreator : React.FC = () => {
 
                     {/* display selection options for pokemon abilities + description  by importing component in charge of this function*/}
                     <AbilitiesSelector abilityUrls={pokemonData?.abilities.map(ability => ability.ability.url)}></AbilitiesSelector>
+
+                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
                 </div>
             )}
         </div>
