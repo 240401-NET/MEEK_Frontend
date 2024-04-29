@@ -4,13 +4,14 @@ import AbilitiesSelector from './AbilitiesSelector';
 import SpriteSelector from './SpriteSelector';
 import MoveSlotSelector from './MoveSlotSelector';
 import HeldItemList from '../testComponents/HeldItemList';
+import PokemonStatsRenderer from './PokemonStatsRenderer';
 
 interface Pokemon {
     name: string
     types: {type : {name: string} } []
     abilities : {ability : {name: string , url: string} } []
     moves: {move: {name: string} } []
-    stats: {base_stat: number, effort : number, stat: {name: string}} []
+    stats: {base_stat: number, effort : number, stat: {name: string} } []
     sprites: {front_default : string, front_shiny : string }
 }
 
@@ -55,6 +56,8 @@ const PokemonTeamCreator : React.FC = () => {
 
                     {/* display selection options for pokemon abilities + description  by importing component in charge of this function*/}
                     <AbilitiesSelector abilityUrls={pokemonData?.abilities.map(ability => ability.ability.url)}></AbilitiesSelector>
+
+                    <PokemonStatsRenderer stats={pokemonData.stats}/>
 
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
