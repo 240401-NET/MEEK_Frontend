@@ -5,6 +5,7 @@ import SpriteSelector from './SpriteSelector';
 import MoveSlotSelector from './MoveSlotSelector';
 import HeldItemList from '../testComponents/HeldItemList';
 import PokemonStatsRenderer from './PokemonStatsRenderer';
+import TeraTypeSelector from './TeraTypeSelector';
 
 interface Pokemon {
     name: string
@@ -58,6 +59,8 @@ const PokemonTeamCreator : React.FC = () => {
                     <AbilitiesSelector abilityUrls={pokemonData?.abilities.map(ability => ability.ability.url)}></AbilitiesSelector>
 
                     <PokemonStatsRenderer stats={pokemonData.stats}/>
+
+                    <TeraTypeSelector></TeraTypeSelector>
 
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
