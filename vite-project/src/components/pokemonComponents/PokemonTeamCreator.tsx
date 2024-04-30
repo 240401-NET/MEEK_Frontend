@@ -6,6 +6,7 @@ import MoveSlotSelector from './MoveSlotSelector';
 import HeldItemList from '../testComponents/HeldItemList';
 import PokemonStatsRenderer from './PokemonStatsRenderer';
 import TeraTypeSelector from './TeraTypeSelector';
+import { PokemonDataProvider} from './PokemonContext';
 
 interface Pokemon {
     name: string
@@ -19,7 +20,8 @@ interface Pokemon {
 const PokemonTeamCreator : React.FC = () => {
 
     const [searchedPokemon, setSearchedPokemon] = useState('');
-    const [pokemonData, setPokemonData] = useState<Pokemon | null>(null);
+    const [pokeData, setPokemonData] = useState<Pokemon | null>(null);
+    // const { pokemonData, setSearchPokemon } = usePokemonContext();
 
     const fetchPokemonData = async () => {
         try {
@@ -40,6 +42,7 @@ const PokemonTeamCreator : React.FC = () => {
     }
 
     return (
+        <PokemonDataProvider>
         <div>
             <h2>Search for a pokemon</h2>
             <form onSubmit={handlePokemonSearchSubmit}>
@@ -47,29 +50,30 @@ const PokemonTeamCreator : React.FC = () => {
                 <button type='submit'>Search</button>
             </form>
 
-            {pokemonData && (
+            {pokeData && (
                 <div>
                     {/* display searched pokemon's name */}
                     <h2>{searchedPokemon}</h2>
                 
                     {/* displays options for selecting sprites */}
-                    <SpriteSelector sprites={pokemonData.sprites}></SpriteSelector>
+                    <SpriteSelector sprites={pokeData.sprites}></SpriteSelector>
 
                     {/* display selection options for pokemon abilities + description  by importing component in charge of this function*/}
-                    <AbilitiesSelector abilityUrls={pokemonData?.abilities.map(ability => ability.ability.url)}></AbilitiesSelector>
+                    <AbilitiesSelector abilityUrls={pokeData?.abilities.map(ability => ability.ability.url)}></AbilitiesSelector>
 
-                    <PokemonStatsRenderer stats={pokemonData.stats}/>
+                    <PokemonStatsRenderer stats={pokeData.stats}/>
 
                     <TeraTypeSelector></TeraTypeSelector>
 
-                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
-                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
-                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
-                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokeData.moves.map((move) => move.move.name)}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokeData.moves.map((move) => move.move.name)}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokeData.moves.map((move) => move.move.name)}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokeData.moves.map((move) => move.move.name)}></MoveSlotSelector>
                     <HeldItemList></HeldItemList>
                 </div>
             )}
         </div>
+        </PokemonDataProvider>
     )
 }
 
