@@ -6,7 +6,7 @@ import MoveSlotSelector from './MoveSlotSelector';
 import HeldItemList from '../testComponents/HeldItemList';
 import PokemonStatsRenderer from './PokemonStatsRenderer';
 import TeraTypeSelector from './TeraTypeSelector';
-import { PokemonDataProvider} from './PokemonContext';
+// import { PokemonDataProvider} from './PokemonContext';
 
 interface Pokemon {
     name: string
@@ -42,7 +42,6 @@ const PokemonTeamCreator : React.FC = () => {
     }
 
     return (
-        <PokemonDataProvider>
         <div>
             <h2>Search for a pokemon</h2>
             <form onSubmit={handlePokemonSearchSubmit}>
@@ -73,7 +72,6 @@ const PokemonTeamCreator : React.FC = () => {
                 </div>
             )}
         </div>
-        </PokemonDataProvider>
     )
 }
 

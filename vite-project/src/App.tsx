@@ -5,6 +5,8 @@ import { TeamBuilder } from './components/TeamBuilder';
 import { TrainerPage } from './components/TrainerPage';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import DisplayPokemon from './components/testComponents/DisplayPokemon.tsx';
+import PokemonTeamBuilder from './pages/PokemonTeamBuilder.tsx';
+import PokemonTeamCreator from './components/pokemonComponents/PokemonTeamCreator.tsx';
 
 function App() {
 
@@ -15,6 +17,8 @@ function App() {
         <Route path='/trainer' element={<TrainerPage />}></Route>
         <Route path='/teambuilder' element={<TeamBuilder />}></Route>
         <Route path='/displaypokemon' element={<DisplayPokemon />}></Route>
+        <Route path='/savepokemon' element={<PokemonTeamBuilder/>}></Route>
+        <Route path='/show' element = {<PokemonTeamCreator/>}></Route>
       </Routes>
     </HashRouter>
   )

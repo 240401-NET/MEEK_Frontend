@@ -1,6 +1,7 @@
 import './TeamBuilder.css'
 import {NavLink as Link} from "react-router-dom"
-import PokemonTeamCreator from './pokemonComponents/PokemonTeamCreator'
+// import PokemonTeamCreator from './pokemonComponents/PokemonTeamCreator'
+// import PokemonTeamBuilder from '../pages/PokemonTeamBuilder'
 
 export function TeamBuilder()
 {
@@ -12,7 +13,8 @@ export function TeamBuilder()
             <Link to="/">
                 <button>Logout</button>
             </Link>
-            <PokemonTeamCreator></PokemonTeamCreator>
+            {/* <PokemonTeamCreator></PokemonTeamCreator> */}
+            {/* <PokemonTeamBuilder></PokemonTeamBuilder> */}
         </div>
     )
 }
