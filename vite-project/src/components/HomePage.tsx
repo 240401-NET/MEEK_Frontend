@@ -1,9 +1,13 @@
 import './HomePage.css'
 import {NavLink as Link} from 'react-router-dom'
+import {useState} from 'react'
 // import { useState, useEffect} from 'react';
 
 export function HomePage() {
 
+  const [usernameRegistration, setUsernameRegistration] = useState('')
+  const [emailRegistration, setEmailRegistration] = useState('')
+  const [passwordRegistration, setPasswordRegistration] = useState('')
 
   const signinClick = () => {
     let signupBtn = document.getElementById("signupBtn") as HTMLButtonElement;
@@ -15,6 +19,24 @@ export function HomePage() {
         // do some code--check that user validation conditions are entered correct
         // calls for some form of validation check
         // signs in user if all credentials entered are correct
+        return fetch("http://localhost:5177/login?", {
+          method: "POST",
+          body: JSON.stringify({
+            "email": emailRegistration,
+            "password": passwordRegistration
+          }),
+            headers: {
+              "Content-type": "application/json"
+            }
+          })
+          .then (response => {
+            if(response.ok) {
+              window.alert("Signup Successful");
+            }
+          })
+          .catch (error =>{
+            throw error;
+          })
       }
     else{
       nameField?.style.setProperty("max-height", "0");
@@ -33,9 +55,26 @@ export function HomePage() {
     let nameField = document.getElementById("nameField")! as HTMLElement;
     if (signupBtn.classList.contains('selected'))
       {
-        // do validation to sign up user
-        // sign up user
-        // store user information in database
+        
+        return fetch("http://localhost:5177/register", {
+          method: "POST",
+          body: JSON.stringify({
+            "username": usernameRegistration,
+            "email": emailRegistration,
+            "password": passwordRegistration
+          }),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8"
+            }
+          })
+          .then (response => {
+            if(response.ok) {
+              window.alert("Signup Successful");
+            }
+          })
+          .catch (error =>{
+            throw error;
+          })
       }
       else
       {
@@ -48,7 +87,12 @@ export function HomePage() {
       }
 
   }
+
           
+  const UserRegistration = (e : React.ChangeEvent<HTMLInputElement>) => {
+    setUsernameRegistration(e.target.value);
+  }
+
   return (
     <div>
       <Link to="/displaypokemon">
@@ -73,17 +117,31 @@ export function HomePage() {
               <div className="input-group">
                 <div className="input-field" id="nameField">
                   <i className="fa-solid fa-user-plus"></i>
-                  <input type="text" placeholder="Name"/>
+                  <input 
+                    type="text" 
+                    placeholder="Name" 
+                    onChange={UserRegistration}
+                  />
                 </div>
           
                 <div className="input-field">
                   <i className="fa-solid fa-envelope"></i>
-                  <input type="email" placeholder="Email"/>
+                  <input 
+                    id="emailField" 
+                    type="email" 
+                    placeholder="Email" 
+                    onChange={(e) => setEmailRegistration(e.target.value)}
+                  />
                 </div>
           
                 <div className="input-field">
                   <i className="fa-solid fa-lock"></i>
-                  <input type="password" placeholder="Password"/>
+                  <input 
+                    id="passwordField" 
+                    type="password" 
+                    placeholder="Password" 
+                    onChange={(e) => setPasswordRegistration(e.target.value)}
+                  />
                 </div>
 
                 <p>Lost Password <a href="#">Click Here!</a></p>
