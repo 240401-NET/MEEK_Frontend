@@ -15,7 +15,12 @@ export interface PokemonTeam {
         level: number;
 
         ivs: {
-            [hp: string] : number
+            hp: number ;
+            attack: number;
+            defense: number;
+            special_attack: number;
+            special_defense: number;
+            speed: number;
         }
 
         // selectedIVs?: { [key: string]: number | null };

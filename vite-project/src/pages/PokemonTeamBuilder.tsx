@@ -7,6 +7,7 @@ import AbilitiesSelector from '../components/pokemonComponents/AbilitiesSelector
 import MoveSlotSelector from '../components/pokemonComponents/MoveSlotSelector';
 import {PokemonNatureSelector} from '../components/pokemonComponents/PokemonNature';
 import LevelSelector from '../components/pokemonComponents/PokemonLevel';
+import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS';
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
@@ -27,7 +28,8 @@ const PokemonTeamBuilder: React.FC = () => {
     const [move4, setMove4] = useState('')
     const [currentNature, setCurrentNature] = useState('')
     const [currentLevel, setCurrentLevel] = useState(50)
-    const [currentIVs, setCurrentIVs] = useState<Record<string, number>>({})
+    // const [currentIVs, setCurrentIVs] = useState<Record<string, number>>({})
+    const [currentIVs, setCurrentIVs] = useState<{ hp?: number; attack?: number; defense?: number; special_attack?: number; special_defense?: number; speed?: number}>({})
     // const [evs, setEVS] = useState<Record<string, number>>({})
 
     useEffect(() =>{
@@ -55,7 +57,15 @@ const PokemonTeamBuilder: React.FC = () => {
         setCurrentNature('')
         setCurrentLevel(50)
         // setEVS({})
-        setCurrentIVs({})
+            setCurrentIVs({
+                hp:  0,
+                attack: 0,
+                defense:  0,
+                special_attack: 0,
+                special_defense: 0,
+                speed: 0
+                // Add other IVs as needed
+              });
 
     }
     
@@ -78,7 +88,14 @@ const PokemonTeamBuilder: React.FC = () => {
                 move_4: move4,
                 nature: currentNature,
                 level: currentLevel,
-                ivs: currentIVs
+                ivs: {
+                    hp: currentIVs.hp,
+                    attack: currentIVs.attack,
+                    defense: currentIVs.attack,
+                    special_attack: currentIVs.special_attack,
+                    special_defense: currentIVs.special_defense,
+                    speed: currentIVs.speed
+                }
             }
             if (editMode && savedPokemonTeam) {
                 const updatedPokemon = savedPokemonTeam?.pokemons.map((pokemon) =>
@@ -86,7 +103,9 @@ const PokemonTeamBuilder: React.FC = () => {
                     {...pokemon, pokemon: editedPokemon, id: `pokemon-${pokemonData.name}-${savedPokemonTeam ? savedPokemonTeam.pokemons.length + 1 : 1}`, 
                         data: pokemonData, sprite: selectedSprite, teraType: selectedTeraType, ability : ability,
                         move_1: move1, move_2: move2, move_3: move3, move_4: move4, nature: currentNature, level: currentLevel,
-                        ivs: currentIVs
+                        ivs: {hp: currentIVs.hp!, attack: currentIVs.attack!, defense: currentIVs.defense!, special_attack: currentIVs.special_attack!,
+                            special_defense: currentIVs.special_defense!, speed: currentIVs.speed!
+                        },
                         } : pokemon)
                     const updatedTeam = {
                         ...savedPokemonTeam,
@@ -107,7 +126,14 @@ const PokemonTeamBuilder: React.FC = () => {
                     move_4: move4,
                     nature: currentNature,
                     level: currentLevel,
-                    ivs: currentIVs
+                    ivs: {
+                        hp: currentIVs.hp!,
+                        attack: currentIVs.attack!,
+                        defense: currentIVs.attack!,
+                        special_attack: currentIVs.special_attack!,
+                        special_defense: currentIVs.special_defense!,
+                        speed: currentIVs.speed!
+                    }
                 }
                 const updatedTeam = savedPokemonTeam 
                 ? {
@@ -140,8 +166,20 @@ const PokemonTeamBuilder: React.FC = () => {
         setMove4(selectedPokemon.move_4)
         setCurrentNature(selectedPokemon.nature)
         setCurrentLevel(selectedPokemon.level)
-        setCurrentIVs(selectedPokemon.ivs)
+        // setCurrentIVs(selectedPokemon.ivs)
+        setCurrentIVs({
+            hp: selectedPokemon.ivs.hp || 0,
+            attack: selectedPokemon.ivs.attack || 0,
+            defense: selectedPokemon.ivs.defense || 0,
+            special_attack: selectedPokemon.ivs.special_attack || 0,
+            special_defense: selectedPokemon.ivs.special_defense || 0,
+            speed: selectedPokemon.ivs.speed || 0
+            // Add other IVs as needed
+          });
         setEditMode(true);
+    }
+    const handleIVChange = (stat: string, value: number ) =>{
+        setCurrentIVs((prevIVs) => ({...prevIVs, [stat] : value}))
     }
 
     return (
@@ -187,10 +225,21 @@ const PokemonTeamBuilder: React.FC = () => {
                     <PokemonNatureSelector setCurrentNature={setCurrentNature} currentNature={currentNature}></PokemonNatureSelector>
                     <AbilitiesSelector abilityUrls={pokemonData.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
                     <LevelSelector currentLevel={currentLevel} setCurrentLevel={setCurrentLevel}></LevelSelector>
-                    <label >
-                        Ivs:
-                        <input type="number" value={currentIVs.hp || ''} onChange={(e) => setCurrentIVs({...currentIVs, hp: parseInt(e.target.value)})}/>
-                    </label>
+                    <PokemonIVEVRenderer 
+                        hp={currentIVs.hp!}
+                        attack={currentIVs.attack!}
+                        defense={currentIVs.defense!}
+                        special_attack={currentIVs.special_attack!}
+                        special_defense={currentIVs.special_defense!}
+                        speed={currentIVs.speed!}
+                        onChangeHP={(value) => handleIVChange('hp', value!)}
+                        onChangeAttack={(value) => handleIVChange('attack', value!)}
+                        onChangeDefense={(value) => handleIVChange('defense', value!)}
+                        onChangeSpecialAttack={(value) => handleIVChange('special_attack', value!)}
+                        onChangeSpecialDefense={(value) => handleIVChange('special_defense', value!)}
+                        onChangeSpeed={(value) => handleIVChange('speed', value!)}
+                        >
+                        </PokemonIVEVRenderer>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>

@@ -13,16 +13,16 @@ export interface Pokemon {
         move_3: string;
         move_4: string;
         // user defined based off interaction with user
-        nature: string | null
+        nature: string | null;
 
         ivs: {
-            hp: number | null
-            attack: number | null
-            defense: number | null
-            special_attack: number | null
-            special_defense: number | null
-            speed: number | null
-        } | null
+            hp: number | null;
+            attack: number | null;
+            // defense: number | null
+            // special_attack: number | null
+            // special_defense: number | null
+            // speed: number | null
+        } | null;
         evs: {
             hp: number | null
             attack: number | null
