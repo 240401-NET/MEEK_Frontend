@@ -27,6 +27,8 @@ const PokemonTeamBuilder: React.FC = () => {
     const [move4, setMove4] = useState('')
     const [currentNature, setCurrentNature] = useState('')
     const [currentLevel, setCurrentLevel] = useState(50)
+    const [currentIVs, setCurrentIVs] = useState<Record<string, number>>({})
+    // const [evs, setEVS] = useState<Record<string, number>>({})
 
     useEffect(() =>{
         const savedTeam = localStorage.getItem('savedPokemonTeam')
@@ -52,6 +54,8 @@ const PokemonTeamBuilder: React.FC = () => {
         setMove2('')
         setCurrentNature('')
         setCurrentLevel(50)
+        // setEVS({})
+        setCurrentIVs({})
 
     }
     
@@ -73,14 +77,16 @@ const PokemonTeamBuilder: React.FC = () => {
                 move_3: move3,
                 move_4: move4,
                 nature: currentNature,
-                level: currentLevel
+                level: currentLevel,
+                ivs: currentIVs
             }
             if (editMode && savedPokemonTeam) {
                 const updatedPokemon = savedPokemonTeam?.pokemons.map((pokemon) =>
                     pokemon.id === editedPokemon.id ? 
                     {...pokemon, pokemon: editedPokemon, id: `pokemon-${pokemonData.name}-${savedPokemonTeam ? savedPokemonTeam.pokemons.length + 1 : 1}`, 
                         data: pokemonData, sprite: selectedSprite, teraType: selectedTeraType, ability : ability,
-                        move_1: move1, move_2: move2, move_3: move3, move_4: move4, nature: currentNature, level: currentLevel
+                        move_1: move1, move_2: move2, move_3: move3, move_4: move4, nature: currentNature, level: currentLevel,
+                        ivs: currentIVs
                         } : pokemon)
                     const updatedTeam = {
                         ...savedPokemonTeam,
@@ -101,6 +107,7 @@ const PokemonTeamBuilder: React.FC = () => {
                     move_4: move4,
                     nature: currentNature,
                     level: currentLevel,
+                    ivs: currentIVs
                 }
                 const updatedTeam = savedPokemonTeam 
                 ? {
@@ -120,7 +127,7 @@ const PokemonTeamBuilder: React.FC = () => {
 
     const loadPokemonOnClick = (selectedPokemon: { id: string, data: Pokemon, sprite: string, 
         teraType: string, ability :string, move_1: string, move_2: string, move_3: string, move_4: string,
-        nature: string, level : number
+        nature: string, level : number, ivs: Record<string,number>
     }) => {
         setPokemonID(selectedPokemon.id)
         setPokemonData(selectedPokemon.data)
@@ -133,6 +140,7 @@ const PokemonTeamBuilder: React.FC = () => {
         setMove4(selectedPokemon.move_4)
         setCurrentNature(selectedPokemon.nature)
         setCurrentLevel(selectedPokemon.level)
+        setCurrentIVs(selectedPokemon.ivs)
         setEditMode(true);
     }
 
@@ -179,6 +187,10 @@ const PokemonTeamBuilder: React.FC = () => {
                     <PokemonNatureSelector setCurrentNature={setCurrentNature} currentNature={currentNature}></PokemonNatureSelector>
                     <AbilitiesSelector abilityUrls={pokemonData.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
                     <LevelSelector currentLevel={currentLevel} setCurrentLevel={setCurrentLevel}></LevelSelector>
+                    <label >
+                        Ivs:
+                        <input type="number" value={currentIVs.hp || ''} onChange={(e) => setCurrentIVs({...currentIVs, hp: parseInt(e.target.value)})}/>
+                    </label>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>

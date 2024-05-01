@@ -13,11 +13,12 @@ export interface PokemonTeam {
         move_4: string;
         nature: string;
         level: number;
-        // selectedNature?: string;
+
+        ivs: {
+            [hp: string] : number
+        }
 
         // selectedIVs?: { [key: string]: number | null };
         // selectedEVs?: { [key: string]: number | null };
-        // level?: number | null;
-        // moveSet?: string[] | null;
     } [];
 }
