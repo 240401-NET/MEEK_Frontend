@@ -2,6 +2,7 @@ import React, { useEffect, useState} from 'react'
 import { Pokemon } from '../models/Pokemon'
 import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
 import { PokemonTeam } from '../models/PokemonTeamsInterface';
+import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector';
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
@@ -12,6 +13,9 @@ const PokemonTeamBuilder: React.FC = () => {
         const savedTeam = localStorage.getItem('savedPokemonTeam');
         return savedTeam ? JSON.parse(savedTeam) : null;
     })
+    const [selectedTeraType, setSelectedTeraType] = useState('');
+    const [editMode, setEditMode] = useState<boolean>(false)
+    const [pokemonID, setPokemonID] = useState<string>('')
 
     useEffect(() =>{
         const savedTeam = localStorage.getItem('savedPokemonTeam')
@@ -38,30 +42,53 @@ const PokemonTeamBuilder: React.FC = () => {
     const handleSavePokemon = () => {
         
         if (pokemonData ) {
-            const newPokemon = {
-                id: `pokemon-${pokemonData.name}-${savedPokemonTeam ? savedPokemonTeam.pokemons.length + 1 : 1}`,
-                pokemon: pokemonData,
-                selectedSprite
+            const editedPokemon = {
+                id : pokemonID,
+                data: pokemonData,
+                sprite: selectedSprite,
+                teraType: selectedTeraType
             }
-            const updatedTeam = savedPokemonTeam 
-            ? {
-                ...savedPokemonTeam,
-                pokemons: [...(savedPokemonTeam.pokemons || []), newPokemon]
+            if (editMode && savedPokemonTeam) {
+                const updatedPokemon = savedPokemonTeam?.pokemons.map((pokemon) =>
+                    pokemon.id === editedPokemon.id ? 
+                    {...pokemon, pokemon: editedPokemon, data: pokemonData, sprite: selectedSprite, teraType: selectedTeraType} : pokemon)
+                    const updatedTeam = {
+                        ...savedPokemonTeam,
+                        pokemons: updatedPokemon,
+                    }
+                setSavedPokemonTeam(updatedTeam)
+                localStorage.setItem('savedPokemonTeam', JSON.stringify(updatedTeam))
+            } else {
+                const newPokemon = {
+                    id: `pokemon-${pokemonData.name}-${savedPokemonTeam ? savedPokemonTeam.pokemons.length + 1 : 1}`,
+                    data: pokemonData,
+                    sprite: selectedSprite,
+                    teraType: selectedTeraType
+                }
+                const updatedTeam = savedPokemonTeam 
+                ? {
+                    ...savedPokemonTeam,
+                    pokemons: [...(savedPokemonTeam.pokemons || []), newPokemon]
+                }
+                : {
+                    pokemons: [newPokemon],
+                }
+                setSavedPokemonTeam(updatedTeam)
+                localStorage.setItem('savedPokemonTeam', JSON.stringify(updatedTeam))
             }
-            : {
-                id: 'team-1',
-                name: 'My Team',
-                pokemons: [newPokemon],
-            }
-            setSavedPokemonTeam(updatedTeam)
-            localStorage.setItem('savedPokemonTeam', JSON.stringify(updatedTeam))
+            setEditMode(false)
             console.log(savedPokemonTeam)
         }
     }
 
-    const loadPokemonOnClick = (selectedPokemon: { id: string; pokemon: Pokemon; selectedSprite: string }) => {
-        setPokemonData(selectedPokemon.pokemon)
-        setSelectedSprite(selectedPokemon.selectedSprite)
+    const loadPokemonOnClick = (selectedPokemon: { id: string, data: Pokemon, sprite: string, 
+        teraType: string
+    }) => {
+        setPokemonID(selectedPokemon.id)
+        setPokemonData(selectedPokemon.data)
+        setSelectedSprite(selectedPokemon.sprite)
+        setSelectedTeraType(selectedPokemon.teraType)
+        setEditMode(true);
     }
 
     return (
@@ -82,8 +109,9 @@ const PokemonTeamBuilder: React.FC = () => {
                     <ul>
                         {savedPokemonTeam.pokemons.map((pokemon) =>(
                             <li key={pokemon.id} onClick={() => loadPokemonOnClick(pokemon)}>
-                                {pokemon.pokemon.name}
+                                {pokemon.data.name}: {pokemon.teraType}    
                             </li>
+
                         ))}
                     </ul>
                 </div>
@@ -102,6 +130,8 @@ const PokemonTeamBuilder: React.FC = () => {
                         <button onClick={() => handleSpriteSelect(pokemonData.sprites.front_shiny)}>Shiny</button>
                     </div>
                     <button onClick={handleSavePokemon}>Save</button>
+                    <TeraTypeSelector setSelectedTeraType={setSelectedTeraType} selectedTeraType={selectedTeraType}></TeraTypeSelector>
+                    
                 </div>
             )}
         </div>

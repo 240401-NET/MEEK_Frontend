@@ -6,10 +6,11 @@ export interface Pokemon {
         moves: {move: {name: string} } []
         stats: {base_stat: number, effort : number, stat: {name: string} } []
         sprites: {front_default : string, front_shiny : string }
-        selectedSprite :string
+        sprite :string | null
+        teraType: string | null
         // user defined based off interaction with user
         nature: string | null
-        teraType: string | null
+
         ivs: {
             hp: number | null
             attack: number | null

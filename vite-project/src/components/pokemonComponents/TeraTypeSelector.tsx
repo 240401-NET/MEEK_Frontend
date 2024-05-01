@@ -1,6 +1,11 @@
-import React, {useState} from 'react'
+// import React, {useState} from 'react'
 
-const TeraTypeSelector : React.FC = () => {
+interface TeraTypeProp {
+    setSelectedTeraType: (teratype :string) => void;
+    selectedTeraType: string
+}
+
+const TeraTypeSelector : React.FC<TeraTypeProp> = ({setSelectedTeraType, selectedTeraType}) => {
 
     const teratypes: string[] = [
         "Stellar",
@@ -23,16 +28,15 @@ const TeraTypeSelector : React.FC = () => {
         "Steel",
         "Water"
     ]
-    const [teraType, setTeraType] = useState('')
 
     const handleTeraTypeSelection = (e : React.ChangeEvent<HTMLSelectElement>) => {
-        setTeraType(e.target.value);
+        setSelectedTeraType(e.target.value);
     }
     return(
         <div>
             <label htmlFor="teraType">
                 <p>Teratype</p>
-                <select id="teraType" value={teraType} onChange={handleTeraTypeSelection}>
+                <select id="teraType" onChange={handleTeraTypeSelection} value ={selectedTeraType}>
                     <option value="">None</option>
                         {teratypes.map(tera => (
                             <option value={tera} key={tera}>

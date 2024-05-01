@@ -1,14 +1,13 @@
 import { Pokemon } from "./Pokemon";
 
 export interface PokemonTeam {  
-    id: string,
-    name: string,
     pokemons: {
         id: string;
-        pokemon: Pokemon;
-        selectedSprite: string;
+        data: Pokemon;
+        sprite: string;
+        teraType: string;
         // selectedNature?: string;
-        // selectedTeraType?: string;
+
         // selectedIVs?: { [key: string]: number | null };
         // selectedEVs?: { [key: string]: number | null };
         // level?: number | null;
