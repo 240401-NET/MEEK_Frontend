@@ -8,6 +8,10 @@ export interface Pokemon {
         sprites: {front_default : string, front_shiny : string }
         sprite :string | null
         teraType: string | null
+        move_1: string;
+        move_2: string;
+        move_3: string;
+        move_4: string;
         // user defined based off interaction with user
         nature: string | null
 

@@ -4,12 +4,15 @@ import '../testComponents/HeldItemList.css'
 
 interface MoveSlotProps {
     moveNames: string[]
+    selectedMove: string
+    setSelectedMove: (move: string) => void
 }
 
 
-const MoveSlotSelector : React.FC<MoveSlotProps> = ({moveNames}) => {
+const MoveSlotSelector : React.FC<MoveSlotProps> = ({moveNames, selectedMove, setSelectedMove
+
+}) => {
     const [searchedMove, setSearchedMove] = useState('');
-    const [selectedMove, setSelectedMove] = useState<string>('');
     const [showAllMoves, setShowAllMoves] = useState<boolean>(false);
 
 

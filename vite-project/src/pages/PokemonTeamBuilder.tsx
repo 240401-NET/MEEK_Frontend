@@ -4,6 +4,7 @@ import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
 import { PokemonTeam } from '../models/PokemonTeamsInterface';
 import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector';
 import AbilitiesSelector from '../components/pokemonComponents/AbilitiesSelector';
+import MoveSlotSelector from '../components/pokemonComponents/MoveSlotSelector';
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
@@ -18,6 +19,10 @@ const PokemonTeamBuilder: React.FC = () => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [pokemonID, setPokemonID] = useState<string>('')
     const [ability, setAbility] = useState('')
+    const [move1, setMove1] = useState('')
+    const [move2, setMove2] = useState('')
+    const [move3, setMove3] = useState('')
+    const [move4, setMove4] = useState('')
 
     useEffect(() =>{
         const savedTeam = localStorage.getItem('savedPokemonTeam')
@@ -49,12 +54,20 @@ const PokemonTeamBuilder: React.FC = () => {
                 data: pokemonData,
                 sprite: selectedSprite,
                 teraType: selectedTeraType,
-                ability: ability
+                ability: ability,
+                move_1: move1,
+                move_2: move2,
+                move_3: move3,
+                move_4: move4
             }
             if (editMode && savedPokemonTeam) {
                 const updatedPokemon = savedPokemonTeam?.pokemons.map((pokemon) =>
                     pokemon.id === editedPokemon.id ? 
-                    {...pokemon, pokemon: editedPokemon, id: `pokemon-${pokemonData.name}-${savedPokemonTeam ? savedPokemonTeam.pokemons.length + 1 : 1}`,data: pokemonData, sprite: selectedSprite, teraType: selectedTeraType, ability : ability} : pokemon)
+                    {...pokemon, pokemon: editedPokemon, id: `pokemon-${pokemonData.name}-
+                        ${savedPokemonTeam ? savedPokemonTeam.pokemons.length + 1 : 1}`, 
+                        data: pokemonData, sprite: selectedSprite, teraType: selectedTeraType, ability : ability,
+                        move_1: move1, move_2: move2, move_3: move3, move_4: move4
+                        } : pokemon)
                     const updatedTeam = {
                         ...savedPokemonTeam,
                         pokemons: updatedPokemon,
@@ -67,7 +80,11 @@ const PokemonTeamBuilder: React.FC = () => {
                     data: pokemonData,
                     sprite: selectedSprite,
                     teraType: selectedTeraType,
-                    ability: ability
+                    ability: ability,
+                    move_1: move1,
+                    move_2: move2,
+                    move_3: move3,
+                    move_4: move4
                 }
                 const updatedTeam = savedPokemonTeam 
                 ? {
@@ -86,13 +103,17 @@ const PokemonTeamBuilder: React.FC = () => {
     }
 
     const loadPokemonOnClick = (selectedPokemon: { id: string, data: Pokemon, sprite: string, 
-        teraType: string, ability :string
+        teraType: string, ability :string, move_1: string, move_2: string, move_3: string, move_4: string
     }) => {
         setPokemonID(selectedPokemon.id)
         setPokemonData(selectedPokemon.data)
         setSelectedSprite(selectedPokemon.sprite)
         setSelectedTeraType(selectedPokemon.teraType)
         setAbility(selectedPokemon.ability)
+        setMove1(selectedPokemon.move_1)
+        setMove2(selectedPokemon.move_2)
+        setMove2(selectedPokemon.move_3)
+        setMove2(selectedPokemon.move_4)
         setEditMode(true);
     }
 
@@ -137,6 +158,10 @@ const PokemonTeamBuilder: React.FC = () => {
                     <button onClick={handleSavePokemon}>Save</button>
                     <TeraTypeSelector setSelectedTeraType={setSelectedTeraType} selectedTeraType={selectedTeraType}></TeraTypeSelector>
                     <AbilitiesSelector abilityUrls={pokemonData.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
+                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move4} setSelectedMove={setMove4}></MoveSlotSelector>
                 </div>
             )}
         </div>
