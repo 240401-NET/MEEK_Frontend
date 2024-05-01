@@ -6,6 +6,7 @@ import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector';
 import AbilitiesSelector from '../components/pokemonComponents/AbilitiesSelector';
 import MoveSlotSelector from '../components/pokemonComponents/MoveSlotSelector';
 import {PokemonNatureSelector} from '../components/pokemonComponents/PokemonNature';
+import LevelSelector from '../components/pokemonComponents/PokemonLevel';
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
@@ -25,6 +26,7 @@ const PokemonTeamBuilder: React.FC = () => {
     const [move3, setMove3] = useState('')
     const [move4, setMove4] = useState('')
     const [currentNature, setCurrentNature] = useState('')
+    const [currentLevel, setCurrentLevel] = useState(50)
 
     useEffect(() =>{
         const savedTeam = localStorage.getItem('savedPokemonTeam')
@@ -49,6 +51,7 @@ const PokemonTeamBuilder: React.FC = () => {
         setMove2('')
         setMove2('')
         setCurrentNature('')
+        setCurrentLevel(50)
 
     }
     
@@ -69,14 +72,15 @@ const PokemonTeamBuilder: React.FC = () => {
                 move_2: move2,
                 move_3: move3,
                 move_4: move4,
-                nature: currentNature
+                nature: currentNature,
+                level: currentLevel
             }
             if (editMode && savedPokemonTeam) {
                 const updatedPokemon = savedPokemonTeam?.pokemons.map((pokemon) =>
                     pokemon.id === editedPokemon.id ? 
                     {...pokemon, pokemon: editedPokemon, id: `pokemon-${pokemonData.name}-${savedPokemonTeam ? savedPokemonTeam.pokemons.length + 1 : 1}`, 
                         data: pokemonData, sprite: selectedSprite, teraType: selectedTeraType, ability : ability,
-                        move_1: move1, move_2: move2, move_3: move3, move_4: move4, nature: currentNature
+                        move_1: move1, move_2: move2, move_3: move3, move_4: move4, nature: currentNature, level: currentLevel
                         } : pokemon)
                     const updatedTeam = {
                         ...savedPokemonTeam,
@@ -95,7 +99,8 @@ const PokemonTeamBuilder: React.FC = () => {
                     move_2: move2,
                     move_3: move3,
                     move_4: move4,
-                    nature: currentNature
+                    nature: currentNature,
+                    level: currentLevel,
                 }
                 const updatedTeam = savedPokemonTeam 
                 ? {
@@ -115,7 +120,7 @@ const PokemonTeamBuilder: React.FC = () => {
 
     const loadPokemonOnClick = (selectedPokemon: { id: string, data: Pokemon, sprite: string, 
         teraType: string, ability :string, move_1: string, move_2: string, move_3: string, move_4: string,
-        nature: string
+        nature: string, level : number
     }) => {
         setPokemonID(selectedPokemon.id)
         setPokemonData(selectedPokemon.data)
@@ -124,9 +129,10 @@ const PokemonTeamBuilder: React.FC = () => {
         setAbility(selectedPokemon.ability)
         setMove1(selectedPokemon.move_1)
         setMove2(selectedPokemon.move_2)
-        setMove2(selectedPokemon.move_3)
-        setMove2(selectedPokemon.move_4)
+        setMove3(selectedPokemon.move_3)
+        setMove4(selectedPokemon.move_4)
         setCurrentNature(selectedPokemon.nature)
+        setCurrentLevel(selectedPokemon.level)
         setEditMode(true);
     }
 
@@ -172,6 +178,7 @@ const PokemonTeamBuilder: React.FC = () => {
                     <TeraTypeSelector setSelectedTeraType={setSelectedTeraType} selectedTeraType={selectedTeraType}></TeraTypeSelector>
                     <PokemonNatureSelector setCurrentNature={setCurrentNature} currentNature={currentNature}></PokemonNatureSelector>
                     <AbilitiesSelector abilityUrls={pokemonData.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
+                    <LevelSelector currentLevel={currentLevel} setCurrentLevel={setCurrentLevel}></LevelSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>

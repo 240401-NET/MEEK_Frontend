@@ -12,6 +12,7 @@ export interface PokemonTeam {
         move_3: string;
         move_4: string;
         nature: string;
+        level: number;
         // selectedNature?: string;
 
         // selectedIVs?: { [key: string]: number | null };
