@@ -7,11 +7,12 @@ interface Ability {
 
 interface Props {
     abilityUrls : string[]
+    setSelectedAbility: (ability: string) => void
+    selectedAbility: string
 }
 
-const AbilitiesSelector : React.FC<Props> = ({abilityUrls}) => {
+const AbilitiesSelector : React.FC<Props> = ({abilityUrls, selectedAbility, setSelectedAbility}) => {
 
-    const [selectedAbility, setSelectedAbility] = useState("");
     const [abilities, setAbilities] = useState<Array<Ability>>([])
 
     const handlePokemonAbilitySelection = (abilityName : string) => {

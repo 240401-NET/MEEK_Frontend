@@ -3,6 +3,7 @@ import { Pokemon } from '../models/Pokemon'
 import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
 import { PokemonTeam } from '../models/PokemonTeamsInterface';
 import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector';
+import AbilitiesSelector from '../components/pokemonComponents/AbilitiesSelector';
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
@@ -16,6 +17,7 @@ const PokemonTeamBuilder: React.FC = () => {
     const [selectedTeraType, setSelectedTeraType] = useState('');
     const [editMode, setEditMode] = useState<boolean>(false)
     const [pokemonID, setPokemonID] = useState<string>('')
+    const [ability, setAbility] = useState('')
 
     useEffect(() =>{
         const savedTeam = localStorage.getItem('savedPokemonTeam')
@@ -46,12 +48,13 @@ const PokemonTeamBuilder: React.FC = () => {
                 id : pokemonID,
                 data: pokemonData,
                 sprite: selectedSprite,
-                teraType: selectedTeraType
+                teraType: selectedTeraType,
+                ability: ability
             }
             if (editMode && savedPokemonTeam) {
                 const updatedPokemon = savedPokemonTeam?.pokemons.map((pokemon) =>
                     pokemon.id === editedPokemon.id ? 
-                    {...pokemon, pokemon: editedPokemon, data: pokemonData, sprite: selectedSprite, teraType: selectedTeraType} : pokemon)
+                    {...pokemon, pokemon: editedPokemon, id: `pokemon-${pokemonData.name}-${savedPokemonTeam ? savedPokemonTeam.pokemons.length + 1 : 1}`,data: pokemonData, sprite: selectedSprite, teraType: selectedTeraType, ability : ability} : pokemon)
                     const updatedTeam = {
                         ...savedPokemonTeam,
                         pokemons: updatedPokemon,
@@ -63,7 +66,8 @@ const PokemonTeamBuilder: React.FC = () => {
                     id: `pokemon-${pokemonData.name}-${savedPokemonTeam ? savedPokemonTeam.pokemons.length + 1 : 1}`,
                     data: pokemonData,
                     sprite: selectedSprite,
-                    teraType: selectedTeraType
+                    teraType: selectedTeraType,
+                    ability: ability
                 }
                 const updatedTeam = savedPokemonTeam 
                 ? {
@@ -82,12 +86,13 @@ const PokemonTeamBuilder: React.FC = () => {
     }
 
     const loadPokemonOnClick = (selectedPokemon: { id: string, data: Pokemon, sprite: string, 
-        teraType: string
+        teraType: string, ability :string
     }) => {
         setPokemonID(selectedPokemon.id)
         setPokemonData(selectedPokemon.data)
         setSelectedSprite(selectedPokemon.sprite)
         setSelectedTeraType(selectedPokemon.teraType)
+        setAbility(selectedPokemon.ability)
         setEditMode(true);
     }
 
@@ -131,7 +136,7 @@ const PokemonTeamBuilder: React.FC = () => {
                     </div>
                     <button onClick={handleSavePokemon}>Save</button>
                     <TeraTypeSelector setSelectedTeraType={setSelectedTeraType} selectedTeraType={selectedTeraType}></TeraTypeSelector>
-                    
+                    <AbilitiesSelector abilityUrls={pokemonData.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
                 </div>
             )}
         </div>

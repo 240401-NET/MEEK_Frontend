@@ -6,6 +6,7 @@ export interface PokemonTeam {
         data: Pokemon;
         sprite: string;
         teraType: string;
+        ability: string;
         // selectedNature?: string;
 
         // selectedIVs?: { [key: string]: number | null };
