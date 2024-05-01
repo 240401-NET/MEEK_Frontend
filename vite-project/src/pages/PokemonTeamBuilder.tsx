@@ -48,6 +48,12 @@ const PokemonTeamBuilder: React.FC = () => {
         } catch (error) {
             console.log("Can't find pokemon", error)
         }
+
+    }
+
+    const clearPageData = () => {
+        setPokemonData(null)
+        setSearchedPokemon('')
         setSelectedTeraType('')
         setAbility('')
         setMove1('')
@@ -147,6 +153,7 @@ const PokemonTeamBuilder: React.FC = () => {
                 localStorage.setItem('savedPokemonTeam', JSON.stringify(updatedTeam))
             }
             setEditMode(false)
+            clearPageData();
             console.log(savedPokemonTeam)
         }
     }

@@ -7,10 +7,10 @@ export interface PokemonTeam {
         sprite: string;
         teraType: string;
         ability: string;
-        move_1: string;
-        move_2: string;
-        move_3: string;
-        move_4: string;
+        move_1: string | "";
+        move_2: string | "";
+        move_3: string | "";
+        move_4: string | "";
         nature: string;
         level: number;
 
