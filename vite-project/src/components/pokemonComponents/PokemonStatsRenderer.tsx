@@ -1,4 +1,5 @@
 import React , {useState} from 'react'
+import {PokemonNatureSelector, natureData} from './PokemonNature'
 
 
 interface Stat {
@@ -11,40 +12,40 @@ interface StatsProp {
     stats : Stat[]
 }
 
-interface Nature {
-    name: string;
-    increasedStat: string;
-    decreasedStat: string;
-  }
+// interface Nature {
+//     name: string;
+//     increasedStat: string;
+//     decreasedStat: string;
+//   }
 
 const PokemonStatsRenderer : React.FC<StatsProp> = ({stats}) => {
-    const natureData : Nature[] = [
-        { name: 'Adamant', increasedStat: 'attack', decreasedStat: 'special-attack' },
-        { name: 'Bashful', increasedStat: 'none', decreasedStat: 'none' },
-        { name: 'Bold', increasedStat: 'defense', decreasedStat: 'attack' },
-        { name: 'Brave', increasedStat: 'attack', decreasedStat: 'speed' },
-        { name: 'Calm', increasedStat: 'special-defense', decreasedStat: 'attack' },
-        { name: 'Careful', increasedStat: 'special-defense', decreasedStat: 'special-attack' },
-        { name: 'Docile', increasedStat: 'none', decreasedStat: 'none' },
-        { name: 'Gentle', increasedStat: 'special-defense', decreasedStat: 'defense' },
-        { name: 'Hardy', increasedStat: 'none', decreasedStat: 'none' },
-        { name: 'Hasty', increasedStat: 'speed', decreasedStat: 'defense' },
-        { name: 'Impish', increasedStat: 'defense', decreasedStat: 'special-attack' },
-        { name: 'Jolly', increasedStat: 'speed', decreasedStat: 'special-attack' },
-        { name: 'Lax', increasedStat: 'defense', decreasedStat: 'special-defense' },
-        { name: 'Lonely', increasedStat: 'attack', decreasedStat: 'defense' },
-        { name: 'Mild', increasedStat: 'special-attack', decreasedStat: 'defense' },
-        { name: 'Modest', increasedStat: 'special-attack', decreasedStat: 'attack' },
-        { name: 'Naive', increasedStat: 'speed', decreasedStat: 'special-defense' },
-        { name: 'Naughty', increasedStat: 'attack', decreasedStat: 'special-defense' },
-        { name: 'Quiet', increasedStat: 'special-attack', decreasedStat: 'speed' },
-        { name: 'Quirky', increasedStat: 'none', decreasedStat: 'none' },
-        { name: 'Rash', increasedStat: 'special attack', decreasedStat: 'special defense' },
-        { name: 'Relaxed', increasedStat: 'defense', decreasedStat: 'speed' },
-        { name: 'Sassy', increasedStat: 'special defense', decreasedStat: 'speed' },
-        { name: 'Serious', increasedStat: 'none', decreasedStat: 'none' },
-        { name: 'Timid', increasedStat: 'speed', decreasedStat: 'attack' },
-    ]
+    // const natureData : Nature[] = [
+    //     { name: 'Adamant', increasedStat: 'attack', decreasedStat: 'special-attack' },
+    //     { name: 'Bashful', increasedStat: 'none', decreasedStat: 'none' },
+    //     { name: 'Bold', increasedStat: 'defense', decreasedStat: 'attack' },
+    //     { name: 'Brave', increasedStat: 'attack', decreasedStat: 'speed' },
+    //     { name: 'Calm', increasedStat: 'special-defense', decreasedStat: 'attack' },
+    //     { name: 'Careful', increasedStat: 'special-defense', decreasedStat: 'special-attack' },
+    //     { name: 'Docile', increasedStat: 'none', decreasedStat: 'none' },
+    //     { name: 'Gentle', increasedStat: 'special-defense', decreasedStat: 'defense' },
+    //     { name: 'Hardy', increasedStat: 'none', decreasedStat: 'none' },
+    //     { name: 'Hasty', increasedStat: 'speed', decreasedStat: 'defense' },
+    //     { name: 'Impish', increasedStat: 'defense', decreasedStat: 'special-attack' },
+    //     { name: 'Jolly', increasedStat: 'speed', decreasedStat: 'special-attack' },
+    //     { name: 'Lax', increasedStat: 'defense', decreasedStat: 'special-defense' },
+    //     { name: 'Lonely', increasedStat: 'attack', decreasedStat: 'defense' },
+    //     { name: 'Mild', increasedStat: 'special-attack', decreasedStat: 'defense' },
+    //     { name: 'Modest', increasedStat: 'special-attack', decreasedStat: 'attack' },
+    //     { name: 'Naive', increasedStat: 'speed', decreasedStat: 'special-defense' },
+    //     { name: 'Naughty', increasedStat: 'attack', decreasedStat: 'special-defense' },
+    //     { name: 'Quiet', increasedStat: 'special-attack', decreasedStat: 'speed' },
+    //     { name: 'Quirky', increasedStat: 'none', decreasedStat: 'none' },
+    //     { name: 'Rash', increasedStat: 'special attack', decreasedStat: 'special defense' },
+    //     { name: 'Relaxed', increasedStat: 'defense', decreasedStat: 'speed' },
+    //     { name: 'Sassy', increasedStat: 'special defense', decreasedStat: 'speed' },
+    //     { name: 'Serious', increasedStat: 'none', decreasedStat: 'none' },
+    //     { name: 'Timid', increasedStat: 'speed', decreasedStat: 'attack' },
+    // ]
     const [pokemonLevel, setPokemonLevel] = useState<number>(50);
     const [currentNature, setCurrentNature] = useState<string>('')
     const [ivs, setIVS] = useState<Record<string, number>>({})
@@ -79,9 +80,9 @@ const PokemonStatsRenderer : React.FC<StatsProp> = ({stats}) => {
     const handlePokemonLevelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPokemonLevel(parseInt(e.target.value));
     }
-    const handleNatureSelection = (e : React.ChangeEvent<HTMLSelectElement>) => {
-        setCurrentNature(e.target.value);
-    }
+    // const handleNatureSelection = (e : React.ChangeEvent<HTMLSelectElement>) => {
+    //     setCurrentNature(e.target.value);
+    // }
     const handleIVChange = (statName: string, ivValue: number) => {
         setIVS(preIVs => ({...preIVs, [statName]: ivValue}))
     }
