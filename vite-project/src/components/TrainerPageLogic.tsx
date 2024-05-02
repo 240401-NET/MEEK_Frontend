@@ -52,60 +52,7 @@ function sortTable(column: number, sort_asc : boolean) {
         .map(sorted_row => document.querySelector('tbody')?.appendChild(sorted_row));
 }
 
-// // Converting HTML table to JSON
+// Function to generate and download a text file
 
-// const pokemon_table = document.querySelector('#pokemon_table');
-// const json_btn = document.querySelector('#toJSON');
-
-// const toJSON = function (table) {
-//     let table_data = [],
-//         t_head = [],
-
-//         t_headings = table.querySelectorAll('th'),
-//         t_rows = table.querySelectorAll('tbody tr');
-
-//     for (let t_heading of t_headings) {
-//         let actual_head = t_heading.textContent.trim().split(' ');
-
-//         t_head.push(actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase());
-//     }
-
-//     t_rows.forEach(row => {
-//         const row_object = {},
-//             t_cells = row.querySelectorAll('td');
-
-//         t_cells.forEach((t_cell, cell_index) => {
-//             const img = t_cell.querySelector('img');
-//             if (img) {
-//                 row_object['pokemon image'] = decodeURIComponent(img.src);
-//             }
-//             row_object[t_head[cell_index]] = t_cell.textContent.trim();
-//         })
-//         table_data.push(row_object);
-//     })
-
-//     return JSON.stringify(table_data, null, 4);
-// }
-
-// json_btn.onclick = () => {
-//     const json = toJSON(pokemon_table);
-//     downloadFile(json, 'json')
-// }
-
-// const downloadFile = function (data, fileType, fileName = '') {
-//     const a = document.createElement('a');
-//     a.download = fileName;
-//     const mime_types = {
-//         'json': 'application/json',
-//         'csv': 'text/csv',
-//         'excel': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-//     }
-//     a.href = `
-//         data:${mime_types[fileType]};charset=utf-8,${encodeURIComponent(data)}
-//     `;
-//     document.body.appendChild(a);
-//     a.click();
-//     a.remove();
-// }
-}
+ }
 
