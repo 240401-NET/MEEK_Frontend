@@ -19,10 +19,11 @@ export function HomePage() {
         // do some code--check that user validation conditions are entered correct
         // calls for some form of validation check
         // signs in user if all credentials entered are correct
-        return fetch("http://localhost:5177/login?", {
+        return fetch(`http://localhost:5177/login?useCookies=true&useSessionCookies=true`, {
           method: "POST",
+          // credentials: "include",
           body: JSON.stringify({
-            "email": emailRegistration,
+            "username": usernameRegistration,
             "password": passwordRegistration
           }),
             headers: {
@@ -64,6 +65,7 @@ export function HomePage() {
             "password": passwordRegistration
           }),
             headers: {
+              "Authorization": "bearer my-token",
               "Content-type": "application/json; charset=UTF-8"
             }
           })
@@ -88,6 +90,27 @@ export function HomePage() {
 
   }
 
+  const logout = () => {
+    return fetch(`http://localhost:5177/logout`, {
+          method: "POST",
+          // credentials: "include",
+          body: JSON.stringify({
+            "username": usernameRegistration,
+            "password": passwordRegistration
+          }),
+            headers: {
+              "Content-type": "application/json"
+            }
+          })
+          .then (response => {
+            if(response.ok) {
+              window.alert("Logout Successful");
+            }
+          })
+          .catch (error =>{
+            throw error;
+          })
+      }
           
   const UserRegistration = (e : React.ChangeEvent<HTMLInputElement>) => {
     setUsernameRegistration(e.target.value);
@@ -115,22 +138,23 @@ export function HomePage() {
           <h1 id="title">Sign Up</h1>
             <form>
               <div className="input-group">
-                <div className="input-field" id="nameField">
-                  <i className="fa-solid fa-user-plus"></i>
-                  <input 
-                    type="text" 
-                    placeholder="Name" 
-                    onChange={UserRegistration}
-                  />
-                </div>
-          
-                <div className="input-field">
+
+              <div className="input-field" id="nameField">
                   <i className="fa-solid fa-envelope"></i>
                   <input 
                     id="emailField" 
                     type="email" 
                     placeholder="Email" 
                     onChange={(e) => setEmailRegistration(e.target.value)}
+                  />
+                </div>
+
+                <div className="input-field">
+                  <i className="fa-solid fa-user-plus"></i>
+                  <input 
+                    type="text" 
+                    placeholder="Name" 
+                    onChange={UserRegistration}
                   />
                 </div>
           
@@ -150,6 +174,7 @@ export function HomePage() {
               <div className="btn-field"> 
                 <button type="button" id="signupBtn" onClick={()=>signupClick()} className=''>Sign Up</button>
                 <button type="button" id="signinBtn" className="disable" onClick={()=>signinClick()}>Sign In</button>
+                <button type="button" onClick={() => logout()}>logout</button>
               </div>
             </form>
           </div>
