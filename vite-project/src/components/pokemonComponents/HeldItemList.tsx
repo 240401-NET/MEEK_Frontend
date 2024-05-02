@@ -1,5 +1,5 @@
-import './HeldItemList.css'
 import React, { useEffect, useState} from 'react'
+import '../../pages/ItemsAndMovesModel.css'
 
 interface HeldItem {
     name: string

@@ -1,4 +1,5 @@
 import React , {useState, useEffect} from 'react'
+import '../../pages/PokemonTeamBuilder.css'
 
 interface Props {
     sprites: {front_default : string, front_shiny : string }

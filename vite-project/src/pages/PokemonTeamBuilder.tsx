@@ -9,6 +9,7 @@ import {PokemonNatureSelector} from '../components/pokemonComponents/PokemonNatu
 import LevelSelector from '../components/pokemonComponents/PokemonLevel';
 import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS';
 import { NavLink as Link } from 'react-router-dom';
+import './PokemonTeamBuilder.css'
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
@@ -46,7 +47,6 @@ const PokemonTeamBuilder: React.FC = () => {
             const responseData = await fetchPokemonDataFromAPI(pokemonName);
             setPokemonData(responseData);
             setSelectedSprite(responseData.sprites.front_default);
-            console.log(responseData)
         } catch (error) {
             console.log("Can't find pokemon", error)
         }

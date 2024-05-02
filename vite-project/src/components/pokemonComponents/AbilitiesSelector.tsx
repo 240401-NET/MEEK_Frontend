@@ -1,4 +1,5 @@
-import React , {useState, useEffect} from 'react'
+import React , {useState, useEffect} from 'react';
+import '../../pages/PokemonTeamBuilder.css'
 
 interface Ability {
     name: string

@@ -1,4 +1,5 @@
 import React from "react"
+import '../../pages/PokemonTeamBuilder.css'
 
 interface NatureProps {
     setCurrentNature: (nature: string) => void
