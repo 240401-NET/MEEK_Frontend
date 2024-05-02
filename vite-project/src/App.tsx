@@ -1,22 +1,24 @@
 import './App.css';
-import './components/HomePage';
-import { HomePage } from './components/HomePage';
-import { TeamBuilder } from './components/TeamBuilder';
-import { TrainerPage } from './components/TrainerPage';
-import { HashRouter, Route, Routes } from 'react-router-dom';
-import DisplayPokemon from './components/testComponents/displayPokemon.tsx';
+import './pages/HomePage.tsx';
+import { HomePageRenderer } from './pages/HomePage.tsx';
+// import { TeamBuilder } from './components/TeamBuilder';
+import { TrainerPage } from './pages/TrainerPage.tsx';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+// import DisplayPokemon from './components/testComponents/DisplayPokemon.tsx';
+import PokemonTeamBuilder from './pages/PokemonTeamBuilder.tsx';
+// import PokemonTeamCreator from './components/pokemonComponents/PokemonTeamCreator.tsx';
 
 function App() {
 
   return (
-    <HashRouter>
+    <Router>
       <Routes>
-        <Route path='/' element={<HomePage />}></Route>
+        <Route path='/' element={<HomePageRenderer />}></Route>
         <Route path='/trainer' element={<TrainerPage />}></Route>
-        <Route path='/teambuilder' element={<TeamBuilder />}></Route>
-        <Route path='/displaypokemon' element={<DisplayPokemon />}></Route>
+        <Route path='/pokemonTeamBuilder' element={<PokemonTeamBuilder/>}></Route>
+        {/* <Route path='/show' element = {<PokemonTeamCreator/>}></Route> */}
       </Routes>
-    </HashRouter>
+    </Router>
   )
 }
 export default App

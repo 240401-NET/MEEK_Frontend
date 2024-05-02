@@ -1,9 +1,14 @@
 import './HomePage.css'
 import {NavLink as Link} from 'react-router-dom'
+import {useState} from 'react'
+import { UserLogin, UserLogout, UserSignUp, setCookie } from '../services/userServices'
 // import { useState, useEffect} from 'react';
 
-export function HomePage() {
+export function HomePageRenderer() {
 
+  const [usernameRegistration, setUsernameRegistration] = useState('')
+  const [emailRegistration, setEmailRegistration] = useState('')
+  const [passwordRegistration, setPasswordRegistration] = useState('')
 
   const signinClick = () => {
     let signupBtn = document.getElementById("signupBtn") as HTMLButtonElement;
@@ -12,9 +17,7 @@ export function HomePage() {
     let nameField = document.getElementById("nameField")! as HTMLElement;
     if (signinBtn.classList.contains('selected'))
       {
-        // do some code--check that user validation conditions are entered correct
-        // calls for some form of validation check
-        // signs in user if all credentials entered are correct
+        UserLogin(usernameRegistration, passwordRegistration);
       }
     else{
       nameField?.style.setProperty("max-height", "0");
@@ -33,9 +36,7 @@ export function HomePage() {
     let nameField = document.getElementById("nameField")! as HTMLElement;
     if (signupBtn.classList.contains('selected'))
       {
-        // do validation to sign up user
-        // sign up user
-        // store user information in database
+          UserSignUp(usernameRegistration, emailRegistration, passwordRegistration)
       }
       else
       {
@@ -49,19 +50,18 @@ export function HomePage() {
 
   }
           
+  const UserRegistration = (e : React.ChangeEvent<HTMLInputElement>) => {
+    setUsernameRegistration(e.target.value);
+  }
+
   return (
     <div>
-      <Link to="/displaypokemon">
-      <button className='navButtons'>
-        Display pokemon
-      </button>
-      </Link>
       <Link to="/trainer">
       <button className='navButtons'>
         Trainer Team View
       </button>
       </Link>
-      <Link to="/teambuilder">
+      <Link to="/pokemonTeamBuilder">
       <button className='navButtons'>
         Team Builder
       </button>
@@ -71,19 +71,34 @@ export function HomePage() {
           <h1 id="title">Sign Up</h1>
             <form>
               <div className="input-group">
-                <div className="input-field" id="nameField">
-                  <i className="fa-solid fa-user-plus"></i>
-                  <input type="text" placeholder="Name"/>
-                </div>
-          
-                <div className="input-field">
+
+              <div className="input-field" id="nameField">
                   <i className="fa-solid fa-envelope"></i>
-                  <input type="email" placeholder="Email"/>
+                  <input 
+                    id="emailField" 
+                    type="email" 
+                    placeholder="Email" 
+                    onChange={(e) => setEmailRegistration(e.target.value)}
+                  />
+                </div>
+
+                <div className="input-field">
+                  <i className="fa-solid fa-user-plus"></i>
+                  <input 
+                    type="text" 
+                    placeholder="Name" 
+                    onChange={UserRegistration}
+                  />
                 </div>
           
                 <div className="input-field">
                   <i className="fa-solid fa-lock"></i>
-                  <input type="password" placeholder="Password"/>
+                  <input 
+                    id="passwordField" 
+                    type="password" 
+                    placeholder="Password" 
+                    onChange={(e) => setPasswordRegistration(e.target.value)}
+                  />
                 </div>
 
                 <p>Lost Password <a href="#">Click Here!</a></p>
@@ -92,6 +107,8 @@ export function HomePage() {
               <div className="btn-field"> 
                 <button type="button" id="signupBtn" onClick={()=>signupClick()} className=''>Sign Up</button>
                 <button type="button" id="signinBtn" className="disable" onClick={()=>signinClick()}>Sign In</button>
+                <button type="button" onClick={UserLogout}>logout</button>
+                <button type="button" onClick={setCookie}>Set Cookie</button>
               </div>
             </form>
           </div>
