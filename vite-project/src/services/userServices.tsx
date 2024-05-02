@@ -60,7 +60,6 @@ export const UserSignUp = (
         return fetch("http://localhost:5177/register", {
           method: "POST",
           mode: 'cors',
-          credentials: "include",
           body: JSON.stringify({
             "username": username,
             "email": email,

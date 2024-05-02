@@ -46,6 +46,7 @@ const PokemonTeamBuilder: React.FC = () => {
             const responseData = await fetchPokemonDataFromAPI(pokemonName);
             setPokemonData(responseData);
             setSelectedSprite(responseData.sprites.front_default);
+            console.log(responseData)
         } catch (error) {
             console.log("Can't find pokemon", error)
         }
@@ -203,7 +204,9 @@ const PokemonTeamBuilder: React.FC = () => {
                 />
                 <button type='submit'>Search</button>
             </form>
-
+            <div>
+                <button onClick={handleSavePokemon}>Save</button>
+            </div>
 
             {(savedPokemonTeam && savedPokemonTeam.pokemons.length > 0) && (
                 <div>
@@ -231,7 +234,7 @@ const PokemonTeamBuilder: React.FC = () => {
                         <button onClick={() => handleSpriteSelect(pokemonData.sprites.front_default)}>Default</button>
                         <button onClick={() => handleSpriteSelect(pokemonData.sprites.front_shiny)}>Shiny</button>
                     </div>
-                    <button onClick={handleSavePokemon}>Save</button>
+                    
                     <TeraTypeSelector setSelectedTeraType={setSelectedTeraType} selectedTeraType={selectedTeraType}></TeraTypeSelector>
                     <PokemonNatureSelector setCurrentNature={setCurrentNature} currentNature={currentNature}></PokemonNatureSelector>
                     <AbilitiesSelector abilityUrls={pokemonData.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
