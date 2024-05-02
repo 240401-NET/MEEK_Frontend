@@ -56,17 +56,12 @@ export function HomePageRenderer() {
 
   return (
     <div>
-      <Link to="/displaypokemon">
-      <button className='navButtons'>
-        Display pokemon
-      </button>
-      </Link>
       <Link to="/trainer">
       <button className='navButtons'>
         Trainer Team View
       </button>
       </Link>
-      <Link to="/teambuilder">
+      <Link to="/pokemonTeamBuilder">
       <button className='navButtons'>
         Team Builder
       </button>

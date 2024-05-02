@@ -8,6 +8,7 @@ import MoveSlotSelector from '../components/pokemonComponents/MoveSlotSelector';
 import {PokemonNatureSelector} from '../components/pokemonComponents/PokemonNature';
 import LevelSelector from '../components/pokemonComponents/PokemonLevel';
 import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS';
+import { NavLink as Link } from 'react-router-dom';
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
@@ -191,6 +192,9 @@ const PokemonTeamBuilder: React.FC = () => {
 
     return (
         <div>
+            <Link to="/">
+                <button>Logout</button>
+            </Link>
             <form onSubmit={() =>pokemonSearch(seaerchedPokemon)}>
                 <input 
                     type="text"

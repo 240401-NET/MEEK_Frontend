@@ -1,5 +1,4 @@
 import React, { useState} from 'react'
-import '../testComponents/HeldItemList.css'
 
 
 interface MoveSlotProps {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './TrainerPage.css';
 import Search from '../assets/search.png';
-import { TrainerPageLogic } from './TrainerPageLogic';
+import { TrainerPageLogic } from '../models/TrainerPageLogic';
 import { NavLink as Link } from 'react-router-dom';
 
 export function TrainerPage() {
