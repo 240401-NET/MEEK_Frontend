@@ -6,28 +6,45 @@
     font-family: sans-serif;
 }
 
-/*@page {
+/* @page {
     size: landscape;
     margin: 0; 
-}*/
+} */
 
 body {
     min-height: 100vh;
-    background: linear-gradient(rgba(154, 145, 147, 0.8), rgba(234, 98, 98, 0.8)), url(images/pokemonLab.webp) center / cover;
-    display: flex;
+    background: linear-gradient(90deg, rgba(150, 138, 138, 0.8), rgba(234, 98, 98, 0.8)), url(../assets/decrepitlab.jpg) center / cover;
+    display:flex;
     justify-content: center;
     align-items: center;
-}
+    padding: 0 10px;
+    
+} 
+   
+.collapsible {
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .content {
+    display: none;
+  }
+  
+  .content.active {
+    display: block;
+  }
 
 main.table {
     width: 82vw;
-    height: 90vh;
+    height: vh;
     background-color: #fff5;
-
     backdrop-filter: blur(7px);
     box-shadow: 0 .4rem .8rem #0005;
     border-radius: .8rem;
-
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     overflow: hidden;
 }
 
@@ -36,27 +53,30 @@ main.table {
     height: 10%;
     background-color: rgba(231, 223, 223, 0.267);
     padding: .8rem 1rem;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: 100;
+    position: relative;
+    box-shadow: 0 .1rem .2rem #0005;
+    border-radius: .8rem .8rem 0 0;
 }
 
 .table__header h1 {
     color: rgb(119, 113, 113);
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .table__header .input-group {
-    width: 35%;
+    width: 25%;
     height: 100%;
     background-color: #fff5;
     padding: 0 .8rem;
     border-radius: 2rem;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     transition: .2s;
 }
 
@@ -69,6 +89,10 @@ main.table {
 .table__header .input-group img {
     width: 2.5rem;
     height: 2.5rem;
+    margin-left: .5rem;
+    filter: invert(0.5);
+    transition: .2s;
+
 }
 
 .table__header .input-group input {
@@ -77,6 +101,24 @@ main.table {
     background-color: transparent;
     border: none;
     outline: none;
+}
+
+.pokemon-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.pokemon-item {
+    margin-right: 20px; /* Adjust as needed for spacing between images and names */
+    text-align: center; /* Center the name under the image */
+    font-size: 16px; /* Adjust as needed */
+    line-height: 1.2;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .table__body {
@@ -173,98 +215,6 @@ tbody tr.hide td img {
     transition: .2s ease-in-out .5s;
 }
 
-/* Egg Groups
-We can change this to reflect some other pokemon properties
-but for now we will leave it as it is */
-
-.egg-group {
-    padding: .4rem 0;
-    border-radius: 2rem;
-    text-align: center;
-}
-
-.egg-group.dragon {
-    background-color: #408754;
-    color: #f0f5f2;
-}
-
-.egg-group.monster {
-    background-color: #eb220b;
-    color: #f0f5f2;
-}
-
-.egg-group.water1 {
-    background-color: #0a06f9;
-    color: #f0f5f2;
-}
-
-.egg-group.water2 {
-    background-color: #5fcaf1;
-    color: #f0f5f2;
-}
-
-.egg-group.human-like {
-    background-color: #f8cf77;
-    color: #f0f5f2;
-}
-
-.egg-group.water3 {
-    background-color: #454fad;
-    color: #f0f5f2;
-}
-
-.egg-group.bug {
-    background-color: #4faa5b;
-    color: #f0f5f2;
-}
-
-.egg-group.mineral {
-    background-color: #7a7c7d;
-    color: #f0f5f2;;
-}
-
-.egg-group.flying {
-    background-color: #faf9f6;
-    color: #f0f5f2;
-}
-
-.egg-group.amorphous {
-    background-color: #6fcaea;
-    color: #f0f5f2;
-}
-
-.egg-group.field {
-    background-color: #a77325;
-    color: #f0f5f2;
-}
-
-.egg-group.fairy {
-    background-color: #d893a3;
-    color: #f0f5f2;
-}
-
-.egg-group.ditto {
-    background-color: #db89cb;
-    color: #f0f5f2;
-}
-
-.egg-group.grass {
-    background-color: #0c6337;
-    color: #f0f5f2;
-}
-
-.egg-group.undiscovered {
-    background-color: #060102;
-    color: #f0f5f2;
-}
-
-.egg-group.gender-unknown {
-    background-color: #cfbd38;
-    color: #f0f5f2;
-}
-
-
-
 @media (max-width: 1000px) {
     td:not(:first-of-type) {
         min-width: 12.1rem;
@@ -306,78 +256,43 @@ thead th.active,tbody td.active {
     color: #6c00bd;
 }
 
-.export__file {
-    position: relative;
+.view-button {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(210, 210, 213, 0.4) url(../assets/ViewIcon.png) center / 100% no-repeat;
+  border: none;
+  border-radius: 20%;
+  transition: .2s ease-in-out;
+  margin-right: 5px;
 }
 
-.export__file .export__file-btn {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    background: #fff6 url(../assets/export.png) center / 80% no-repeat;
-    border-radius: 50%;
-    transition: .2s ease-in-out;
+.delete-button {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(213, 210, 210, 0.4) url(../assets/DeleteIcon.png) center / 100% no-repeat;
+  border: none;
+  border-radius: 20%;
+  transition: .2s ease-in-out;
+  margin-right: 5px;
 }
 
-.export__file .export__file-btn:hover { 
-    background-color: #fff;
-    transform: scale(1.15);
-    cursor: pointer;
+.download-button {
+display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(213, 210, 210, 0.4) url(../assets/ExportFileIcon.png) center / 100% no-repeat;
+  border: none;
+  border-radius: 10%;
+  transition: .2s ease-in-out;
+  margin-right: 10px;
 }
 
-.export__file input {
-    display: none;
-}
-
-.export__file .export__file-options {
-    position: absolute;
-    right: 0;
-    
-    width: 12rem;
-    border-radius: .5rem;
-    overflow: hidden;
-    text-align: center;
-
-    opacity: 0;
-    transform: scale(.8);
-    transform-origin: top right;
-    
-    box-shadow: 0 .2rem .5rem #0004;
-    
-    transition: .2s;
-}
-
-.export__file input:checked + .export__file-options {
-    opacity: 1;
-    transform: scale(1);
-    z-index: 100;
-}
-
-.export__file .export__file-options label{
-    display: block;
-    width: 100%;
-    padding: .6rem 0;
-    background-color: #f2f2f2;
-    
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    transition: .2s ease-in-out;
-}
-
-.export__file .export__file-options label:first-of-type{
-    padding: 1rem 0;
-    background-color: #86e49d !important;
-}
-
-.export__file .export__file-options label:hover{
-    transform: scale(1.05);
-    background-color: #fff;
-    cursor: pointer;
-}
-
-.export__file .export__file-options img{
-    width: 2rem;
-    height: auto;
+.view-button:hover,
+.delete-button:hover,
+.download-button:hover {
+  /* Define hover styles */
+  transform: scale(1.25);
+  cursor: pointer;
 }

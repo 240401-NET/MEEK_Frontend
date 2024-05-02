@@ -1,9 +1,10 @@
 import './HomePage.css'
 import {NavLink as Link} from 'react-router-dom'
 import {useState} from 'react'
+import { UserLogin, UserLogout, UserSignUp, setCookie } from '../services/userServices'
 // import { useState, useEffect} from 'react';
 
-export function HomePage() {
+export function HomePageRenderer() {
 
   const [usernameRegistration, setUsernameRegistration] = useState('')
   const [emailRegistration, setEmailRegistration] = useState('')
@@ -16,28 +17,7 @@ export function HomePage() {
     let nameField = document.getElementById("nameField")! as HTMLElement;
     if (signinBtn.classList.contains('selected'))
       {
-        // do some code--check that user validation conditions are entered correct
-        // calls for some form of validation check
-        // signs in user if all credentials entered are correct
-        return fetch(`http://localhost:5177/login?useCookies=true&useSessionCookies=true`, {
-          method: "POST",
-          // credentials: "include",
-          body: JSON.stringify({
-            "username": usernameRegistration,
-            "password": passwordRegistration
-          }),
-            headers: {
-              "Content-type": "application/json"
-            }
-          })
-          .then (response => {
-            if(response.ok) {
-              window.alert("Signup Successful");
-            }
-          })
-          .catch (error =>{
-            throw error;
-          })
+        UserLogin(usernameRegistration, passwordRegistration);
       }
     else{
       nameField?.style.setProperty("max-height", "0");
@@ -56,27 +36,7 @@ export function HomePage() {
     let nameField = document.getElementById("nameField")! as HTMLElement;
     if (signupBtn.classList.contains('selected'))
       {
-        
-        return fetch("http://localhost:5177/register", {
-          method: "POST",
-          body: JSON.stringify({
-            "username": usernameRegistration,
-            "email": emailRegistration,
-            "password": passwordRegistration
-          }),
-            headers: {
-              "Authorization": "bearer my-token",
-              "Content-type": "application/json; charset=UTF-8"
-            }
-          })
-          .then (response => {
-            if(response.ok) {
-              window.alert("Signup Successful");
-            }
-          })
-          .catch (error =>{
-            throw error;
-          })
+          UserSignUp(usernameRegistration, emailRegistration, passwordRegistration)
       }
       else
       {
@@ -89,28 +49,6 @@ export function HomePage() {
       }
 
   }
-
-  const logout = () => {
-    return fetch(`http://localhost:5177/logout`, {
-          method: "POST",
-          // credentials: "include",
-          body: JSON.stringify({
-            "username": usernameRegistration,
-            "password": passwordRegistration
-          }),
-            headers: {
-              "Content-type": "application/json"
-            }
-          })
-          .then (response => {
-            if(response.ok) {
-              window.alert("Logout Successful");
-            }
-          })
-          .catch (error =>{
-            throw error;
-          })
-      }
           
   const UserRegistration = (e : React.ChangeEvent<HTMLInputElement>) => {
     setUsernameRegistration(e.target.value);
@@ -174,7 +112,8 @@ export function HomePage() {
               <div className="btn-field"> 
                 <button type="button" id="signupBtn" onClick={()=>signupClick()} className=''>Sign Up</button>
                 <button type="button" id="signinBtn" className="disable" onClick={()=>signinClick()}>Sign In</button>
-                <button type="button" onClick={() => logout()}>logout</button>
+                <button type="button" onClick={UserLogout}>logout</button>
+                <button type="button" onClick={setCookie}>Set Cookie</button>
               </div>
             </form>
           </div>
