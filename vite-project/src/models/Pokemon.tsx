@@ -1,36 +1,75 @@
 export interface Pokemon {
         // From PokeAPI
-        name: string
-        types: {type : {name: string} } []
-        abilities : {ability : {name: string , url: string} } []
-        moves: {move: {name: string} } []
-        stats: {base_stat: number, effort : number, stat: {name: string} } []
-        sprites: {front_default : string, front_shiny : string }
-        sprite :string | null
-        teraType: string | null
-        move_1: string;
-        move_2: string;
-        move_3: string;
-        move_4: string;
-        // user defined based off interaction with user
-        nature: string | null;
+        name: string;
+        id: number;
+        types: {
+            type : {
+                name: string
+            }; 
+        } [];
+        abilities: {
+            ability: {
+                name: string, 
+                url: string
+            }; 
+        } [];
+        moves: {
+            move: {
+                name: string
+            }; 
+        } [];
+        stats: {
+            base_stat: number;
+            effort: number;
+            stat: { name: string; url: string };
+        }[];
+         
+        sprites: {
+            front_default : string, 
+            front_shiny : string 
+        }
 
-        ivs: {
-            hp: number | null;
-            attack: number | null;
-            // defense: number | null
-            // special_attack: number | null
-            // special_defense: number | null
-            // speed: number | null
-        } | null;
-        evs: {
-            hp: number | null
-            attack: number | null
-            defense: number | null
-            special_attack: number | null
-            special_defense: number| null
-            speed: number | null
-        } | null
-        level: number | null
-        moveSet: string[] | null
+        // user defined based off interaction with user
+}
+
+export interface PokemonTeamMember {
+    
+    pokemonData : Pokemon | null,
+    pkmApiId: number,
+    nickname: string | null,
+    custom_id: string,
+    level: number,
+    chosenAbilityId: number,
+    gender: boolean,
+    isShiny: boolean | null;
+    teraType: string | null;
+    heldItemId: number,
+    pokemonTeamId: number,
+    rosterOrder: number,
+    nature: string | null,
+    moves: Move[],
+    stats: Stat[],
+}
+
+export interface PokemonTeam {
+    id: number,
+    name: string,
+    trainerId: number,
+    pokemonTeamMembers: PokemonTeamMember[]
+}
+
+export interface Stat{
+    id: number,
+    effort: number,
+    individual: number,
+    name: string | null,
+    url: string | null,
+    PkmTmId: number,
+    Total: number,
+}
+
+export interface Move {
+    id: number,
+    name: string | null,
+    url: string | null,
 }

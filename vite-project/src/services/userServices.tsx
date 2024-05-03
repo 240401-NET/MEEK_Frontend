@@ -19,11 +19,12 @@ export const UserLogin = (
             .then (response =>{
                 if(response.ok) {
                     console.log("Response", response);
-                    window.alert("SignIn successful");
+                    // window.alert("SignIn successful");
+                    return response;
                 }
-                
             })
             .catch (error => {
+                // window.alert("Signin unsuccessful. Please try again!")
                 console.log(error);
                 throw error;
             })
@@ -42,7 +43,7 @@ export const UserLogout = () => {
             })
             .then (response =>{
                 if(response.ok) {
-                    console.log("Response", response);
+                    // console.log("Response", response);
                     window.alert("Logout successful");
                 }
             })
@@ -72,23 +73,10 @@ export const UserSignUp = (
           .then (response => {
             if(response.ok) {
               window.alert("Signup Successful");
+              return response;
             }
           })
           .catch (error =>{
             throw error;
           })
     }
-
-export const setCookie = () => {
-    function getCookie(name: string): string | null {
-        const cookieValue = document.cookie
-            .split('; ')
-            .find(row => row.startsWith(name + '='));
-    
-        return cookieValue ? decodeURIComponent(cookieValue.split('=')[1]) : null;
-    }
-    
-    // Usage example
-    const myCookieValue = getCookie(".AspNetCore.Identity.Application");
-    console.log('Cookie value:', myCookieValue)
-}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import { Pokemon } from '../models/Pokemon'
-import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
+// import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
 import { PokemonTeam } from '../models/PokemonTeamsInterface';
 import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector';
 import AbilitiesSelector from '../components/pokemonComponents/AbilitiesSelector';
@@ -10,11 +10,12 @@ import LevelSelector from '../components/pokemonComponents/PokemonLevel';
 import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS';
 import { NavLink as Link } from 'react-router-dom';
 import './PokemonTeamBuilder.css'
+import { usePokemonApiSearch } from '../hooks/PokemonTeamBuilderHooks';
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
-    const [pokemonData , setPokemonData] = useState<Pokemon | null>(null)
-    const [seaerchedPokemon, setSearchedPokemon] = useState<string>('')
+    const {pokemonData, setSearchedPokemon, handleSearch} = usePokemonApiSearch();
+    // const [seaerchedPokemon, setSearchedPokemon] = useState<string>('')
     const [selectedSprite, setSelectedSprite] = useState<string>('')
     const [savedPokemonTeam, setSavedPokemonTeam] = useState<PokemonTeam| null>(()=> {
         const savedTeam = localStorage.getItem('savedPokemonTeam');
@@ -22,7 +23,7 @@ const PokemonTeamBuilder: React.FC = () => {
     })
     const [selectedTeraType, setSelectedTeraType] = useState('');
     const [editMode, setEditMode] = useState<boolean>(false)
-    const [pokemonID, setPokemonID] = useState<string>('')
+    const [pokemonID, setPokemonID] = useState<string>()
     const [ability, setAbility] = useState('')
     const [move1, setMove1] = useState('')
     const [move2, setMove2] = useState('')
@@ -42,19 +43,8 @@ const PokemonTeamBuilder: React.FC = () => {
             }
     }, [])
 
-    const pokemonSearch = async (pokemonName : string) => {
-        try {
-            const responseData = await fetchPokemonDataFromAPI(pokemonName);
-            setPokemonData(responseData);
-            setSelectedSprite(responseData.sprites.front_default);
-        } catch (error) {
-            console.log("Can't find pokemon", error)
-        }
-
-    }
-
     const clearPageData = () => {
-        setPokemonData(null)
+        // setPokemonData(null)
         setSearchedPokemon('')
         setSelectedTeraType('')
         setAbility('')
@@ -165,7 +155,7 @@ const PokemonTeamBuilder: React.FC = () => {
         nature: string, level : number, ivs: Record<string,number>
     }) => {
         setPokemonID(selectedPokemon.id)
-        setPokemonData(selectedPokemon.data)
+        // setPokemonData(selectedPokemon.data)
         setSelectedSprite(selectedPokemon.sprite)
         setSelectedTeraType(selectedPokemon.teraType)
         setAbility(selectedPokemon.ability)
@@ -196,7 +186,7 @@ const PokemonTeamBuilder: React.FC = () => {
             <Link to="/">
                 <button>Logout</button>
             </Link>
-            <form onSubmit={() =>pokemonSearch(seaerchedPokemon)}>
+            <form onSubmit={handleSearch}>
                 <input 
                     type="text"
                     placeholder='Enter Pokemon Name'
@@ -223,21 +213,21 @@ const PokemonTeamBuilder: React.FC = () => {
             )}
             {pokemonData && (
                 <div>
-                    <h2>{pokemonData.name}</h2>
-                    <p>Type(s): {pokemonData.types.map((type) => type.type.name).join(', ')}</p>
+                    <h2>{pokemonData!.name}</h2>
+                    <p>Type(s): {pokemonData!.types.map((type) => type.type.name).join(', ')}</p>
                     <div>
                         <h3>Select a Sprite:</h3>
                         <img 
                             src={selectedSprite || ''}
                             alt="Pokemon Sprite" 
                         />
-                        <button onClick={() => handleSpriteSelect(pokemonData.sprites.front_default)}>Default</button>
-                        <button onClick={() => handleSpriteSelect(pokemonData.sprites.front_shiny)}>Shiny</button>
+                        <button onClick={() => handleSpriteSelect(pokemonData!.sprites.front_default)}>Default</button>
+                        <button onClick={() => handleSpriteSelect(pokemonData!.sprites.front_shiny)}>Shiny</button>
                     </div>
                     
                     <TeraTypeSelector setSelectedTeraType={setSelectedTeraType} selectedTeraType={selectedTeraType}></TeraTypeSelector>
                     <PokemonNatureSelector setCurrentNature={setCurrentNature} currentNature={currentNature}></PokemonNatureSelector>
-                    <AbilitiesSelector abilityUrls={pokemonData.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
+                    <AbilitiesSelector abilityUrls={pokemonData!.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
                     <LevelSelector currentLevel={currentLevel} setCurrentLevel={setCurrentLevel}></LevelSelector>
                     <PokemonIVEVRenderer 
                         hp={currentIVs.hp!}
@@ -254,10 +244,10 @@ const PokemonTeamBuilder: React.FC = () => {
                         onChangeSpeed={(value) => handleIVChange('speed', value!)}
                         >
                         </PokemonIVEVRenderer>
-                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
-                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
-                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>
-                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move4} setSelectedMove={setMove4}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move4} setSelectedMove={setMove4}></MoveSlotSelector>
                 </div>
             )}
         </div>
