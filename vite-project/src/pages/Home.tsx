@@ -1,6 +1,8 @@
+import "./HomePage.css"
 import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import { NavLink as Link } from 'react-router-dom'
+import { UserLogout } from '../services/userServices'
 
 export const Home : React.FC = () =>{
     const {isLoggedIn, logoutUser} = useAuth()
@@ -12,7 +14,7 @@ export const Home : React.FC = () =>{
                 <Link to ="/trainer">
                     <button>View all teams!</button>
                 </Link>
-                <button onClick={logoutUser}>Logout</button>
+                <button onClick={ () => {UserLogout(), logoutUser()}}>Logout</button>
                 </>
 
             ) : ( 

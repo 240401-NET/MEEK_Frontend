@@ -24,6 +24,7 @@ export const UserLogin = (
                 }
             })
             .catch (error => {
+                // window.alert("Signin unsuccessful. Please try again!")
                 console.log(error);
                 throw error;
             })
@@ -79,17 +80,3 @@ export const UserSignUp = (
             throw error;
           })
     }
-
-export const setCookie = () => {
-    function getCookie(name: string): string | null {
-        const cookieValue = document.cookie
-            .split('; ')
-            .find(row => row.startsWith(name + '='));
-    
-        return cookieValue ? decodeURIComponent(cookieValue.split('=')[1]) : null;
-    }
-    
-    // Usage example
-    const myCookieValue = getCookie(".AspNetCore.Identity.Application");
-    console.log('Cookie value:', myCookieValue)
-}

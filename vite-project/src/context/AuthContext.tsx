@@ -1,5 +1,5 @@
 import React , {createContext, useState, useContext, useEffect} from 'react'
-import { UserSignUp, UserLogin , UserLogout} from '../services/userServices';
+import { UserSignUp, UserLogin} from '../services/userServices';
 import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
@@ -27,21 +27,17 @@ export const AuthProvider = ( {children} : Props ) => {
       const user = localStorage.getItem("user");
       const token = localStorage.getItem("token");
         if(user && token) {
-          setUser(JSON.parse(user));
+          setUser(user);
           setToken(token);
         }
         setIsAuthenticated(true)
     }, [])
 
-    const register = async (email: string, username: string, password: string) => {
+    const register = async (username: string, email: string,  password: string) => {
       await UserSignUp(email, username, password)
         .then((res) => {
           if (res){
-            localStorage.setItem("token", res.url + res.statusText);
-            localStorage.setItem("user", username);
-            setToken(res.url + res.statusText);
-            setUser(username!);
-            navigate('/');
+            navigate('/login');
           }
         })
         .catch((error) => console.error(error))
@@ -56,13 +52,14 @@ export const AuthProvider = ( {children} : Props ) => {
             setToken(res.url + res.statusText);
             setUser(username!);
             navigate('/');
+            window.alert("SignIn successful");
           }
         })
         .catch((error) => console.error(error))
       }
 
-    const logoutUser = async () => {
-      await UserLogout
+    const logoutUser = () => {
+      // UserLogout;
       localStorage.removeItem("user");
       localStorage.removeItem("token");
       setUser(null);

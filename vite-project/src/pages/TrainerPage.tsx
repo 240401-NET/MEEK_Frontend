@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './TrainerPage.css';
 import Search from '../assets/search.png';
 import { TrainerPageLogic } from '../models/TrainerPageLogic';
-import { NavLink as Link } from 'react-router-dom';
+import { NavLink as Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { UseEffectOnce } from '../services/UseEffectOnce';
 
 export function TrainerPage() {
-    useEffect(() => {
-        // Call your logic function here
-        TrainerPageLogic();
-    }, []);
+    const {user, token} = useAuth();
+    const navigate = useNavigate();
+    // calls custom use effect function to redirect page and pop up windows alert only once!
+    UseEffectOnce (()=> {
+        if(!user && !token){
+            window.alert("Unauthorized. Please login to view teams");
+            navigate("/");
+        }
+        else {
+            TrainerPageLogic()
+        }
+    })
 
     const downloadText = (teamData: any) => {
         // Extract team data

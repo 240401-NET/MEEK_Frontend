@@ -1,7 +1,7 @@
 import './HomePage.css'
 import {NavLink as Link} from 'react-router-dom'
 import {useState} from 'react'
-import { UserLogin, UserLogout, UserSignUp, setCookie } from '../services/userServices'
+import { UserLogin, UserLogout, UserSignUp,} from '../services/userServices'
 // import { useState, useEffect} from 'react';
 
 export function HomePageRenderer() {
@@ -108,7 +108,6 @@ export function HomePageRenderer() {
                 <button type="button" id="signupBtn" onClick={()=>signupClick()} className=''>Sign Up</button>
                 <button type="button" id="signinBtn" className="disable" onClick={()=>signinClick()}>Sign In</button>
                 <button type="button" onClick={UserLogout}>logout</button>
-                <button type="button" onClick={setCookie}>Set Cookie</button>
               </div>
             </form>
           </div>

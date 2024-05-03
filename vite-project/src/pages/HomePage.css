@@ -94,7 +94,7 @@
    .btn-field{
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
    }
    
    .btn-field button{
@@ -107,6 +107,11 @@
     outline: 0;
     cursor: pointer;
     transition: background 1s;
+   }
+
+   .lost-password {
+    display: flex;
+    justify-content: center;
    }
    
    .input-group{

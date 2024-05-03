@@ -6,7 +6,7 @@ import { SignUp } from './pages/SignUp.tsx';
 import { HomePageRenderer } from './pages/HomePage.tsx';
 // import { TeamBuilder } from './components/TeamBuilder';
 import { TrainerPage } from './pages/TrainerPage.tsx';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import DisplayPokemon from './components/testComponents/DisplayPokemon.tsx';
 import PokemonTeamBuilder from './pages/PokemonTeamBuilder.tsx';
 // import PokemonTeamCreator from './components/pokemonComponents/PokemonTeamCreator.tsx';
@@ -20,8 +20,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />}></Route>
           <Route path='/otherhome' element={<HomePageRenderer />}></Route>
-          <Route path='/login' element={<Login />}></Route>
-          <Route path='/signup' element={<SignUp />}></Route>a
+          <Route path='/login' element={<Login username={''} password={''} />}></Route>
+          <Route path='/signup' element={<SignUp username={''} email={''} password={''} />}></Route>a
           <Route path='/trainer' element={<TrainerPage />}></Route>
           <Route path='/pokemonTeamBuilder' element={<PokemonTeamBuilder/>}></Route>
           {/* <Route path='/show' element = {<PokemonTeamCreator/>}></Route> */}
