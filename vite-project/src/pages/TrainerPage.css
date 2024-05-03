@@ -6,10 +6,10 @@
     font-family: sans-serif;
 }
 
-/* @page {
+@page {
     size: landscape;
     margin: 0; 
-} */
+}
 
 .body {
     min-height: 100vh;
