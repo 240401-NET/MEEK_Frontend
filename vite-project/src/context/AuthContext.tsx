@@ -64,7 +64,7 @@ export const AuthProvider = ( {children} : Props ) => {
       localStorage.removeItem("token");
       setUser(null);
       setToken("");
-      navigate("/login")
+      // navigate("/login")
     }
 
     const isLoggedIn = () => {

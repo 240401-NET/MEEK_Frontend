@@ -4,6 +4,10 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
    }
+
+   body {
+    padding: 0;
+   }
    
    .navButtons{
     background-color: red;

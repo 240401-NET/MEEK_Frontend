@@ -90,7 +90,7 @@ export function TrainerPage() {
     }));
 
     return (
-        <div>
+        <div className='body'>
             <Link to="/">
                 <button>Logout</button>
             </Link>

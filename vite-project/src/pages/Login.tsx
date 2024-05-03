@@ -66,7 +66,7 @@ export const Login : React.FC<LoginFormInterface> = () =>{
                             <br />
                                 
                             <div className='lost-password'>
-                                <p>Don't have an account? <Link to="/signup"><a href="#">Register!</a></Link></p>   
+                                <p>Don't have an account? <Link to="/signup">Register!</Link></p>   
                             </div>
 
                         </div>

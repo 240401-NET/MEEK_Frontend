@@ -72,9 +72,10 @@ export const SignUp : React.FC<SignupFormInterface> = () => {
                             <div className='btn-field'>
                                 <button type='submit' id="signupBtn">Sign Up</button>
                             </div>
+                            <br />
                             
                             <div className='lost-password'>
-                                <p>Already have an account? <Link to="/login"><a href="#">Click Here!</a></Link></p>    
+                                <p>Already have an account? <Link to="/login">Click Here!</Link></p>    
                             </div>
                         </div>
                     </form>
