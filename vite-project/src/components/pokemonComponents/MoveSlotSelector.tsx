@@ -1,5 +1,5 @@
-import React, { useState} from 'react'
-import '../../pages/ItemsAndMovesModel.css'
+import React, { useState} from 'react';
+import '../../pages/ItemsAndMovesModel.css';
 
 interface MoveSlotProps {
     moveNames: string[]

@@ -189,7 +189,7 @@ const PokemonTeamBuilder: React.FC = () => {
             <form onSubmit={handleSearch}>
                 <input 
                     type="text"
-                    placeholder='Enter Pokemon name'
+                    placeholder='Enter Pokemon Name'
                     onChange={(e) => setSearchedPokemon(e.target.value)}
                 />
                 <button type='submit'>Search</button>
@@ -216,7 +216,7 @@ const PokemonTeamBuilder: React.FC = () => {
                     <h2>{pokemonData!.name}</h2>
                     <p>Type(s): {pokemonData!.types.map((type) => type.type.name).join(', ')}</p>
                     <div>
-                        <h3>Select a sprite:</h3>
+                        <h3>Select a Sprite:</h3>
                         <img 
                             src={selectedSprite || ''}
                             alt="Pokemon Sprite" 
