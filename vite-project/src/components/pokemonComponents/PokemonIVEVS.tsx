@@ -1,5 +1,5 @@
 import React from "react";
-import '../../pages/PokemonTeamBuilder.css'
+import '../../pages/PokemonTeamBuilder.css';
 
 
 interface IVProp {

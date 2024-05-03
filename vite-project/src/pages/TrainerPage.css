@@ -17,7 +17,7 @@ body {
     display:flex;
     justify-content: center;
     align-items: center;
-    padding: 0 10px;
+    padding: 0 10%;
     
 } 
    
@@ -267,6 +267,18 @@ thead th.active,tbody td.active {
   margin-right: 5px;
 }
 
+
+.edit-button {
+    display: inline-block;
+    width: 1.5rem;
+    height: 2rem;
+    background: rgba(210, 210, 213, 0.4) url(../assets/EditIcon.png) center / 100% no-repeat;
+    border: none;
+    border-radius: 20%;
+    transition: .2s ease-in-out;
+    margin-right: 5px;
+  }
+
 .delete-button {
   display: inline-block;
   width: 2rem;
@@ -290,6 +302,7 @@ display: inline-block;
 }
 
 .view-button:hover,
+.edit-button:hover,
 .delete-button:hover,
 .download-button:hover {
   /* Define hover styles */

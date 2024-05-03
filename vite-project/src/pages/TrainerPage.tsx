@@ -19,12 +19,15 @@ export function TrainerPage() {
         textContent += `Team ID: ${teamId}\n\n`;
     
         textContent += "Pokemon:\n\n";
-        pokemon.forEach((poke: { name: any; heldItem: any; ability: any; teraType: any; evs: any; nature: any; moveList: any[]; }) => {
+        pokemon.forEach((poke: { name: any; gender: any; heldItem: any; ability: any; shiny : any; teraType: any; evs: any; ivs: any; nature: any; moveList: any[]; }) => {
             textContent += `${poke.name}`;
+            textContent += ` ${poke.gender}`;
             textContent += ` @ ${poke.heldItem}\n`;
             textContent += `Ability: ${poke.ability}\n`;
+            textContent += `Shiny: ${poke.shiny}\n`;
             textContent += `Tera Type: ${poke.teraType}\n`;
             textContent += `EVs: ${poke.evs}\n`;
+            textContent += `IVs: ${poke.ivs}\n`;
             textContent += `${poke.nature} Nature\n`;
             textContent += '-'+`${poke.moveList.join('-')}\n`;
         });
@@ -57,6 +60,10 @@ export function TrainerPage() {
 
     const toggleRow = (teamId: string) => {
         setExpandedRow(prevExpandedRow => (prevExpandedRow === teamId ? null : teamId));
+    };
+
+    const editTeam = (teamId: string) => {
+        console.log(`Editing team with ID ${teamId}`);
     };
 
     const deleteTeam = (teamId: string) => {
@@ -120,6 +127,7 @@ export function TrainerPage() {
                                         </td>
                                         <td>
                                         <button className="view-button" onClick={() => toggleRow(team.teamId)}title="View Team"></button>
+                                        <a href="http://localhost:5173/#/Pokemonteambuilder" title="Edit Team"><button className="edit-button" onClick={() => editTeam(team.teamId)}></button></a>
                                         <button className="delete-button" onClick={() => deleteTeam(team.teamId)}title="Delete Team"></button>
                                         <button className="download-button" onClick={() => downloadText(team)} title="Export Team"></button>
                                         </td>
@@ -131,10 +139,13 @@ export function TrainerPage() {
                                                     <thead>
                                                         <tr>
                                                             <th>Pokemon</th>
+                                                            <th>Gender</th>
                                                             <th>Held Item</th>
                                                             <th>Ability</th>
+                                                            <th>Shiny</th>
                                                             <th>Tera Type</th>
                                                             <th>EVs</th>
+                                                            <th>IVs</th>
                                                             <th>Nature</th>
                                                             <th>Move List</th>
                                                         </tr>
@@ -143,10 +154,13 @@ export function TrainerPage() {
                                                         {team.pokemon.map((pokemon) => (
                                                             <tr key={pokemon.name}>
                                                                 <td><a href={pokemon.name}><img src={pokemon.image} alt={pokemon.name} /></a>{pokemon.name}</td>
+                                                                <td>{pokemon.gender}</td>
                                                                 <td>{pokemon.heldItem}</td>
                                                                 <td>{pokemon.ability}</td>
+                                                                <td>{pokemon.shiny}</td>
                                                                 <td>{pokemon.teraType}</td>
                                                                 <td>{pokemon.evs}</td>
+                                                                <td>{pokemon.ivs}</td>
                                                                 <td>{pokemon.nature}</td>
                                                                 <td>{pokemon.moveList.map(move => <React.Fragment>{move}<br /></React.Fragment>)}</td>
                                                             </tr>
@@ -172,12 +186,12 @@ const teamData = [
         teamId: '1',
         teamName: 'Alpha',
         pokemon: [
-            {name: 'Charizard', image: 'https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/charizard.png', heldItem: 'Iapapa Berry', teraType: 'Fire', ability: 'Blaze', evs: '4 Atk / 252 SpA / 252 Spe', nature: 'Adamant', moveList: ['Fire Blast\n','Fly\n','Iron Tail\n','Dragon Dance\n'] },
-            {name: 'Swampert', image: 'https://img.pokemondb.net/sprites/black-white/normal/swampert.png', heldItem: 'Leftovers', teraType: 'Water', ability: 'Torrent', evs: '252 HP / 4 Atk / 252 SpA', nature: 'Adamant', moveList: ['Earthquake\n','Ice Beam\n','Surf\n','Hydro Pump\n'] },
-            {name: 'Tyranitar', image: 'https://img.pokemondb.net/sprites/diamond-pearl/normal/tyranitar.png', heldItem: 'Charcoal', teraType: 'Rock', ability: 'Sand Stream', evs: '252 HP / 252 Atk / 4 SpA', nature: 'Adamant', moveList: ['Body Slam\n','Hyper Beam\n','Rock Slide\n','Earthquake\n'] },
-            {name: 'Empoleon', image: 'https://img.pokemondb.net/sprites/diamond-pearl/normal/empoleon.png', heldItem: 'Chople Berry', teraType: 'Water', ability: 'Torrent', evs: '4 Atk / 252 SpA / 252 Spe', nature: 'Adamant', moveList: ['Surf\n','Hydro Pump\n','Ice Beam\n','Earthquake\n'] },
-            {name: 'Incineroar', image: 'https://img.pokemondb.net/sprites/sword-shield/normal/incineroar.png', heldItem: 'Life Orb', teraType: 'Fire', ability: 'Blaze', evs: '252 HP / 252 Atk / 4 SpD', nature: 'Adamant', moveList: ['Fire Blast\n','Close Combat\n','Cross Chop\n','Dark Pulse\n'] },
-            {name: 'Mew', image: 'https://img.pokemondb.net/sprites/diamond-pearl/normal/mew.png', heldItem: 'Choice Scarf', teraType: 'Psychic', ability: 'Synchronize', evs: '4 Atk / 252 SpA / 252 Spe', nature: 'Adamant', moveList: ['Fire Blast\n','Fly\n','Blizzard\n','Shadow Ball\n'] },
+            {name: 'Charizard', image: 'https://img.pokemondb.net/sprites/lets-go-pikachu-eevee/normal/charizard.png', gender: true, heldItem: 'Iapapa Berry', teraType: 'Fire', ability: 'Blaze', shiny: true, evs: '4 Atk / 252 SpA / 252 Spe', ivs: 'Atk / SpA / Spe', nature: 'Adamant', moveList: ['Fire Blast\n','Fly\n','Iron Tail\n','Dragon Dance\n'] },
+            {name: 'Swampert', image: 'https://img.pokemondb.net/sprites/black-white/normal/swampert.png', gender: true, heldItem: 'Leftovers', teraType: 'Water', ability: 'Torrent', shiny: true, evs: '252 HP / 4 Atk / 252 SpA', ivs: 'HP / Atk / SpA', nature: 'Adamant', moveList: ['Earthquake\n','Ice Beam\n','Surf\n','Hydro Pump\n'] },
+            {name: 'Tyranitar', image: 'https://img.pokemondb.net/sprites/diamond-pearl/normal/tyranitar.png', gender: true, heldItem: 'Charcoal', teraType: 'Rock', ability: 'Sand Stream',shiny: true, evs: '252 HP / 252 Atk / 4 SpA', ivs: 'HP / Atk / SpA', nature: 'Adamant', moveList: ['Body Slam\n','Hyper Beam\n','Rock Slide\n','Earthquake\n'] },
+            {name: 'Empoleon', image: 'https://img.pokemondb.net/sprites/diamond-pearl/normal/empoleon.png', gender: true, heldItem: 'Chople Berry', teraType: 'Water', ability: 'Torrent', shiny: false, evs: '4 Atk / 252 SpA / 252 Spe', ivs: 'Atk / SpA / Spe', nature: 'Adamant', moveList: ['Surf\n','Hydro Pump\n','Ice Beam\n','Earthquake\n'] },
+            {name: 'Incineroar', image: 'https://img.pokemondb.net/sprites/sword-shield/normal/incineroar.png', gender: true, heldItem: 'Life Orb', teraType: 'Fire', ability: 'Blaze', evs: '252 HP / 252 Atk / 4 SpD', ivs: 'HP / Atk / SpD', nature: 'Adamant', moveList: ['Fire Blast\n','Close Combat\n','Cross Chop\n','Dark Pulse\n'] },
+            {name: 'Mew', image: 'https://img.pokemondb.net/sprites/diamond-pearl/normal/mew.png', gender: true, heldItem: 'Choice Scarf', teraType: 'Psychic', ability: 'Synchronize', evs: '4 Atk / 252 SpA / 252 Spe', ivs: 'Atk / SpA / Spe', nature: 'Adamant', moveList: ['Fire Blast\n','Fly\n','Blizzard\n','Shadow Ball\n'] },
         ]
     },
     {
@@ -224,3 +238,4 @@ const teamData = [
 ];
 
 export default TrainerPage;
+
