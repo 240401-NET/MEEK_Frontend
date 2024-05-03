@@ -19,9 +19,9 @@ export const UserLogin = (
             .then (response =>{
                 if(response.ok) {
                     console.log("Response", response);
-                    window.alert("SignIn successful");
+                    // window.alert("SignIn successful");
+                    return response;
                 }
-                
             })
             .catch (error => {
                 console.log(error);
@@ -42,7 +42,7 @@ export const UserLogout = () => {
             })
             .then (response =>{
                 if(response.ok) {
-                    console.log("Response", response);
+                    // console.log("Response", response);
                     window.alert("Logout successful");
                 }
             })
@@ -72,6 +72,7 @@ export const UserSignUp = (
           .then (response => {
             if(response.ok) {
               window.alert("Signup Successful");
+              return response;
             }
           })
           .catch (error =>{
