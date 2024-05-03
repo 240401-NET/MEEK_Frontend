@@ -25,7 +25,7 @@ export const Login : React.FC<LoginFormInterface> = () =>{
         <>
             <div className='container'>
                 <div className='form-box'>
-                    <h1 id="title">Sign In</h1>
+                    <h1 id="title">Login</h1>
                     <form onSubmit={(e) => handleLogin(e)}>
                         <div className='input-group'>
 

@@ -137,7 +137,7 @@ export function TrainerPage() {
                                         </td>
                                         <td>
                                         <button className="view-button" onClick={() => toggleRow(team.teamId)}title="View Team"></button>
-                                        <a href="http://localhost:5173/#/Pokemonteambuilder" title="Edit Team"><button className="edit-button" onClick={() => editTeam(team.teamId)}></button></a>
+                                        <Link to='/pokemonTeamBuilder'><button title="Edit Team" className="edit-button" onClick={() => editTeam(team.teamId)}></button></Link>
                                         <button className="delete-button" onClick={() => deleteTeam(team.teamId)}title="Delete Team"></button>
                                         <button className="download-button" onClick={() => downloadText(team)} title="Export Team"></button>
                                         </td>
