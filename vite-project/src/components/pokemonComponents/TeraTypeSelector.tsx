@@ -1,5 +1,5 @@
-import React from 'react'
-import '../../pages/PokemonTeamBuilder.css'
+import React from 'react';
+import '../../pages/PokemonTeamBuilder.css';
 
 interface TeraTypeProp {
     setSelectedTeraType: (teratype :string) => void;
@@ -27,7 +27,8 @@ const TeraTypeSelector : React.FC<TeraTypeProp> = ({setSelectedTeraType, selecte
         "Psychic",
         "Rock",
         "Steel",
-        "Water"
+        "Water",
+        "Unknown"
     ]
 
     const handleTeraTypeSelection = (e : React.ChangeEvent<HTMLSelectElement>) => {

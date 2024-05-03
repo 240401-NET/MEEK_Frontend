@@ -1,5 +1,6 @@
-import React, {useContext, useEffect, useState, createContext} from 'react'
+import React, {useContext, useEffect, useState, createContext} from 'react';
 import { Pokemon } from '../../models/Pokemon';
+import './PokemonTeamBuilder.css';
 
 
 interface PokemonContextType {

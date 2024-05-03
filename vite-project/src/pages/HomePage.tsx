@@ -107,7 +107,7 @@ export function HomePageRenderer() {
               <div className="btn-field"> 
                 <button type="button" id="signupBtn" onClick={()=>signupClick()} className=''>Sign Up</button>
                 <button type="button" id="signinBtn" className="disable" onClick={()=>signinClick()}>Sign In</button>
-                <button type="button" onClick={UserLogout}>logout</button>
+                <button type="button" onClick={UserLogout}>Logout</button>
                 <button type="button" onClick={setCookie}>Set Cookie</button>
               </div>
             </form>
