@@ -64,7 +64,7 @@ const PokemonTeamBuilder: React.FC = () => {
         setSelectedSprite(spriteUrl);
     }
 
+******************************************************************************************************************************************
 
-
-- then paste this into in the form section where it says on submit:
+-then paste this into in the form section where it says on submit:
 handleSearch
