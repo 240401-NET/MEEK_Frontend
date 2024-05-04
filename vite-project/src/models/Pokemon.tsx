@@ -73,3 +73,8 @@ export interface Move {
     name: string | null,
     url: string | null,
 }
+
+export interface Sprite {
+    front_shiny: string,
+    front_default: string, 
+}

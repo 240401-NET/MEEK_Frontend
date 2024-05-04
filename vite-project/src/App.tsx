@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PokemonTeamBuilder from './pages/PokemonTeamBuilder.tsx';
 // import PokemonTeamCreator from './components/pokemonComponents/PokemonTeamCreator.tsx';
 import { AuthProvider } from './context/AuthContext.tsx';
+import { TeamBuilder } from './pages/TeamBuilder.tsx';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path='/signup' element={<SignUp username={''} email={''} password={''} />}></Route>a
           <Route path='/trainer' element={<TrainerPage />}></Route>
           <Route path='/pokemonTeamBuilder' element={<PokemonTeamBuilder/>}></Route>
+          <Route path='/teambuilder' element={<TeamBuilder/>}></Route>
           {/* <Route path='/show' element = {<PokemonTeamCreator/>}></Route> */}
         </Routes>
       </AuthProvider>
