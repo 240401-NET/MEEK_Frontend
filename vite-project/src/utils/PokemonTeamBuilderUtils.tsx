@@ -6,7 +6,7 @@ export const updatePokemonTeam = (options : UpdatePokemonInterface) =>{
     savedPokemonTeam,
     editMode,
     setEditMode,
-    setPokemonTeam,
+    setSavedPokemonTeam,
     teamId,
     teamName,
     trainerId,
@@ -54,7 +54,7 @@ export const updatePokemonTeam = (options : UpdatePokemonInterface) =>{
                     ...savedPokemonTeam,
                     pokemonTeamMembers: updatedPokemon,
                 }
-                setPokemonTeam(updatedTeam);
+                setSavedPokemonTeam(updatedTeam);
                 localStorage.setItem(`${savedPokemonTeam.name}`, JSON.stringify(updatedTeam))
             }
         } else {
@@ -85,7 +85,7 @@ export const updatePokemonTeam = (options : UpdatePokemonInterface) =>{
                 trainerId: trainerId,
                 pokemonTeamMembers: [newPokemon]
             } 
-            setPokemonTeam(updatedTeam);
+            setSavedPokemonTeam(updatedTeam);
             localStorage.setItem('savedPokemonTeam', JSON.stringify(updatedTeam));
             setEditMode(false);
     }

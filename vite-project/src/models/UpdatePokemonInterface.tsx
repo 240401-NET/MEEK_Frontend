@@ -4,7 +4,7 @@ export interface UpdatePokemonInterface {
     savedPokemonTeam: PokemonTeam,
     editMode: boolean,
     setEditMode: React.Dispatch<React.SetStateAction<boolean>>,
-    setPokemonTeam: React.Dispatch<React.SetStateAction<PokemonTeam>>,
+    setSavedPokemonTeam: React.Dispatch<React.SetStateAction<PokemonTeam>>,
     teamId: number,
     teamName: string, 
     trainerId: number,

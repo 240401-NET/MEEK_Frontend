@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import { Pokemon } from '../models/Pokemon'
-// import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
+import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
 import { PokemonTeam } from '../models/PokemonTeamsInterface';
 import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector';
 import AbilitiesSelector from '../components/pokemonComponents/AbilitiesSelector';
@@ -10,12 +10,11 @@ import LevelSelector from '../components/pokemonComponents/PokemonLevel';
 import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS';
 import { NavLink as Link } from 'react-router-dom';
 import './PokemonTeamBuilder.css'
-import { usePokemonApiSearch } from '../hooks/PokemonTeamBuilderHooks';
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
-    const {pokemonData, setSearchedPokemon, handleSearch} = usePokemonApiSearch();
-    // const [seaerchedPokemon, setSearchedPokemon] = useState<string>('')
+    const [pokemonData , setPokemonData] = useState<Pokemon | null>(null)
+    const [seaerchedPokemon, setSearchedPokemon] = useState<string>('')
     const [selectedSprite, setSelectedSprite] = useState<string>('')
     const [savedPokemonTeam, setSavedPokemonTeam] = useState<PokemonTeam| null>(()=> {
         const savedTeam = localStorage.getItem('savedPokemonTeam');
@@ -23,7 +22,7 @@ const PokemonTeamBuilder: React.FC = () => {
     })
     const [selectedTeraType, setSelectedTeraType] = useState('');
     const [editMode, setEditMode] = useState<boolean>(false)
-    const [pokemonID, setPokemonID] = useState<string>()
+    const [pokemonID, setPokemonID] = useState<string>('')
     const [ability, setAbility] = useState('')
     const [move1, setMove1] = useState('')
     const [move2, setMove2] = useState('')
@@ -43,8 +42,27 @@ const PokemonTeamBuilder: React.FC = () => {
             }
     }, [])
 
+    const pokemonSearch = async (pokemonName : string) => {
+        try {
+            const responseData = await fetchPokemonDataFromAPI(pokemonName);
+            setPokemonData(responseData);
+            setSelectedSprite(responseData.sprites.front_default);
+        } catch (error) {
+            console.log("Can't find pokemon", error)
+        }
+
+    }
+    const handleSearch = (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault(); // Prevent default form submission or button click behavior
+        pokemonSearch(seaerchedPokemon);   
+    };
+
+    const handleSpriteSelect = (spriteUrl :string) => {
+        setSelectedSprite(spriteUrl);
+    }
+
     const clearPageData = () => {
-        // setPokemonData(null)
+        setPokemonData(null)
         setSearchedPokemon('')
         setSelectedTeraType('')
         setAbility('')
@@ -65,10 +83,6 @@ const PokemonTeamBuilder: React.FC = () => {
                 // Add other IVs as needed
               });
 
-    }
-    
-    const handleSpriteSelect = (spriteUrl :string) => {
-        setSelectedSprite(spriteUrl)
     }
 
     const handleSavePokemon = () => {
@@ -155,7 +169,7 @@ const PokemonTeamBuilder: React.FC = () => {
         nature: string, level : number, ivs: Record<string,number>
     }) => {
         setPokemonID(selectedPokemon.id)
-        // setPokemonData(selectedPokemon.data)
+        setPokemonData(selectedPokemon.data)
         setSelectedSprite(selectedPokemon.sprite)
         setSelectedTeraType(selectedPokemon.teraType)
         setAbility(selectedPokemon.ability)
