@@ -7,7 +7,7 @@ import { useSprite } from "../context/Spritecontext";
 export const TeamBuilder : React.FC = () => {
     const {fetchPokemonApiData, pokemonData} = usePokemonData();
     const [searchedPokemon, setSearchedPokemon] = useState("")
-    const {sprites, shiny, sprite, handleSprite, handleShiny} = useSprite();
+    const {sprite, handleSprite, handleShiny} = useSprite();
 
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -15,9 +15,9 @@ export const TeamBuilder : React.FC = () => {
         fetchPokemonApiData(searchedPokemon);
     }
     
-    const handleSprite = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        e.preventDefault();
-        setSprite(e.target.value)
+    const handleSpriteSelection = (name: string) => {
+        handleSprite(name);
+        handleShiny();
     }
 
     return (
@@ -37,6 +37,13 @@ export const TeamBuilder : React.FC = () => {
                 <div>
                     <p>{pokemonData.name}</p>
                     <p>{pokemonData.id}</p>
+                    <h3>Select a Sprite:</h3>
+                        <img 
+                            src={sprite || ''}
+                            alt="Pokemon Sprite" 
+                        />
+                    <button onClick={() => handleSpriteSelection(pokemonData!.sprites.front_default!)}>Default</button>
+                    <button onClick={() => handleSpriteSelection(pokemonData!.sprites.front_shiny)}>Shiny</button>
                 </div>
 
             )}

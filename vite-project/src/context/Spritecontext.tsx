@@ -32,6 +32,7 @@ export const SpritesProvider :  React.FC<Props> = ({children}) => {
     useEffect (() => {
         if (pokemonData) {
             setSprites(pokemonData.sprites);
+            setSprite(pokemonData.sprites.front_default)
             setShiny(false);
         }
     }, [pokemonData])
@@ -41,7 +42,7 @@ export const SpritesProvider :  React.FC<Props> = ({children}) => {
     }
     
     const handleShiny = () => {
-        if(pokemonData?.sprites.front_shiny) {
+        if(sprite === pokemonData?.sprites.front_shiny) {
             setShiny(true);
         }
         else {
