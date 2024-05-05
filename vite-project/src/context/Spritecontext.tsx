@@ -30,7 +30,9 @@ export const SpritesProvider :  React.FC<Props> = ({children}) => {
     const [shiny, setShiny] = useState<boolean>(false);
 
     useEffect (() => {
-        loadSprite (); 
+        if(pokemonData) {
+            loadSprite (); 
+        }
     }, [pokemonData])
 
     const loadSprite = () => {

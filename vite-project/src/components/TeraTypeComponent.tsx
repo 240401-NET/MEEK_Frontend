@@ -10,7 +10,7 @@ const TeraTypeComponent: React.FC = () => {
             <label htmlFor="teraType">
                 <p>Teratype</p>
                 <select id="teraType" onChange={(e) => handleTeraTypeSelection(e.target.value)} value={teraType}>
-                    <option value=""></option>
+                    <option value=''></option>
                         {teratypes.map(tera => (
                             <option value={tera} key={tera}>
                                 {tera}

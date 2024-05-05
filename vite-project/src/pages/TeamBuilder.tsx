@@ -1,16 +1,17 @@
 import React, { useState, } from "react";
 import { usePokemonData } from "../context/PokemonDataContext";
 import { NavLink as Link } from "react-router-dom";
-import { useSprite } from "../context/Spritecontext";
+// import { useSprite } from "../context/Spritecontext";
 import AbilitiesComponent from "../components/AbilityComponent";
 import TeraTypeComponent from "../components/TeraTypeComponent";
+import SpriteComponent from "../components/SpriteComponent";
 // import { useAbility } from "../context/AbilitiesContext";
 // import AbilitiesSelector from "../components/pokemonComponents/AbilitiesSelector";
 
 
 export const TeamBuilder : React.FC = () => {
     const {fetchPokemonApiData, pokemonData} = usePokemonData();
-    const {sprite, handleSprite, handleShiny} = useSprite();
+    // const {sprite, handleSprite, handleShiny} = useSprite();
     // const {selectedAbility, selectedAbilityId} = useAbility();
     const [searchedPokemon, setSearchedPokemon] = useState("")
 
@@ -19,10 +20,10 @@ export const TeamBuilder : React.FC = () => {
         fetchPokemonApiData(searchedPokemon);
     }
     
-    const handleSpriteSelection = (name: string) => {
-        handleSprite(name);
-        handleShiny();
-    }
+    // const handleSpriteSelection = (name: string) => {
+    //     handleSprite(name);
+    //     handleShiny();
+    // }
 
 
     return (
@@ -42,13 +43,7 @@ export const TeamBuilder : React.FC = () => {
                 <div>
                     <p>{pokemonData.name}</p>
                     <p>{pokemonData.id}</p>
-                    <h3>Select a Sprite:</h3>
-                        <img 
-                            src={sprite || ''}
-                            alt="Pokemon Sprite" 
-                        />
-                    <button onClick={() => handleSpriteSelection(pokemonData!.sprites.front_default!)}>Default</button>
-                    <button onClick={() => handleSpriteSelection(pokemonData!.sprites.front_shiny)}>Shiny</button>
+                    <SpriteComponent></SpriteComponent>
                     <AbilitiesComponent></AbilitiesComponent>
                     <TeraTypeComponent></TeraTypeComponent>
                 </div>

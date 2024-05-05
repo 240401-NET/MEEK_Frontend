@@ -24,7 +24,7 @@ export const AbilityContext = createContext<AbilityContextType>({
 
 });
 
-export const usePokemonDataContext = () => {
+export const useAbilityContext = () => {
     const _context = useContext(AbilityContext);
     if (!_context) {
         throw new Error("usePokemonDataContext must be used within a pokemon provider");
