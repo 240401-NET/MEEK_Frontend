@@ -78,3 +78,19 @@ export interface Sprite {
     front_shiny: string,
     front_default: string, 
 }
+
+export interface Ability {
+    name: string,
+    url: string
+}
+
+export interface AbilityText {
+    name: string,
+    flavor_Text: string,
+}
+
+export interface AbilityAndId {
+    name: string,
+    id: number,
+    flavor_Text: string,
+}

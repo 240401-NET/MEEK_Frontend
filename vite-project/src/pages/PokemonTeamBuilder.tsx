@@ -257,7 +257,7 @@ const PokemonTeamBuilder: React.FC = () => {
                         onChangeSpecialDefense={(value) => handleIVChange('special_defense', value!)}
                         onChangeSpeed={(value) => handleIVChange('speed', value!)}
                         >
-                        </PokemonIVEVRenderer>
+                    </PokemonIVEVRenderer>
                     <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>
