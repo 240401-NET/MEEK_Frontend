@@ -6,6 +6,7 @@ import AbilitiesComponent from "../components/AbilityComponent";
 import TeraTypeComponent from "../components/TeraTypeComponent";
 import SpriteComponent from "../components/SpriteComponent";
 import NatureComponent from "../components/NatureComponent";
+import LevelComponent from "../components/LevelComponent";
 // import { useAbility } from "../context/AbilitiesContext";
 // import AbilitiesSelector from "../components/pokemonComponents/AbilitiesSelector";
 
@@ -48,6 +49,7 @@ export const TeamBuilder : React.FC = () => {
                     <AbilitiesComponent></AbilitiesComponent>
                     <TeraTypeComponent></TeraTypeComponent>
                     <NatureComponent></NatureComponent>
+                    <LevelComponent></LevelComponent>
                 </div>
 
             )}

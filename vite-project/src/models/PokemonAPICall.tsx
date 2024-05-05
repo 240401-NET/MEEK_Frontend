@@ -6,9 +6,7 @@ export const fetchPokemonDataFromAPI  = (pokemonName: string) => {
             if (!response) {
                 throw new Error ('Failed to retrieve pokemon data');
             }
-            console.log(response)
             return response.json()
-
         })
         .catch(error => {
                 console.error(error);

@@ -4,6 +4,7 @@ import { SpritesProvider } from "./Spritecontext";
 import { AbilityProvider } from "./AbilitiesContext";
 import { TeraTypeProvider } from "./TeraTypeContext";
 import { NatureProvider } from "./NatureContext";
+import { LevelProvider } from "./LevelContext";
 
 interface Props {
     children: React.ReactNode,
@@ -17,7 +18,9 @@ export const PokemonProvider : React.FC<Props> = ({children}) => {
         <AbilityProvider>
         <TeraTypeProvider>
         <NatureProvider>
-            {children}
+        <LevelProvider>
+        {children}
+        </LevelProvider>
         </NatureProvider>
         </TeraTypeProvider>
         </AbilityProvider>
