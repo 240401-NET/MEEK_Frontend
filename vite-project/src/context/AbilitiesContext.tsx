@@ -37,7 +37,7 @@ export const AbilityProvider : React.FC<Props> = ( {children} ) => {
     const [abilitiesArray, setAbilitiesArray] = useState<Ability[]>([]);
     const [abilitiesURLArray, setAbilitiesURLArray] = useState<string[]>([]);
     const [abilitiesIdArray, setAbilitiesIdArray] = useState<number[]>([]);
-    const [abilities, setAbilities] = useState<Array<AbilityText>>([]);
+    const [abilities, setAbilities] = useState<AbilityText[]>([]);
     const [abilitiesAndIdArray, setAbilitiesAndIdArray] = useState<AbilityAndId[]>([])
     const [selectedAbilityId, setSelectedAbilityId] = useState<number>(0)
     const [selectedAbility, setSelectedAbility] = useState<string>("");
@@ -79,7 +79,7 @@ export const AbilityProvider : React.FC<Props> = ( {children} ) => {
                 setAbilities(abilitiesData);
             }
     
-            const abilityIdArray: number[] = passedInAbilitiesArray.map((ability) => {
+            const abilityIdArray: number[] = abilitiesArray.map((ability) => {
               const urlParts = ability.url.split('/');
               const idString = urlParts[urlParts.length - 2];
               return parseInt(idString);
@@ -88,10 +88,10 @@ export const AbilityProvider : React.FC<Props> = ( {children} ) => {
                 setAbilitiesIdArray(abilityIdArray);
             }
 
-            const combinedArray = passedInAbilitiesArray.map((ability, index) => ({
+            const combinedArray = abilities.map((ability, index) => ({
               name: ability.name,
-              id: abilityIdArray[index],
-              flavor_Text: abilitiesData[index].flavor_Text
+              flavor_Text: ability.flavor_Text,
+              id: abilityIdArray[index]
             }));
             if (JSON.stringify(combinedArray) !== JSON.stringify(abilitiesAndIdArray)) {
                 setAbilitiesAndIdArray(combinedArray);

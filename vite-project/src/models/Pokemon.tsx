@@ -86,7 +86,7 @@ export interface Ability {
 
 export interface AbilityText {
     name: string,
-    flavor_Text: string,
+    flavor_Text: string
 }
 
 export interface AbilityAndId {

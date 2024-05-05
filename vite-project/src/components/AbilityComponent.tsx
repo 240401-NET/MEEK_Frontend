@@ -1,6 +1,6 @@
 import React from 'react';
-import '../../pages/PokemonTeamBuilder.css';
-import { useAbility } from '../../context/AbilitiesContext';
+import '../pages/PokemonTeamBuilder.css'
+import { useAbility } from '../context/AbilitiesContext';
 
 const AbilitiesComponent : React.FC = () => {
 

@@ -2,13 +2,15 @@ import React, { useState, } from "react";
 import { usePokemonData } from "../context/PokemonDataContext";
 import { NavLink as Link } from "react-router-dom";
 import { useSprite } from "../context/Spritecontext";
-import AbilitiesComponent from "../components/pokemonComponents/AbilityComponent";
+import AbilitiesComponent from "../components/AbilityComponent";
+// import { useAbility } from "../context/AbilitiesContext";
 // import AbilitiesSelector from "../components/pokemonComponents/AbilitiesSelector";
 
 
 export const TeamBuilder : React.FC = () => {
     const {fetchPokemonApiData, pokemonData} = usePokemonData();
     const {sprite, handleSprite, handleShiny} = useSprite();
+    // const {selectedAbility, selectedAbilityId} = useAbility();
     const [searchedPokemon, setSearchedPokemon] = useState("")
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,4 +54,6 @@ export const TeamBuilder : React.FC = () => {
             )}
         </>
     )
+
+    
 }
