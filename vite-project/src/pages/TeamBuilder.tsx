@@ -5,6 +5,7 @@ import { NavLink as Link } from "react-router-dom";
 import AbilitiesComponent from "../components/AbilityComponent";
 import TeraTypeComponent from "../components/TeraTypeComponent";
 import SpriteComponent from "../components/SpriteComponent";
+import NatureComponent from "../components/NatureComponent";
 // import { useAbility } from "../context/AbilitiesContext";
 // import AbilitiesSelector from "../components/pokemonComponents/AbilitiesSelector";
 
@@ -46,6 +47,7 @@ export const TeamBuilder : React.FC = () => {
                     <SpriteComponent></SpriteComponent>
                     <AbilitiesComponent></AbilitiesComponent>
                     <TeraTypeComponent></TeraTypeComponent>
+                    <NatureComponent></NatureComponent>
                 </div>
 
             )}

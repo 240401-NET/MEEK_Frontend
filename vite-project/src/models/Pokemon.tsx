@@ -94,3 +94,9 @@ export interface AbilityAndId {
     id: number,
     flavor_Text: string,
 }
+
+export interface Nature {
+    name: string;
+    increasedStat: string;
+    decreasedStat: string;
+}

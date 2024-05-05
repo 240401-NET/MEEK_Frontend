@@ -10,7 +10,7 @@ interface Nature {
     name: string;
     increasedStat: string;
     decreasedStat: string;
-  }
+}
 
   const natureData : Nature[] = [
     { name: 'Adamant', increasedStat: 'attack', decreasedStat: 'special-attack' },
