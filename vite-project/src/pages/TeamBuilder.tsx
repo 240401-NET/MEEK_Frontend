@@ -8,6 +8,7 @@ import SpriteComponent from "../components/SpriteComponent";
 import NatureComponent from "../components/NatureComponent";
 import LevelComponent from "../components/LevelComponent";
 import StatComponent from "../components/StatComponent";
+import StatRenderingComponent from "../components/StatRenderingComponent";
 // import { Stattest } from "../models/Pokemon";
 // import { useAbility } from "../context/AbilitiesContext";
 // import AbilitiesSelector from "../components/pokemonComponents/AbilitiesSelector";
@@ -45,6 +46,7 @@ export const TeamBuilder : React.FC = () => {
                     <NatureComponent></NatureComponent>
                     <LevelComponent></LevelComponent>
                     <StatComponent></StatComponent>
+                    <StatRenderingComponent></StatRenderingComponent>
                 </div>
 
             )}

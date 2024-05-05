@@ -3,8 +3,6 @@ import '../pages/PokemonTeamBuilder.css'
 import { useStat } from "../context/StatContext";
 
 
-
-
 const StatComponent : React.FC = () => {
 
     const {currentIVs, currentEVs, handleIVStatsArrary, handleEVStatsArrary} = useStat();

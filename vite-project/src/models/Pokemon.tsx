@@ -74,6 +74,7 @@ export interface Stattest{
     individual: number,
     name: string | null,
     url: string | null,
+    base_stat: number
 }
 
 export interface Stats {
@@ -95,6 +96,15 @@ export interface IVStats{
 }
 
 export interface EVStats{
+    'hp': number,
+    'attack': number,
+    'defense': number, 
+    'special-attack': number,
+    'special-defense': number,
+    'speed': number,
+}
+
+export interface AdjustedStatTotals {
     'hp': number,
     'attack': number,
     'defense': number, 

@@ -63,7 +63,6 @@ export const StatProvider : React.FC<Props> = ({children}) => {
 
     useEffect(() => {
         SetsArray();
-        console.log(statsArray)
     }, [pokemonData, APIStatsArray, statsArray, currentIVs, currentEVs])
 
     const SetsArray = () => {
@@ -82,7 +81,8 @@ export const StatProvider : React.FC<Props> = ({children}) => {
                     effort: evValue,
                     individual: ivValue,
                     name: stat.stat.name,
-                    url: stat.stat.url
+                    url: stat.stat.url,
+                    base_stat: stat.base_stat
                     }
             })
             if (JSON.stringify(combinedStatsArray) !== JSON.stringify(statsArray)){
@@ -96,10 +96,7 @@ export const StatProvider : React.FC<Props> = ({children}) => {
 
     }
     const handleEVStatsArrary = (stat: string, value: number ) =>{
-        const previousIdData = currentIVs
-        if (JSON.stringify(previousIdData) !== JSON.stringify(currentEVs)){
             setCurrentEVs((prevIVs) => ({...prevIVs, [stat] : value}))
-        }
     }
 
     return (
