@@ -3,6 +3,7 @@ import { usePokemonData } from "../context/PokemonDataContext";
 import { NavLink as Link } from "react-router-dom";
 import { useSprite } from "../context/Spritecontext";
 import AbilitiesComponent from "../components/AbilityComponent";
+import TeraTypeComponent from "../components/TeraTypeComponent";
 // import { useAbility } from "../context/AbilitiesContext";
 // import AbilitiesSelector from "../components/pokemonComponents/AbilitiesSelector";
 
@@ -49,6 +50,7 @@ export const TeamBuilder : React.FC = () => {
                     <button onClick={() => handleSpriteSelection(pokemonData!.sprites.front_default!)}>Default</button>
                     <button onClick={() => handleSpriteSelection(pokemonData!.sprites.front_shiny)}>Shiny</button>
                     <AbilitiesComponent></AbilitiesComponent>
+                    <TeraTypeComponent></TeraTypeComponent>
                 </div>
 
             )}
