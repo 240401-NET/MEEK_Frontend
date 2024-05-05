@@ -10,6 +10,7 @@ import LevelSelector from '../components/pokemonComponents/PokemonLevel';
 import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS';
 import { NavLink as Link } from 'react-router-dom';
 import './PokemonTeamBuilder.css'
+import { IVStats } from '../models/Pokemon';
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {

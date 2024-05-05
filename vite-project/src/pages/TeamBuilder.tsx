@@ -1,4 +1,4 @@
-import React, { useState, } from "react";
+import React, { useState} from "react";
 import { usePokemonData } from "../context/PokemonDataContext";
 import { NavLink as Link } from "react-router-dom";
 // import { useSprite } from "../context/Spritecontext";
@@ -7,26 +7,20 @@ import TeraTypeComponent from "../components/TeraTypeComponent";
 import SpriteComponent from "../components/SpriteComponent";
 import NatureComponent from "../components/NatureComponent";
 import LevelComponent from "../components/LevelComponent";
+import StatComponent from "../components/StatComponent";
+// import { Stattest } from "../models/Pokemon";
 // import { useAbility } from "../context/AbilitiesContext";
 // import AbilitiesSelector from "../components/pokemonComponents/AbilitiesSelector";
 
 
 export const TeamBuilder : React.FC = () => {
     const {fetchPokemonApiData, pokemonData} = usePokemonData();
-    // const {sprite, handleSprite, handleShiny} = useSprite();
-    // const {selectedAbility, selectedAbilityId} = useAbility();
-    const [searchedPokemon, setSearchedPokemon] = useState("")
+    const [searchedPokemon, setSearchedPokemon] = useState("");
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         fetchPokemonApiData(searchedPokemon);
     }
-    
-    // const handleSpriteSelection = (name: string) => {
-    //     handleSprite(name);
-    //     handleShiny();
-    // }
-
 
     return (
         <>
@@ -50,6 +44,7 @@ export const TeamBuilder : React.FC = () => {
                     <TeraTypeComponent></TeraTypeComponent>
                     <NatureComponent></NatureComponent>
                     <LevelComponent></LevelComponent>
+                    <StatComponent></StatComponent>
                 </div>
 
             )}

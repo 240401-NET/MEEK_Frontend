@@ -68,6 +68,42 @@ export interface Stat{
     Total: number,
 }
 
+export interface Stattest{
+    id: number, 
+    effort: number,
+    individual: number,
+    name: string | null,
+    url: string | null,
+}
+
+export interface Stats {
+    base_stat: number;
+    effort: number;
+    stat: { 
+        name: string, 
+        url: string 
+    }
+}
+
+export interface IVStats{
+    'hp': number,
+    'attack': number,
+    'defense': number,
+    'special-attack': number,
+    'special-defense': number,
+    'speed': number,
+}
+
+export interface EVStats{
+    'hp': number,
+    'attack': number,
+    'defense': number, 
+    'special-attack': number,
+    'special-defense': number,
+    'speed': number,
+}
+
+
 export interface Move {
     id: number,
     name: string | null,
