@@ -12,28 +12,28 @@ import StatRenderingComponent from "../components/StatRenderingComponent";
 import MoveComponent from "../components/MoveComponent";
 import GenderComponent from "../components/GenderComponent";
 import NicknameComponent from "../components/NicknameComponent";
+import SaveComponent from "../components/SaveComponent";
+import { PokemonTeamMember } from "../models/Pokemon";
+import { useSavePokemon } from "../context/SavePokemonContext";
+import LoadComponent from "../components/LoadComponent";
 // import { Stattest } from "../models/Pokemon";
 // import { useAbility } from "../context/AbilitiesContext";
 // import AbilitiesSelector from "../components/pokemonComponents/AbilitiesSelector";
 
 
 export const TeamBuilder : React.FC = () => {
-    const {fetchPokemonApiData, pokemonData, handleSetPokemonData} = usePokemonData();
+    const {fetchPokemonApiData, pokemonData} = usePokemonData();
+    const {savedPokemonTeam} = useSavePokemon();
     const [searchedPokemon, setSearchedPokemon] = useState("");
 
     useEffect(() => {
-        if(true)
-            handleSetPokemonData(pokemonData)
-    }, [])
-
+        if(pokemonData === null) {
+            setSearchedPokemon('')
+        }
+    }, [pokemonData]) 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         fetchPokemonApiData(searchedPokemon);
-    }
-
-    const clearPageData = () => {
-        handleSetPokemonData(null);
-        setSearchedPokemon('');
     }
 
     return (
@@ -50,7 +50,8 @@ export const TeamBuilder : React.FC = () => {
                 />
                 <button type='submit'>Search</button>
             </form>
-            <button type="submit" onClick={() => clearPageData()}>Clear</button>
+            <SaveComponent></SaveComponent>
+            <LoadComponent></LoadComponent>
             {pokemonData && (
                 <div>
                     <p>{pokemonData.name}</p>

@@ -1,6 +1,7 @@
 import React, {useState, useContext, useEffect, createContext} from 'react';
 import { usePokemonData } from "./PokemonDataContext";
 import { Ability , AbilityText, AbilityAndId} from '../models/Pokemon';
+import { useSaveContext } from './SavePokemonContext';
 
 interface AbilityContextType {
     abilitiesAndIdArray: AbilityAndId [],
@@ -33,6 +34,7 @@ export const useAbilityContext = () => {
 }
 
 export const AbilityProvider : React.FC<Props> = ( {children} ) => {
+    const {editMode} = useSaveContext()
     const {pokemonData} = usePokemonData();
     const [abilitiesArray, setAbilitiesArray] = useState<Ability[]>([]);
     const [abilitiesURLArray, setAbilitiesURLArray] = useState<string[]>([]);
@@ -44,7 +46,9 @@ export const AbilityProvider : React.FC<Props> = ( {children} ) => {
 
     
     useEffect(() => {
+      if(!editMode){
         fetchData();
+      }
       }, [pokemonData, abilitiesArray, abilitiesURLArray, abilities, abilitiesIdArray, abilitiesAndIdArray]);
 
       useEffect(() => {

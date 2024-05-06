@@ -1,37 +1,35 @@
-import {PokemonTeamMember} from "../models/Pokemon";
-import { UpdatePokemonInterface } from "../models/UpdatePokemonInterface";
+import {MoveSet, Pokemon, PokemonTeam, PokemonTeamMember, Stattest} from "../models/Pokemon";
+// import { UpdatePokemonInterface } from "../models/UpdatePokemonInterface";
 
-export const updatePokemonTeam = (options : UpdatePokemonInterface) =>{
-    const {
-    savedPokemonTeam,
-    editMode,
-    setEditMode,
-    setSavedPokemonTeam,
-    teamId,
-    teamName,
-    trainerId,
-    pokemonResponseData,
-    custom_id,
-    pkmApiId,
-    nickname,
-    level,
-    chosenAbilityId,
-    gender,
-    isShiny,
-    teraType,
-    heldItemId,
-    pokemonTeamId,
-    rosterOrder,
-    nature,
-    moves,
-    stats } = options
+export const updatePokemonTeam =  
+(
+    savedPokemonTeam : PokemonTeam,
+    editMode : boolean,
+    setEditMode : React.Dispatch<React.SetStateAction<boolean>>,
+    setSavedPokemonTeam : React.Dispatch<React.SetStateAction<PokemonTeam>>,
+    teamName: string,
+    pokemonResponseData: Pokemon,
+    pkmApiId: number,
+    nickname: string,
+    level: number,
+    chosenAbilityId: string,
+    gender: boolean,
+    isShiny: boolean,
+    teraType: string,
+    heldItemId: number,
+    pokemonTeamId: number,
+    rosterOrder: number,
+    nature: string,
+    moves: MoveSet,
+    stats: Stattest[] 
+) => {
 
     if (pokemonResponseData) {
         const editedPokemon : PokemonTeamMember = {
             pokemonData: pokemonResponseData,
             pkmApiId: pkmApiId,
             nickname: nickname,
-            custom_id: custom_id,
+            custom_id: '',
             level: level,
             chosenAbilityId : chosenAbilityId,
             gender: gender,
@@ -48,7 +46,7 @@ export const updatePokemonTeam = (options : UpdatePokemonInterface) =>{
             const updatedPokemon = savedPokemonTeam?.pokemonTeamMembers.map((pokemon) =>
                 pokemon.custom_id === editedPokemon.custom_id ?
                 {...pokemon, pokemon: editedPokemon, 
-                    custom_id:`pokemon-${pokemonResponseData.name}-${savedPokemonTeam ? savedPokemonTeam.pokemonTeamMembers.length + 1 : 1}`
+                    custom_id:`pokemon-${nickname}-${savedPokemonTeam ? savedPokemonTeam.pokemonTeamMembers.length + 1 : 1}`
                 } : pokemon)
                 const updatedTeam = {
                     ...savedPokemonTeam,
@@ -62,7 +60,7 @@ export const updatePokemonTeam = (options : UpdatePokemonInterface) =>{
                 pokemonData: pokemonResponseData,
                 pkmApiId: pkmApiId,
                 nickname: nickname,
-                custom_id: custom_id,
+                custom_id: `pokemon-${nickname}-${savedPokemonTeam ? savedPokemonTeam.pokemonTeamMembers.length + 1 : 1}`,
                 level: level,
                 chosenAbilityId : chosenAbilityId,
                 gender: gender,
@@ -80,9 +78,9 @@ export const updatePokemonTeam = (options : UpdatePokemonInterface) =>{
                 ...savedPokemonTeam,
                 pokemonTeamMembers: [...(savedPokemonTeam.pokemonTeamMembers || []), newPokemon]
             } : {
-                id: teamId,
+                id: undefined,
                 name: teamName,
-                trainerId: trainerId,
+                trainerId: undefined,
                 pokemonTeamMembers: [newPokemon]
             } 
             setSavedPokemonTeam(updatedTeam);

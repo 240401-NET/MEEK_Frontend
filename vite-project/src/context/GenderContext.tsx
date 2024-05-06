@@ -1,5 +1,6 @@
 import React , {createContext, useState, useContext, useEffect} from 'react'
 import { usePokemonData } from './PokemonDataContext'
+import { useSaveContext } from './SavePokemonContext'
 
 interface GenderContextType {
     gender : boolean
@@ -24,11 +25,15 @@ export const useGenderContext = () => {
 }
 
 export const GenderProvider : React.FC<Props> = ({children}) => {
+    const {editMode} = useSaveContext()
     const {pokemonData} = usePokemonData();
     const [gender, setGender] = useState(false)
 
     useEffect(() => {
-        setGender(false);
+        if(!editMode){
+            setGender(false);
+          }
+
     }, [pokemonData])
 
     const handleGender = (booleanValue: boolean) => {

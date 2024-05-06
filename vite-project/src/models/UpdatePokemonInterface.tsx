@@ -1,4 +1,4 @@
-import { Pokemon, Stat , Move, PokemonTeam,} from "../models/Pokemon";
+import { Pokemon, Stat , MoveSet, PokemonTeam, Stattest} from "../models/Pokemon";
 
 export interface UpdatePokemonInterface {
     savedPokemonTeam: PokemonTeam,
@@ -13,7 +13,7 @@ export interface UpdatePokemonInterface {
     pkmApiId: number,
     nickname: string,
     level: number, 
-    chosenAbilityId: number,
+    chosenAbilityId: string,
     gender: boolean,
     isShiny: boolean | null,
     teraType: string | null,
@@ -21,6 +21,6 @@ export interface UpdatePokemonInterface {
     pokemonTeamId: number,
     rosterOrder: number,
     nature: string | null,
-    moves: Move[],
-    stats: Stat[]
+    moves: MoveSet,
+    stats: Stattest[]
 }

@@ -9,6 +9,7 @@ import { StatProvider } from "./StatContext";
 import { MoveProvider } from "./MoveContext";
 import { GenderProvider } from "./GenderContext";
 import { NicknameProvider } from "./NicknameContext";
+import { SavePokemonProvider } from "./SavePokemonContext";
 
 interface Props {
     children: React.ReactNode,
@@ -27,7 +28,9 @@ export const PokemonProvider : React.FC<Props> = ({children}) => {
         <MoveProvider>
         <GenderProvider>
         <NicknameProvider>
+        <SavePokemonProvider>
         {children}
+        </SavePokemonProvider>
         </NicknameProvider>
         </GenderProvider>
         </MoveProvider>

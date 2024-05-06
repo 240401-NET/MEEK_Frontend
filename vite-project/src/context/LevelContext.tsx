@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect, createContext} from 'react';
 import { usePokemonData } from "./PokemonDataContext";
+import { useSaveContext } from './SavePokemonContext';
 
 interface LevelContextType {
     level : number,
@@ -24,12 +25,13 @@ export const useLevelContext = () => {
 }
 
 export const LevelProvider : React.FC<Props> = ({children}) => {
+    const {editMode} = useSaveContext()
     const {pokemonData} = usePokemonData();
     const [level, setLevel] = useState(50);
 
     useEffect(() =>{
-        if(pokemonData) {
-            LoadLevel()
+        if(!editMode){
+            LoadLevel();
         }
     }, [pokemonData])
 

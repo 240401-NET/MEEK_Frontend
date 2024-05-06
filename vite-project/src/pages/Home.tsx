@@ -5,9 +5,15 @@ import React from 'react'
 import { useAuth } from '../context/AuthContext'
 import { NavLink as Link } from 'react-router-dom'
 import { UserLogout } from '../services/userServices'
+import { getAllTrainerTeams } from '../models/PokemonAPICall'
 
 export const Home : React.FC = () =>{
     const {isLoggedIn, logoutUser} = useAuth()
+
+    const handleGetAllTrainers = async () => {
+        await getAllTrainerTeams()
+    }
+
     return (
         <>
             <div className="body">
@@ -19,6 +25,7 @@ export const Home : React.FC = () =>{
                                 <Link to ="/trainer">
                                     <button>View all teams</button>
                                 </Link>
+                                <button onClick={handleGetAllTrainers}>Test get all teams</button>
                                 <br />
                                 <Link to="/pokemonteambuilder">
                                     <button>Create New Team</button>

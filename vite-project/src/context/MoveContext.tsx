@@ -1,6 +1,7 @@
 import React, {useState, useContext, useEffect, createContext} from 'react';
 import { usePokemonData } from "./PokemonDataContext";
 import { MoveSet, Moves, Move } from '../models/Pokemon';
+import { useSaveContext } from './SavePokemonContext';
 
 
 interface MoveContextType {
@@ -12,6 +13,7 @@ interface MoveContextType {
     handleSelectedMove: (slot: keyof MoveSet, value: string) => void
     handleSearchedMove: (moveName: string) => void
     setSelectedSlot: (slot: number) => void;
+    setPokemonMoveSet: React.Dispatch<React.SetStateAction<MoveSet>>
 }
 
 interface Props {
@@ -33,7 +35,8 @@ const MoveContext = createContext<MoveContextType>({
     selectedSlot: 1,
     handleSelectedMove: () => {},
     handleSearchedMove: () => {},
-    setSelectedSlot: () => {}
+    setSelectedSlot: () => {},
+    setPokemonMoveSet: () => {}
 })
 
 export const useMoveContext = () => {
@@ -45,7 +48,7 @@ export const useMoveContext = () => {
 }
 
 export const MoveProvider : React.FC<Props> = ({children}) => {
-
+    const {editMode} = useSaveContext();
     const {pokemonData} = usePokemonData();
     const [moves, setMoves] = useState<Moves[]>([]);
     const [movesList , setMovesList] = useState<Move[]>([]);
@@ -56,7 +59,10 @@ export const MoveProvider : React.FC<Props> = ({children}) => {
 
     // loads a new move list everytime a new pokemon is searched up
     useEffect(() => {
-        LoadMoves();
+        if(!editMode){
+            LoadMoves();
+        }
+
     }, [pokemonData, moves, movesList])
 
     useEffect(() => {
@@ -106,7 +112,7 @@ export const MoveProvider : React.FC<Props> = ({children}) => {
     }
 
     return (
-        <MoveContext.Provider value = {{moves, pokemonMoveSet, handleSelectedMove, searchedMove, handleSearchedMove, movesList, selectedSlot, setSelectedSlot}}>
+        <MoveContext.Provider value = {{setPokemonMoveSet, moves, pokemonMoveSet, handleSelectedMove, searchedMove, handleSearchedMove, movesList, selectedSlot, setSelectedSlot}}>
             {children}
         </MoveContext.Provider>
     )

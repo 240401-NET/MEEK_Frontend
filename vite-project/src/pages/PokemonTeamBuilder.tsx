@@ -10,7 +10,7 @@ import LevelSelector from '../components/pokemonComponents/PokemonLevel';
 import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS';
 import { NavLink as Link } from 'react-router-dom';
 import './PokemonTeamBuilder.css'
-import { IVStats } from '../models/Pokemon';
+// import { IVStats } from '../models/Pokemon';
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
@@ -40,6 +40,9 @@ const PokemonTeamBuilder: React.FC = () => {
         if(savedTeam)
             {
                 setSavedPokemonTeam(JSON.parse(savedTeam))
+            }
+            else {
+                console.log("no saved teams available")
             }
     }, [])
 
@@ -87,7 +90,7 @@ const PokemonTeamBuilder: React.FC = () => {
     }
 
     const handleSavePokemon = () => {
-        
+        console.log("the button works")
         if (pokemonData ) {
             const editedPokemon = {
                 id : pokemonID,
@@ -217,7 +220,7 @@ const PokemonTeamBuilder: React.FC = () => {
                 <div>
                     <h3>Saved Pokemon</h3>
                     <ul>
-                        {savedPokemonTeam.pokemons.map((pokemon) =>(
+                        {savedPokemonTeam.po((pokemon) =>(
                             <li key={pokemon.id} onClick={() => loadPokemonOnClick(pokemon)}>
                                 {pokemon.data.name}: {pokemon.teraType}    
                             </li>

@@ -9,6 +9,7 @@ interface StatContextType {
     currentEVs: EVStats,
     handleIVStatsArrary: (stat: string, value: number) => void,
     handleEVStatsArrary: (stat: string, value: number) => void,
+    setStatsArray: React.Dispatch<React.SetStateAction<Stattest[]>>
 }
 
 
@@ -22,7 +23,8 @@ const StatContext = createContext<StatContextType>({
     currentIVs: initialIVState,
     currentEVs: initialEVState,
     handleIVStatsArrary: () => {},
-    handleEVStatsArrary: () => {}
+    handleEVStatsArrary: () => {},
+    setStatsArray: () => {}
 
 })
 
@@ -88,7 +90,7 @@ export const StatProvider : React.FC<Props> = ({children}) => {
     }
 
     return (
-        <StatContext.Provider value = {{statsArray, APIStatsArray, currentIVs, currentEVs, handleEVStatsArrary, handleIVStatsArrary}}>
+        <StatContext.Provider value = {{setStatsArray, statsArray, APIStatsArray, currentIVs, currentEVs, handleEVStatsArrary, handleIVStatsArrary}}>
             {children}
         </StatContext.Provider>
     )
