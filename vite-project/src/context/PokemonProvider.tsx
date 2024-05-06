@@ -7,6 +7,8 @@ import { NatureProvider } from "./NatureContext";
 import { LevelProvider } from "./LevelContext";
 import { StatProvider } from "./StatContext";
 import { MoveProvider } from "./MoveContext";
+import { GenderProvider } from "./GenderContext";
+import { NicknameProvider } from "./NicknameContext";
 
 interface Props {
     children: React.ReactNode,
@@ -23,7 +25,11 @@ export const PokemonProvider : React.FC<Props> = ({children}) => {
         <LevelProvider>
         <StatProvider>
         <MoveProvider>
+        <GenderProvider>
+        <NicknameProvider>
         {children}
+        </NicknameProvider>
+        </GenderProvider>
         </MoveProvider>
         </StatProvider>
         </LevelProvider>

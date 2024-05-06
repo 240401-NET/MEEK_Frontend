@@ -10,6 +10,8 @@ import LevelComponent from "../components/LevelComponent";
 import StatComponent from "../components/StatComponent";
 import StatRenderingComponent from "../components/StatRenderingComponent";
 import MoveComponent from "../components/MoveComponent";
+import GenderComponent from "../components/GenderComponent";
+import NicknameComponent from "../components/NicknameComponent";
 // import { Stattest } from "../models/Pokemon";
 // import { useAbility } from "../context/AbilitiesContext";
 // import AbilitiesSelector from "../components/pokemonComponents/AbilitiesSelector";
@@ -41,6 +43,8 @@ export const TeamBuilder : React.FC = () => {
                 <div>
                     <p>{pokemonData.name}</p>
                     <p>{pokemonData.id}</p>
+                    <NicknameComponent></NicknameComponent>
+                    <GenderComponent></GenderComponent>
                     <SpriteComponent></SpriteComponent>
                     <AbilitiesComponent></AbilitiesComponent>
                     <TeraTypeComponent></TeraTypeComponent>
