@@ -4,8 +4,7 @@ import { useNickname } from "../context/NicknameContext";
 const NicknameComponent : React.FC = () => {
 
     const {nickname, handleNickname} = useNickname()
-
-    console.log(nickname)
+    
     return (
         <>
             <input

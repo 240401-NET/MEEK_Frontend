@@ -5,8 +5,6 @@ const GenderComponent : React.FC = () => {
 
     const {gender, handleGender} = useGender()
 
-    console.log (gender);
-
     return (
         <>
             <label>

@@ -114,6 +114,26 @@ export interface AdjustedStatTotals {
     'speed': number,
 }
 
+export const initialIVState: IVStats = {
+    'hp': 31,
+    'attack': 31,
+    'defense': 31, 
+    'special-attack': 31,
+    'special-defense': 31,
+    'speed': 31,
+
+};
+
+export const initialEVState: EVStats = {
+    'hp': 0,
+    'attack': 0,
+    'defense': 0, 
+    'special-attack': 0,
+    'special-defense': 0,
+    'speed': 0,
+
+};
+
 export interface Move{
     name: string,
 }

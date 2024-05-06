@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect, createContext} from 'react';
 import { usePokemonData } from "./PokemonDataContext";
-import { Stats, IVStats, EVStats, Stattest } from '../models/Pokemon';
+import { Stats, IVStats, EVStats, Stattest, initialIVState, initialEVState } from '../models/Pokemon';
 
 interface StatContextType {
     statsArray: Stattest[],
@@ -11,25 +11,6 @@ interface StatContextType {
     handleEVStatsArrary: (stat: string, value: number) => void,
 }
 
-const initialIVState: IVStats = {
-    'hp': 31,
-    'attack': 31,
-    'defense': 31, 
-    'special-attack': 31,
-    'special-defense': 31,
-    'speed': 31,
-
-};
-
-const initialEVState: EVStats = {
-    'hp': 0,
-    'attack': 0,
-    'defense': 0, 
-    'special-attack': 0,
-    'special-defense': 0,
-    'speed': 0,
-
-};
 
 interface Props {
     children: React.ReactNode
@@ -64,6 +45,13 @@ export const StatProvider : React.FC<Props> = ({children}) => {
     useEffect(() => {
         SetsArray();
     }, [pokemonData, APIStatsArray, statsArray, currentIVs, currentEVs])
+
+    useEffect(() => {
+        setAPIStatsArray([]);
+        setCurrentIVs(initialIVState);
+        setCurrentEVs(initialEVState);
+        setStatsArray([]);
+    }, [pokemonData])
 
     const SetsArray = () => {
         if (pokemonData) {

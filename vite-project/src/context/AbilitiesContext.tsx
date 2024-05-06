@@ -47,6 +47,16 @@ export const AbilityProvider : React.FC<Props> = ( {children} ) => {
         fetchData();
       }, [pokemonData, abilitiesArray, abilitiesURLArray, abilities, abilitiesIdArray, abilitiesAndIdArray]);
 
+      useEffect(() => {
+        setAbilitiesArray([]);
+        setAbilitiesURLArray([]);
+        setAbilitiesIdArray([]);
+        setAbilities([]);
+        setAbilitiesAndIdArray([]);
+        setSelectedAbilityId(0);
+        setSelectedAbility('')
+      }, [pokemonData])
+
       const fetchData = async () => {
         try {
           if (pokemonData?.abilities) {

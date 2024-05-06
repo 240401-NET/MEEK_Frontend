@@ -5,6 +5,7 @@ import { fetchPokemonDataFromAPI } from "../models/PokemonAPICall";
 interface PokemonDataContextType {
     pokemonData: Pokemon | null,
     fetchPokemonApiData: (pokemonName: string) => void,
+    handleSetPokemonData: (obj : Pokemon | null) => void
 }
 
 interface Props {
@@ -34,8 +35,12 @@ export const PokemonDataProvider : React.FC<Props> = ( {children}) => {
             throw error;
         }
     }
+
+    const handleSetPokemonData = (obj: Pokemon | null) => {
+        setPokemonData(obj);
+    }
     return (
-        <PokemonDataContext.Provider value={{pokemonData, fetchPokemonApiData}}>
+        <PokemonDataContext.Provider value={{pokemonData, fetchPokemonApiData, handleSetPokemonData}}>
             {children}
         </PokemonDataContext.Provider>
     )

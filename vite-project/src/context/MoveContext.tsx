@@ -59,6 +59,14 @@ export const MoveProvider : React.FC<Props> = ({children}) => {
         LoadMoves();
     }, [pokemonData, moves, movesList])
 
+    useEffect(() => {
+        setMoves([]);
+        setMovesList([]);
+        setPokemonMoveSet(MoveSetInitialState);
+        setSearchedMove('');
+        setSelectedSlot(1);
+    }, [pokemonData])
+
     // creates an array of all possible moves a pokemon can learn along with the move id, name and url to the move
     const LoadMoves = () => {
         if(pokemonData) {

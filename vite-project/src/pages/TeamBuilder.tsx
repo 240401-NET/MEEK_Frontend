@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import { usePokemonData } from "../context/PokemonDataContext";
 import { NavLink as Link } from "react-router-dom";
 // import { useSprite } from "../context/Spritecontext";
@@ -18,12 +18,22 @@ import NicknameComponent from "../components/NicknameComponent";
 
 
 export const TeamBuilder : React.FC = () => {
-    const {fetchPokemonApiData, pokemonData} = usePokemonData();
+    const {fetchPokemonApiData, pokemonData, handleSetPokemonData} = usePokemonData();
     const [searchedPokemon, setSearchedPokemon] = useState("");
+
+    useEffect(() => {
+        if(true)
+            handleSetPokemonData(pokemonData)
+    }, [])
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         fetchPokemonApiData(searchedPokemon);
+    }
+
+    const clearPageData = () => {
+        handleSetPokemonData(null);
+        setSearchedPokemon('');
     }
 
     return (
@@ -35,10 +45,12 @@ export const TeamBuilder : React.FC = () => {
                 <input 
                     type="text"
                     placeholder='Enter Pokemon Name'
+                    value={searchedPokemon}
                     onChange={(e) => setSearchedPokemon(e.target.value)}
                 />
                 <button type='submit'>Search</button>
             </form>
+            <button type="submit" onClick={() => clearPageData()}>Clear</button>
             {pokemonData && (
                 <div>
                     <p>{pokemonData.name}</p>
