@@ -15,7 +15,8 @@ export interface Pokemon {
         } [];
         moves: {
             move: {
-                name: string
+                name: string,
+                url: string
             }; 
         } [];
         stats: {
@@ -47,8 +48,8 @@ export interface PokemonTeamMember {
     pokemonTeamId: number,
     rosterOrder: number,
     nature: string | null,
-    moves: Move[],
-    stats: Stat[],
+    moves: MoveSet,
+    stats: Stattest[],
 }
 
 export interface PokemonTeam {
@@ -113,11 +114,21 @@ export interface AdjustedStatTotals {
     'speed': number,
 }
 
+export interface Move{
+    name: string,
+}
 
-export interface Move {
+export interface Moves {
     id: number,
     name: string | null,
     url: string | null,
+}
+
+export interface MoveSet{
+    'move1': string,
+    'move2': string,
+    move3: string,
+    move4: string 
 }
 
 export interface Sprite {

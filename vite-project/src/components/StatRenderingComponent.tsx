@@ -3,6 +3,7 @@ import { useStat } from '../context/StatContext';
 import { usePokemonData } from '../context/PokemonDataContext';
 import { useNature } from '../context/NatureContext';
 import { Stattest } from '../models/Pokemon';
+import { useLevel } from '../context/LevelContext';
 
 // const initialStatTotalState: AdjustedStatTotals = {
 //     'hp': 0,
@@ -18,10 +19,11 @@ const StatRenderingComponent : React.FC = () => {
     const {pokemonData} = usePokemonData();
     const {statsArray} = useStat();
     const {nature, natureData} = useNature();
+    const {level} = useLevel()
     // const [adjustedStatTotals, setAdjustedStatTotals] = useState<AdjustedStatTotals>(initialStatTotalState)
 
     useEffect(() => {
-        calculateBaseStatsWithNatures(statsArray, 50, nature);
+        calculateBaseStatsWithNatures(statsArray, level, nature);
     }, [pokemonData, statsArray, nature])
 
     const calculateBaseStatsWithNatures = (statsArray : Stattest[], level: number, nature: string)  => {
@@ -50,7 +52,7 @@ const StatRenderingComponent : React.FC = () => {
         });
     };
 
-    const adjustedStats = calculateBaseStatsWithNatures(statsArray, 50, nature)
+    const adjustedStats = calculateBaseStatsWithNatures(statsArray, level, nature)
 
     return(
         <>
