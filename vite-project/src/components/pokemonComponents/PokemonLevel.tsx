@@ -12,18 +12,19 @@ const LevelSelector : React.FC<LevelProps> = ({currentLevel, setCurrentLevel}) =
         setCurrentLevel(parseInt(e.target.value));
     }
     return (
-        <div>                
-            <label htmlFor="level">Set Pokemon Level : {currentLevel}</label>
-                <input 
-                    type="range" 
-                    id="level"
-                    min="1"
-                    max="100"
-                    value={currentLevel}
-                    onChange={handlePokemonLevelChange}
-                />
+        <div className="pokemon-level">
+          <label htmlFor="level" className="level-label">Set Pokemon Level: {currentLevel}</label>
+          <input 
+            type="range" 
+            id="level"
+            className="level-input"
+            min="1"
+            max="100"
+            value={currentLevel}
+            onChange={handlePokemonLevelChange}
+          />
         </div>
-    )
+      );
 }
 
 export default LevelSelector

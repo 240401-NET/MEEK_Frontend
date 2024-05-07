@@ -112,6 +112,8 @@ const HeldItemList : React.FC = () => {
                     </div>
                 </div>
             )}
+
+            
             <p>Selected item: {selectedItem}</p>
         </div>
     )

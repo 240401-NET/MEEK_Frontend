@@ -15,34 +15,44 @@ const SpriteSelector : React.FC<Props> = ({ sprites }) => {
     useEffect(() => {
         setSelectedSprite("front_default")
     },[sprites])
-
-    return (
-        <div>
-            {sprites[selectedSprite] ? (
-                <img src={sprites[selectedSprite]} alt="" />
-            ) : (
-                <p>no sprite available</p>
-            )}
-        <label>
-            <input 
-                type="radio"
-                value="front_default"
-                checked={selectedSprite === "front_default"}
-                onChange={() => handlePokemonSpriteSelection("front_default")} 
-                />
-                Defualt
-        </label>
-        <label>
-            <input 
-                type="radio"
-                value="front_shiny"
-                checked={selectedSprite === "front_shiny"}
-                onChange={() => handlePokemonSpriteSelection("front_shiny")} 
-                />
-                Shiny
-        </label>
+return (
+  <div>
+    <h3>Sprite</h3>
+    {sprites[selectedSprite] ? (
+      <img src={sprites[selectedSprite]} alt="" />
+    ) : (
+      <p>no sprite available</p>
+    )}
+        <div className="sprite-container">
+      {sprites[selectedSprite] ? (
+        <img src={sprites[selectedSprite]} alt="Pokemon Sprite" className="pokemon-sprite" />
+      ) : (
+        <p className="no-sprite">No sprite available</p>
+      )}
     </div>
-    )
+    <div>
+      <span className="sprite-label">Sprite: </span>
+      <label>
+        <input
+          type="radio"
+          value="front_default"
+          checked={selectedSprite === "front_default"}
+          onChange={() => handlePokemonSpriteSelection("front_default")}
+        />
+        Default
+      </label>
+      <label>
+        <input
+          type="radio"
+          value="front_shiny"
+          checked={selectedSprite === "front_shiny"}
+          onChange={() => handlePokemonSpriteSelection("front_shiny")}
+        />
+        Shiny
+      </label>
+    </div>
+  </div>
+);
 }
 
 export default SpriteSelector

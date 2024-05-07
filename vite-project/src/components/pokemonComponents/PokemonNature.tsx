@@ -47,20 +47,21 @@ const PokemonNatureSelector : React.FC<NatureProps> = ({setCurrentNature, curren
     }
 
     return (
-        <div>
-            <label htmlFor="nature">
-                    <p>Nature:</p>
-                    <select id="nature" value={currentNature} onChange={handleNatureSelection}>
-                        <option value="">None</option>
-                        {natureData.map(nature =>(
-                            <option key={nature.name} value={nature.name}>
-                                {nature.name}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-            </div>
-    )
+        <div className="select-container">
+          <label htmlFor="nature">
+            <p>Nature : </p>
+            <select id="nature" value={currentNature} onChange={handleNatureSelection}>
+              <option value="">None</option>
+              {natureData.map(nature => (
+                <option key={nature.name} value={nature.name}>
+                  {nature.name}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      );
+
 }
 
 export {PokemonNatureSelector, natureData}

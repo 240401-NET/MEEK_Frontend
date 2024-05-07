@@ -26,7 +26,7 @@ export const SignUp : React.FC<SignupFormInterface> = () => {
         <>
         <div className='container'>
                 <div className='form-box'>
-                    <h1 id="title">Sign In</h1>
+                    <h1 id="title">Sign Up</h1>
                     <form onSubmit={(e) => handleSignup(e)}>
                         <div className='input-group'>
 
