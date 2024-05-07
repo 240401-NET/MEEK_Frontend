@@ -34,21 +34,22 @@ const TeraTypeSelector : React.FC<TeraTypeProp> = ({setSelectedTeraType, selecte
     const handleTeraTypeSelection = (e : React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedTeraType(e.target.value);
     }
-    return(
-        <div>
-            <label htmlFor="teraType">
-                <p>Teratype</p>
-                <select id="teraType" onChange={handleTeraTypeSelection} value ={selectedTeraType}>
-                    <option value="">None</option>
-                        {teratypes.map(tera => (
-                            <option value={tera} key={tera}>
-                                {tera}
-                            </option>
-                        ))}
-                </select>
-            </label>
+
+    return (
+        <div className="select-container">
+          <label htmlFor="teraType">
+            <p>Teratype : </p>
+            <select id="teraType" onChange={handleTeraTypeSelection} value={selectedTeraType}>
+              <option value="">None</option>
+              {teratypes.map(tera => (
+                <option value={tera} key={tera}>
+                  {tera}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
-    )
+      )
 }
 
 export default TeraTypeSelector;

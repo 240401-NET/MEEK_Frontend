@@ -2,13 +2,11 @@ import {useState, useEffect} from 'react'
 import { Pokemon, PokemonTeam, PokemonTeamMember } from '../models/Pokemon'
 import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
 
+
 export const usePokemonTeamBuilderHooks = () => {
     
     const [selectedSprite, setSelectedSprite] = useState<string>('')
-    const [savedPokemonTeam, setSavedPokemonTeam] = useState<PokemonTeam| null>(()=> {
-        const savedTeam = localStorage.getItem('savedPokemonTeam');
-        return savedTeam ? JSON.parse(savedTeam) : null;
-    })
+    const [savedPokemonTeam, setSavedPokemonTeam] = useState<PokemonTeam| null>(()=> {const savedTeam = localStorage.getItem('savedPokemonTeam'); return savedTeam ? JSON.parse(savedTeam) : null;})
     const [selectedTeraType, setSelectedTeraType] = useState('');
     const [editMode, setEditMode] = useState<boolean>(false)
     const [pokemonID, setPokemonID] = useState<string>('')
@@ -16,6 +14,8 @@ export const usePokemonTeamBuilderHooks = () => {
     const [moves, setMoves] = useState<string[]>(['', '', '', '']);
     const [currentNature, setCurrentNature] = useState('')
     const [currentLevel, setCurrentLevel] = useState(50)
+    const [selectedGender, setSelectedGender] = useState<string>('Random'); // New state for selected gender
+
 }
 
 export const usePokemonApiSearch = () => {

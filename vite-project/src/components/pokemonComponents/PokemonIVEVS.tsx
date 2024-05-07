@@ -3,12 +3,12 @@ import '../../pages/PokemonTeamBuilder.css';
 
 
 interface IVProp {
-    hp: number | 0;
-    attack: number | 0;
-    defense: number | 0;
-    special_attack: number | 0;
-    special_defense: number | 0;
-    speed: number | 0;
+    hp: number | 31;
+    attack: number | 31;
+    defense: number | 31;
+    special_attack: number | 31;
+    special_defense: number | 31;
+    speed: number | 31;
     onChangeHP : (value: number) => void;
     onChangeAttack : (value: number) => void;
     onChangeDefense : (value: number) => void;
@@ -22,7 +22,7 @@ const PokemonIVEVRenderer : React.FC<IVProp> = ({
     onChangeHP, onChangeAttack, onChangeDefense, onChangeSpecialAttack, onChangeSpecialDefense, onChangeSpeed
 }) => {
 
-    const handleHPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const handleHPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(e.target.value);
         onChangeHP(value);
       };
@@ -46,34 +46,37 @@ const PokemonIVEVRenderer : React.FC<IVProp> = ({
         const value = parseInt(e.target.value);
         onChangeSpeed(value);
       };
-    return (
-        <div>
-            <label>
-                HP:
-                <input type="number" value={hp} onChange={handleHPChange} />
-            </label>
-            <label>
-                Attack:
-                <input type="number" value={attack} onChange={handleAttackChange} />
-            </label>
-            <label>
-                Defense:
-                <input type="number" value={defense} onChange={handleDefenseChange} />
-            </label>
-            <label>
-                Special Attack:
-                <input type="number" value={special_attack} onChange={handleSpecialAttackChange} />
-            </label>
-            <label>
-                Special Defense:
-                <input type="number" value={special_defense} onChange={handleSpecialDefenseChange} />
-            </label>
-            <label>
-                Speed:
-                <input type="number" value={speed} onChange={handleSpeedChange} />
-            </label>
+
+      return (
+        <div className="stat-input-container">
+          <label>
+            HP:
+            <input type="number" value={hp} onChange={handleHPChange} defaultValue={31} min={0} max={31} />
+            
+          </label>
+          <label>
+            Atk:
+            <input type="number" value={attack} onChange={handleAttackChange} defaultValue={31} min={0} max={31} />
+          </label>
+          <label>
+            Def:
+            <input type="number" value={defense} onChange={handleDefenseChange} defaultValue={31} min={0} max={31} />
+          </label>
+          <label>
+            SpA:
+            <input type="number" value={special_attack} onChange={handleSpecialAttackChange} defaultValue={31} min={0} max={31} />
+          </label>
+          <label>
+            SpD:
+            <input type="number" value={special_defense} onChange={handleSpecialDefenseChange} defaultValue={31} min={0} max={31} />
+          </label>
+          <label>
+            Spe:
+            <input type="number" value={speed} onChange={handleSpeedChange} defaultValue={31} min={0} max={31} />
+          </label>
         </div>
-    )
+      );
+      
 }
 
 export default PokemonIVEVRenderer

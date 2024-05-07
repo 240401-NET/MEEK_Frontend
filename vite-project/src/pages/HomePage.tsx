@@ -2,6 +2,7 @@ import './HomePage.css'
 import {NavLink as Link} from 'react-router-dom'
 import {useState} from 'react'
 import { UserLogin, UserLogout, UserSignUp,} from '../services/userServices'
+import musicFile from "../assets/music.mp3";
 // import { useState, useEffect} from 'react';
 
 export function HomePageRenderer() {
@@ -53,65 +54,67 @@ export function HomePageRenderer() {
   const UserRegistration = (e : React.ChangeEvent<HTMLInputElement>) => {
     setUsernameRegistration(e.target.value);
   }
-
+  
   return (
     <div>
       <Link to="/trainer">
-      <button className='navButtons'>
-        Trainer Team View
-      </button>
+        <button className='navButtons'>
+          Trainer Team View
+        </button>
       </Link>
       <Link to="/pokemonTeamBuilder">
-      <button className='navButtons'>
-        Team Builder
-      </button>
+        <button className='navButtons'>
+          Team Builder
+        </button>
       </Link>
       <div className="container">
         <div className="form-box">
           <h1 id="title">Sign Up</h1>
-            <form>
-              <div className="input-group">
-
+          <form>
+            <div className="input-group">
               <div className="input-field" id="nameField">
-                  <i className="fa-solid fa-envelope"></i>
-                  <input 
-                    id="emailField" 
-                    type="email" 
-                    placeholder="Email" 
-                    onChange={(e) => setEmailRegistration(e.target.value)}
-                  />
-                </div>
-
-                <div className="input-field">
-                  <i className="fa-solid fa-user-plus"></i>
-                  <input 
-                    type="text" 
-                    placeholder="Name" 
-                    onChange={UserRegistration}
-                  />
-                </div>
-          
-                <div className="input-field">
-                  <i className="fa-solid fa-lock"></i>
-                  <input 
-                    id="passwordField" 
-                    type="password" 
-                    placeholder="Password" 
-                    onChange={(e) => setPasswordRegistration(e.target.value)}
-                  />
-                </div>
-
-                <p>Lost Password <a href="#">Click Here!</a></p>
+                <i className="fa-solid fa-envelope"></i>
+                <input 
+                  id="emailField" 
+                  type="email" 
+                  placeholder="Email" 
+                  onChange={(e) => setEmailRegistration(e.target.value)}
+                />
               </div>
-
-              <div className="btn-field"> 
-                <button type="button" id="signupBtn" onClick={()=>signupClick()} className=''>Sign Up</button>
-                <button type="button" id="signinBtn" className="disable" onClick={()=>signinClick()}>Sign In</button>
-                <button type="button" onClick={UserLogout}>logout</button>
+              <div className="input-field">
+                <i className="fa-solid fa-user-plus"></i>
+                <input 
+                  type="text" 
+                  placeholder="Name" 
+                  onChange={UserRegistration}
+                />
               </div>
-            </form>
-          </div>
+              <div className="input-field">
+                <i className="fa-solid fa-lock"></i>
+                <input 
+                  id="passwordField" 
+                  type="password" 
+                  placeholder="Password" 
+                  onChange={(e) => setPasswordRegistration(e.target.value)}
+                />
+              </div>
+              <p>Lost Password <a href="#">Click Here!</a></p>
+            </div>
+            <div className="btn-field"> 
+              <button type="button" id="signupBtn" onClick={()=>signupClick()} className=''>Sign Up</button>
+              <button type="button" id="signinBtn" className="disable" onClick={()=>signinClick()}>Sign In</button>
+              <button type="button" onClick={UserLogout}>logout</button>
+            </div>
+          </form>
         </div>
       </div>
-  )
+      <div>
+        <audio autoPlay loop>
+          <source src={musicFile} type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+  );
 }
+  

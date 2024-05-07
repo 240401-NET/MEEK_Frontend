@@ -1,26 +1,463 @@
-/* PokemonTeamBuilder.css */
-
-/* Styles for PokemonSearchButton component */
-.search-container {
+.page-container {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    min-height: 100vh; /* Set a minimum height to accommodate default content */
+    background-color: #eaa1a1;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/pokemonTeam.jpg) center / cover;
+    background-repeat: repeat-y; /* Repeat vertically */
+    background-size: cover;
+}
+.custom-form {
+    margin: 10px auto;
+    margin-top: 10px;
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 1000px;
+    padding: 10px;
+    background-color: rgba(249, 247, 247, 0.8); /* Adjust the alpha value (0.8) to change the opacity */
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(147, 146, 146, 0.1);
+    text-align: center;
+    color: #333;
 }
 
-.search-container input[type="text"] {
-    padding: 8px;
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.custom-input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 40%;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #e1e3e7;
+    border: 1px solid #d3cdcd;
+    box-sizing: border-box;
+    font-size: 20px;
+    font-weight: none;
+    text-align: left;
+    color: #080808;
 }
 
-.search-container button {
-    padding: 8px 16px;
-    background-color: #00060c;
-    color: #fff;
+
+.search-button {
+    position: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    padding: 10px 20px;
+    border-radius: 20px;
     border: none;
-    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+.search-button:hover {
+    background-color: #38a941;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.save-button {
+    position: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background-color: #fa0404;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+.save-button:hover {
+    background-color: #38a941;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.pokemon-team-form {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    max-width: 1000px;
+    padding: 20px;
+    background-color: rgba(249, 247, 247, 0.8); /* Adjust the alpha value (0.8) to change the opacity */
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #333;
+}
+.pokemon-team-form h3 {
+    font-size: 20px;
+    color: #070000;
+    text-align: center;
+    margin-bottom: px;
+}
+
+.pokemon-team-form ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.pokemon-team-form li {
+    margin: 14px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.2;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pokemon-team-form img {
+    width: 100px;
+    height: 100px;
+    border-radius: 30%;
+    margin-bottom: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.pokemon-team-form img:hover {
+    transform: scale(1.2);
     cursor: pointer;
 }
 
-.search-container button:hover {
-    background-color: #0056b3;
+.pokemon-team-form p {
+    text-align: center;
+    font-size: 13px;
+    color: #333;
+    font-weight: 500;
 }
+
+.delete-button {
+    background-color: rgba(249, 247, 247, 0.1); /* Adjust the alpha value (0.8) to change the opacity */
+    border: none; 
+    padding: 5px 5px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    margin-top: 5px; 
+}
+
+.delete-button:hover {
+    background-color: #cc0000; 
+}
+
+.pokemon-form {
+
+    margin: 10px auto;
+    max-width: 1000px;
+    max-height: 2000px;
+    padding: 20px;
+    background-color: rgba(249, 247, 247, 0.8); /* Adjust the alpha value (0.8) to change the opacity */
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #333;
+  }
+
+.pokemon-form h2 {
+    font-size: 22px;
+    color: #070000;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.pokemon-form p {
+    font-size:15px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.pokemon-form h3 {
+    font-size: 20px;
+    color: #070000;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.pokemon-form img {
+    display: block;
+    margin: 0 auto;
+    width: 140px;
+    height: 140px;
+    border-radius: 30%;
+    margin-bottom: 20px;
+}
+
+.default-button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 20px;
+    background-color: #abb3c3;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+}
+.default-button:hover {
+    background-color: #38a941;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.shiny-button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background-color: #ead025c6;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.shiny-button:hover {
+    background-color: #38a941;
+    color: #f6f3f3;
+    transform: scale(1.1);
+}
+
+.gender-selection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .gender-label {
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .gender-option {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .select-container {
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .select-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #0f0f0f;
+    text-align: center;
+  }
+  
+  .select-container select {
+    width: 80%;
+    height: 40px;
+    padding: 9px;
+    border-radius: 20px;
+    border: 0px solid #f7e170;
+    box-sizing: border-box;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    appearance: none;
+    background-color: #c8ab5380;
+    color: #fffcfc;
+  }
+  .select-container select:hover {
+    background-color: #38a941;
+    color: #fff;
+    transform: scale(1.1);
+  }
+  
+  .select-container select::-ms-expand {
+    display: none;
+  }
+
+  .ability-label {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: strong;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+  
+  .ability-radio {
+    vertical-align: middle;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-top: 10px;
+  }
+  
+ .pokemon-level {
+  margin: 10px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.level-label {
+  display: inline-block;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.level-input {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  border-radius: 5px;
+  background: #e3e0e0;
+  outline: none;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+}
+
+.level-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #858282;
+  cursor: pointer;
+}
+.stat-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+  
+  .stat-input-container label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+  
+  .stat-input-container input[type="number"] {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 5px;
+    border-radius: 5px;
+    background: #e3e0e0;
+    outline: none;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+  }
+
+  .move-selector input {
+    display: inline-block;
+    width: 65%;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #e1e3e7;
+    border: 1px solid #606060;
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+  
+  .move-selector ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .move-selector button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+  }

@@ -46,22 +46,24 @@ const AbilitiesSelector : React.FC<Props> = ({abilityUrls, selectedAbility, setS
 
     return (
         <div>
-            <h3>Abilities</h3>
-            {abilities.map((ability, index) =>(
-                        <div key = {index}>
-                            <input 
-                            type="radio" 
-                            id={`ability-${index}`}
-                            name="ability"
-                            value={ability.name}
-                            checked={selectedAbility === ability.name}
-                            onChange={() => handlePokemonAbilitySelection(ability.name)}
-                            />
-                            <label htmlFor={`ability-${index}`}>{ability.name}</label>
-                            <p>{ability.flavor_Text}</p>
-                        </div>
-            ))}
-        </div>
-    )
+        <h3>Abilities</h3>
+        {abilities.map((ability, index) => (
+          <div key={index}>
+            <label htmlFor={`ability-${index}`} className="ability-label">
+              <input
+                type="radio"
+                id={`ability-${index}`}
+                name="ability"
+                value={ability.name}
+                checked={selectedAbility === ability.name}
+                onChange={() => handlePokemonAbilitySelection(ability.name)}
+                className="ability-radio"
+              />
+              {ability.name.charAt(0).toUpperCase() + ability.name.slice(1)} : {ability.flavor_Text.charAt(0).toUpperCase() + ability.flavor_Text.slice(1)}
+            </label>
+          </div>
+        ))}
+      </div>
+      );
 }
 export default AbilitiesSelector

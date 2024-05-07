@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import { Pokemon } from '../models/Pokemon'
-// import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
+import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
 import { PokemonTeam } from '../models/PokemonTeamsInterface';
 import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector';
 import AbilitiesSelector from '../components/pokemonComponents/AbilitiesSelector';
@@ -8,22 +8,22 @@ import MoveSlotSelector from '../components/pokemonComponents/MoveSlotSelector';
 import {PokemonNatureSelector} from '../components/pokemonComponents/PokemonNature';
 import LevelSelector from '../components/pokemonComponents/PokemonLevel';
 import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS';
+import GenderSelector from '../components/pokemonComponents/GenderSelector';
 import { NavLink as Link } from 'react-router-dom';
+import HeldItemList from '../components/pokemonComponents/HeldItemList';
 import './PokemonTeamBuilder.css'
-import { usePokemonApiSearch } from '../hooks/PokemonTeamBuilderHooks';
+import musicFile from "../assets/music.mp3";
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
-    const {pokemonData, setSearchedPokemon, handleSearch} = usePokemonApiSearch();
-    // const [seaerchedPokemon, setSearchedPokemon] = useState<string>('')
+    const [pokemonData , setPokemonData] = useState<Pokemon | null>(null)
+    const [searchedPokemon, setSearchedPokemon] = useState<string>('')
     const [selectedSprite, setSelectedSprite] = useState<string>('')
-    const [savedPokemonTeam, setSavedPokemonTeam] = useState<PokemonTeam| null>(()=> {
-        const savedTeam = localStorage.getItem('savedPokemonTeam');
-        return savedTeam ? JSON.parse(savedTeam) : null;
-    })
+    const [selectedItem, setSelectedItem] = useState<string>('');
+    const [savedPokemonTeam, setSavedPokemonTeam] = useState<PokemonTeam| null>(()=> {const savedTeam = localStorage.getItem('savedPokemonTeam');return savedTeam ? JSON.parse(savedTeam) : null;})
     const [selectedTeraType, setSelectedTeraType] = useState('');
     const [editMode, setEditMode] = useState<boolean>(false)
-    const [pokemonID, setPokemonID] = useState<string>()
+    const [pokemonID, setPokemonID] = useState<string>('')
     const [ability, setAbility] = useState('')
     const [move1, setMove1] = useState('')
     const [move2, setMove2] = useState('')
@@ -43,8 +43,27 @@ const PokemonTeamBuilder: React.FC = () => {
             }
     }, [])
 
+    const pokemonSearch = async (pokemonName : string) => {
+        try {
+            const responseData = await fetchPokemonDataFromAPI(pokemonName);
+            setPokemonData(responseData);
+            setSelectedSprite(responseData.sprites.front_default);
+        } catch (error) {
+            console.log("Can't find pokemon", error)
+        }
+
+    }
+    const handleSearch = (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault(); // Prevent default form submission or button click behavior
+        pokemonSearch(searchedPokemon);   
+    };
+
+    const handleSpriteSelect = (spriteUrl :string) => {
+        setSelectedSprite(spriteUrl);
+    }
+
     const clearPageData = () => {
-        // setPokemonData(null)
+        setPokemonData(null)
         setSearchedPokemon('')
         setSelectedTeraType('')
         setAbility('')
@@ -65,10 +84,6 @@ const PokemonTeamBuilder: React.FC = () => {
                 // Add other IVs as needed
               });
 
-    }
-    
-    const handleSpriteSelect = (spriteUrl :string) => {
-        setSelectedSprite(spriteUrl)
     }
 
     const handleSavePokemon = () => {
@@ -155,7 +170,7 @@ const PokemonTeamBuilder: React.FC = () => {
         nature: string, level : number, ivs: Record<string,number>
     }) => {
         setPokemonID(selectedPokemon.id)
-        // setPokemonData(selectedPokemon.data)
+        setPokemonData(selectedPokemon.data)
         setSelectedSprite(selectedPokemon.sprite)
         setSelectedTeraType(selectedPokemon.teraType)
         setAbility(selectedPokemon.ability)
@@ -180,54 +195,87 @@ const PokemonTeamBuilder: React.FC = () => {
     const handleIVChange = (stat: string, value: number ) =>{
         setCurrentIVs((prevIVs) => ({...prevIVs, [stat] : value}))
     }
+    const handleSave = () =>{
+        handleSavePokemon()
+    }
+
+    const button = document.querySelector("#save-button");
+    button?.addEventListener ("click", onClick, false);
+    function onClick (event: any) {
+        event.preventDefault();
+        handleSave();
+    }
+
+    const deletePokemon = (pokemonId: string) => {
+        // Filter out the Pokémon with the specified ID from the team
+        const updatedTeam = {
+            ...savedPokemonTeam,
+            pokemons: savedPokemonTeam!.pokemons.filter((pokemon) => pokemon.id !== pokemonId)
+        };
+    
+        // Update the state to reflect the deletion
+        setSavedPokemonTeam(updatedTeam);
+    
+        // Optionally, update local storage or perform any other necessary actions
+        localStorage.setItem('savedPokemonTeam', JSON.stringify(updatedTeam));
+    };
+
+       // Function to handle gender selection
+       const handleGenderSelection = (gender: string) => {
+        setSelectedGender(gender);
+    };
+
+    
 
     return (
-        <div>
+    <div className="page-container"> {/* Add the page-container class here */}
+        <Link to="/"></Link>
             <Link to="/">
                 <button>Logout</button>
             </Link>
-            <form onSubmit={handleSearch}>
-                <input 
-                    type="text"
-                    placeholder='Enter Pokemon Name'
-                    onChange={(e) => setSearchedPokemon(e.target.value)}
-                />
-                <button type='submit'>Search</button>
+            <form onSubmit={handleSearch} className="custom-form">
+    <input type="text" placeholder='Enter Pokemon Name' onChange={(e) => setSearchedPokemon(e.target.value)}className="custom-input" />
+    <button type='submit' className="search-button">Search</button>
+    <button type='submit' id = "save-button" className="save-button" onClick={(handleSavePokemon)}>Save</button>
             </form>
-            <div>
-                <button onClick={handleSavePokemon}>Save</button>
-            </div>
-
-            {(savedPokemonTeam && savedPokemonTeam.pokemons.length > 0) && (
-                <div>
-                    <h3>Saved Pokemon</h3>
-                    <ul>
-                        {savedPokemonTeam.pokemons.map((pokemon) =>(
-                            <li key={pokemon.id} onClick={() => loadPokemonOnClick(pokemon)}>
-                                {pokemon.data.name}: {pokemon.teraType}    
-                            </li>
-
-                        ))}
-                    </ul>
-                </div>
+            {savedPokemonTeam && savedPokemonTeam.pokemons.length > 0 && (
+    <div>
+        <form className="pokemon-team-form">
+            <h3>Pokemon Team</h3>
+            <ul>
+                {savedPokemonTeam.pokemons.map((pokemon) => (
+                    <li key={pokemon.id} onClick={() => loadPokemonOnClick(pokemon)}>
+                        {pokemon.data.name.charAt(0).toUpperCase() + pokemon.data.name.slice(1)} : {pokemon.teraType}
+                        <img src={pokemon.sprite} alt={pokemon.data.name} />
+                        <button className="delete-button" onClick={() => deletePokemon(pokemon.id)}></button>
+                    </li>
+                ))}
+            </ul>
+            {/* Check if the team has exactly 6 Pokemon before allowing to add more */}
+            {savedPokemonTeam.pokemons.length === 6 && (
+                <p>This team already has 6 Pokémon. You cannot add more.</p>
             )}
+        </form>
+    </div>
+)}
             {pokemonData && (
                 <div>
-                    <h2>{pokemonData!.name}</h2>
-                    <p>Type(s): {pokemonData!.types.map((type) => type.type.name).join(', ')}</p>
+                    <form className='pokemon-form'>
+                    <h2>{pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}</h2>
+                    <p>Type(s): {pokemonData.types.map((type) => type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)).join(', ')}</p>
                     <div>
-                        <h3>Select a Sprite:</h3>
-                        <img 
-                            src={selectedSprite || ''}
-                            alt="Pokemon Sprite" 
-                        />
-                        <button onClick={() => handleSpriteSelect(pokemonData!.sprites.front_default)}>Default</button>
-                        <button onClick={() => handleSpriteSelect(pokemonData!.sprites.front_shiny)}>Shiny</button>
+                        {/* <h3>Select Sprite:</h3> */}
+                        <img src={selectedSprite || ''} alt="Pokemon Sprite" />
+                        <button type='button' className="default-button"onClick={() => handleSpriteSelect(pokemonData.sprites.front_default)}>Default</button>
+                        <button type ='button'className="shiny-button"onClick={() => handleSpriteSelect(pokemonData.sprites.front_shiny)}>Shiny</button>
                     </div>
-                    
+                    <div>
+            {/* Render the GenderSelector component */}
+            <GenderSelector onSelect={handleGenderSelection} />
+        </div>
                     <TeraTypeSelector setSelectedTeraType={setSelectedTeraType} selectedTeraType={selectedTeraType}></TeraTypeSelector>
                     <PokemonNatureSelector setCurrentNature={setCurrentNature} currentNature={currentNature}></PokemonNatureSelector>
-                    <AbilitiesSelector abilityUrls={pokemonData!.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
+                    <AbilitiesSelector abilityUrls={pokemonData.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
                     <LevelSelector currentLevel={currentLevel} setCurrentLevel={setCurrentLevel}></LevelSelector>
                     <PokemonIVEVRenderer 
                         hp={currentIVs.hp!}
@@ -243,16 +291,29 @@ const PokemonTeamBuilder: React.FC = () => {
                         onChangeSpecialDefense={(value) => handleIVChange('special_defense', value!)}
                         onChangeSpeed={(value) => handleIVChange('speed', value!)}
                         >
-                        </PokemonIVEVRenderer>
-                    <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
-                    <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
-                    <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>
-                    <MoveSlotSelector moveNames={pokemonData!.moves.map((move) => move.move.name)} selectedMove={move4} setSelectedMove={setMove4}></MoveSlotSelector>
+                    </PokemonIVEVRenderer>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={pokemonData.moves.map((move) => move.move.name)} selectedMove={move4} setSelectedMove={setMove4}></MoveSlotSelector>
+                    </div>
+                    </form>
                 </div>
             )}
+                <div>
+        <audio autoPlay loop>
+          <source src={musicFile} type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
         </div>
     )
 };  
 
 
 export default PokemonTeamBuilder
+function setSelectedGender(gender: string) {
+    throw new Error('Function not implemented.');
+}
+
