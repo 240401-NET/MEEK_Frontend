@@ -1,13 +1,36 @@
 import './Home.css'
 import "./HomePage.css"
 import "./TrainerPage.css"
-import React from 'react'
+import React  from 'react'
 import { useAuth } from '../context/AuthContext'
 import { NavLink as Link } from 'react-router-dom'
 import { UserLogout } from '../services/userServices'
+// import { getAllTrainerTeams, createATeam, UpdateATeam, DeleteATeam } from '../services/TrainerServices'
+// import { CreateTeamInterface } from '../models/TrainerApiInterface'
 
 export const Home : React.FC = () =>{
     const {isLoggedIn, logoutUser} = useAuth()
+
+    // const handleGetAllTeams = async () => {
+    //     const response = await getAllTrainerTeams();
+    //     console.log(response)   
+    // }
+
+    // const handlePostATeam = async () => {
+    //     const response = await createATeam();
+    //     console.log(response);
+    // }
+
+    // const handleUpdateATeam = async () => {
+    //     const response = await UpdateATeam();
+    //     console.log(response);
+    // }
+
+    // // const handleDeleteATeam = async () => {
+    // //     const response = await DeleteATeam();
+    // //     console.log(response);
+    // // }
+    
     return (
         <>
             <div className="body">
