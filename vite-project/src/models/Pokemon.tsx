@@ -34,27 +34,29 @@ export interface Pokemon {
 
 export interface PokemonTeamMember {
     
-    pokemonData : Pokemon | null,
     pkmApiId: number,
-    nickname: string | null,
-    custom_id: string,
+    name: string, 
+    nickname: string,
     level: number,
-    chosenAbilityId: number,
+    chosenAbility: string,
     gender: boolean,
-    isShiny: boolean | null;
-    teraType: string | null;
-    heldItemId: number,
-    pokemonTeamId: number,
+    isShiny: boolean,
+    teraType: string,
+    heldItem: string,
     rosterOrder: number,
-    nature: string | null,
-    moves: Move[],
-    stats: Stat[],
+    nature: string
+    pokemonMoveSet: MoveSet,
+    pokemonStats: StatImplementation[],
 }
 
 export interface PokemonTeam {
+    name: string,
+    pokemonTeamMembers: PokemonTeamMember[]
+}
+
+export interface BackEndPokemonTeamInterface {
     id: number,
     name: string,
-    trainerId: number,
     pokemonTeamMembers: PokemonTeamMember[]
 }
 
@@ -68,8 +70,21 @@ export interface Stat{
     Total: number,
 }
 
+export interface StatImplementation {
+    effort: number,
+    individual: number,
+    name: string
+}
+
 export interface Move {
     id: number,
     name: string | null,
     url: string | null,
+}
+
+export interface MoveSet {
+    move1: string,
+    move2: string,
+    move3: string,
+    move4: string,
 }
