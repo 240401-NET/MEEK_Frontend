@@ -42,7 +42,7 @@ const AbilitiesSelector : React.FC<Props> = ({abilityUrls, selectedAbility, setS
             }
         };
         fetchAbilityData();
-    },[abilityUrls])
+    }, [abilityUrls])
 
     return (
         <div>

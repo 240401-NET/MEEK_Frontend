@@ -3,7 +3,7 @@ export const UserLogin = (
     username: string, 
     // email: string, 
     password: string ) => {
-        const loginURL = `http://localhost:5177/login?useCookies=true&useSessionCookies=true`;
+        const loginURL = `http://localhost:5177/login`;
         return fetch(loginURL, {
             method: "POST",
             mode: 'cors',
@@ -16,7 +16,7 @@ export const UserLogin = (
                 "Content-type": "application/json"
                 }
             })
-            .then (response =>{
+            .then (response => {
                 if(response.ok) {
                     console.log("Response", response);
                     // window.alert("SignIn successful");

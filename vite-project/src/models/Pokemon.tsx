@@ -88,3 +88,52 @@ export interface MoveSet {
     move3: string,
     move4: string,
 }
+
+export const MoveSetInitiailState: MoveSet = {
+    move1: "",
+    move2: "",
+    move3: "",
+    move4: "",
+}
+
+export interface PokemonBackEndApiCall {
+    id: number,
+    name: string,
+    pokemonBaseStats: 
+        {
+            id: number,
+            name: string,
+            baseStat: number,
+            url: string,
+            pkmApiId: number
+        } [],
+    pokemonSprite:
+        {
+            front_default: string,
+            front_shiny: string,
+            front_female: string,
+            front_shiny_female: string,
+            pkmApiId: number
+        },
+    abilities:
+        {
+            id: number,
+            isHidden: boolean,
+            slot: number,
+            name: string,
+            url: string
+        } [],
+    moves: 
+        {
+            id: number,
+            name: string,
+            url: string
+        } [],
+    types: 
+        {
+            id: number,
+            slot: number,
+            url: string,
+            name: string
+        } [],
+}

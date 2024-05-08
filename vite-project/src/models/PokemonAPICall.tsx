@@ -1,5 +1,5 @@
 export const fetchPokemonDataFromAPI  = (pokemonName: string) => {
-    const url :string = `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
+    const url :string = `http://localhost:5177/pokemon/name/${pokemonName.toLowerCase()}`
     return fetch(url)
         .then( response => {
             // console.log(url)

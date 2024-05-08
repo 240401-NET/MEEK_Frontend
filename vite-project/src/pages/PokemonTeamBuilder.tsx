@@ -221,7 +221,7 @@ const PokemonTeamBuilder: React.FC = () => {
     };
 
        // Function to handle gender selection
-       const handleGenderSelection = (gender: string) => {
+    const handleGenderSelection = (gender: string) => {
         setSelectedGender(gender);
     };
 
@@ -234,9 +234,9 @@ const PokemonTeamBuilder: React.FC = () => {
                 <button>Logout</button>
             </Link>
             <form onSubmit={handleSearch} className="custom-form">
-    <input type="text" placeholder='Enter Pokemon Name' onChange={(e) => setSearchedPokemon(e.target.value)}className="custom-input" />
-    <button type='submit' className="search-button">Search</button>
-    <button type='submit' id = "save-button" className="save-button" onClick={(handleSavePokemon)}>Save</button>
+        <input type="text" placeholder='Enter Pokemon Name' onChange={(e) => setSearchedPokemon(e.target.value)}className="custom-input" />
+        <button type='submit' className="search-button">Search</button>
+        <button type='submit' id = "save-button" className="save-button" onClick={(handleSavePokemon)}>Save</button>
             </form>
             {savedPokemonTeam && savedPokemonTeam.pokemons.length > 0 && (
     <div>
@@ -270,9 +270,9 @@ const PokemonTeamBuilder: React.FC = () => {
                         <button type ='button'className="shiny-button"onClick={() => handleSpriteSelect(pokemonData.sprites.front_shiny)}>Shiny</button>
                     </div>
                     <div>
-            {/* Render the GenderSelector component */}
-            <GenderSelector onSelect={handleGenderSelection} />
-        </div>
+                        {/* Render the GenderSelector component */}
+                        <GenderSelector onSelect={handleGenderSelection} />
+                    </div>
                     <TeraTypeSelector setSelectedTeraType={setSelectedTeraType} selectedTeraType={selectedTeraType}></TeraTypeSelector>
                     <PokemonNatureSelector setCurrentNature={setCurrentNature} currentNature={currentNature}></PokemonNatureSelector>
                     <AbilitiesSelector abilityUrls={pokemonData.abilities.map(ability => ability.ability.url)} selectedAbility={ability} setSelectedAbility={setAbility}></AbilitiesSelector>
@@ -313,6 +313,7 @@ const PokemonTeamBuilder: React.FC = () => {
 
 
 export default PokemonTeamBuilder
+
 function setSelectedGender(gender: string) {
     throw new Error('Function not implemented.');
 }

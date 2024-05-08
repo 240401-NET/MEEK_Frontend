@@ -5,7 +5,7 @@ import React  from 'react'
 import { useAuth } from '../context/AuthContext'
 import { NavLink as Link } from 'react-router-dom'
 import { UserLogout } from '../services/userServices'
-// import { getAllTrainerTeams, createATeam, UpdateATeam, DeleteATeam } from '../services/TrainerServices'
+import { getAllTrainerTeams, createATeam, UpdateATeam, DeleteATeam } from '../services/TrainerServices'
 // import { CreateTeamInterface } from '../models/TrainerApiInterface'
 
 export const Home : React.FC = () =>{
@@ -42,6 +42,7 @@ export const Home : React.FC = () =>{
                                 <Link to ="/trainer">
                                     <button>View all teams</button>
                                 </Link>
+                                {/* <button onClick={() => handleGetAllTeams()}>why</button> */}
                                 <br />
                                 <Link to="/pokemonteambuilder">
                                     <button>Create New Team</button>

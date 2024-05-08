@@ -38,7 +38,7 @@ export function TrainerPage() {
         if (ifCreateTeam) {
             try {
                 const obj = JSON.parse(createTeamResponse)
-                localStorage.setItem(`${obj.name}-${obj.id}`, createTeamResponse);
+                localStorage.setItem(`${obj.name}-${obj.id}-pokemonTeam`, createTeamResponse);
                 window.alert(`${teamName} sucessfully created!`)
             }
             catch (error) {

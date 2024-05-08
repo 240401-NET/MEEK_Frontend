@@ -1,7 +1,7 @@
 import { PokemonTeamMember } from "../models/Pokemon";
 
-export const getAllTrainerTeams = async () => {
-    return await fetch ('http://localhost:5177/Team', {
+export const getAllTrainerTeams =  () => {
+    return fetch ('http://localhost:5177/Team', {
         mode: 'cors',
         credentials: "include",
         headers: {
