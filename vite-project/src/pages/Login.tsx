@@ -3,6 +3,7 @@ import "./HomePage.css"
 import { useAuth } from '../context/AuthContext'
 import { LoginFormInterface } from '../models/UserInterfaces'
 import { NavLink as Link } from 'react-router-dom'
+import musicFile from "../assets/music.mp3";
 
 export const Login : React.FC<LoginFormInterface> = () =>{
     const {loginUser} = useAuth()
@@ -30,7 +31,7 @@ export const Login : React.FC<LoginFormInterface> = () =>{
                         <div className='input-group'>
 
                             <div className='input-field'>
-                                <i className="fa-solid fa-user-plus"></i>
+                                <i className="fa-solid fa-user"></i>
                                 <input 
                                     type="text"
                                     id="username"
@@ -73,7 +74,12 @@ export const Login : React.FC<LoginFormInterface> = () =>{
                     </form>
                 </div>
             </div>
-                
+            <div>
+        <audio autoPlay loop>
+          <source src={musicFile} type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
         </>
     )
 }

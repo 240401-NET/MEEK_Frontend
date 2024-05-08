@@ -12,7 +12,7 @@ import GenderSelector from '../components/pokemonComponents/GenderSelector';
 import { NavLink as Link } from 'react-router-dom';
 import HeldItemList from '../components/pokemonComponents/HeldItemList';
 import './PokemonTeamBuilder.css'
-import musicFile from "../assets/music.mp3";
+import musicFile from "../assets/musicTwo.mp3";
 // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
 
 const PokemonTeamBuilder: React.FC = () => {
