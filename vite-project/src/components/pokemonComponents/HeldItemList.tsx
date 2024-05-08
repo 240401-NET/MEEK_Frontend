@@ -6,7 +6,11 @@ interface HeldItem {
     url: string
 }
 
-const HeldItemList : React.FC = () => {
+interface itemProps {
+    handleItemSelection: (itemName: string) => void
+}
+
+const HeldItemList : React.FC<itemProps> = ({handleItemSelection}) => {
     
     // useState statements to set intial state of all these state variables
     const [heldItems, setItems] = useState<HeldItem[]>([]);
@@ -68,10 +72,18 @@ const HeldItemList : React.FC = () => {
         item.name.toLowerCase().includes(searchedItem.toLowerCase())
     )
 
-    const handleItemSelection = (itemName : string) => {
+    const handleItemSelections = (itemName : string) => {
         setSelectedItem(itemName);
         setSearchedItem('');
     }
+
+    const button = document.querySelector("#show-all-items");
+    button!.addEventListener ("click", onClick, false);
+    function onClick (event : any) {
+        event.preventDefault();
+        handleShowAllItems();
+    }
+
 
     // handlers for opening and closing modal of items.
     const handleShowAllItems = () => {
@@ -96,7 +108,7 @@ const HeldItemList : React.FC = () => {
             )}
             {!searchedItem && (
                 <div>
-                    <button onClick={handleShowAllItems}>Show All Items</button>
+                    <button id="show-all-items"onClick={handleShowAllItems}>Show All Items</button>
                 </div>  
             )}
             {showAllItems && (
@@ -106,7 +118,7 @@ const HeldItemList : React.FC = () => {
                         <h2>All Items</h2>
                         <ul>
                             {heldItems.map((item, index) =>
-                                <li key={index} onClick={() => {handleCloseModal(), handleItemSelection(item.name) }}>{item.name}</li>
+                                <li key={index} onClick={() => {handleCloseModal(), handleItemSelection(item.name), handleItemSelections(item.name) }}>{item.name}</li>
                             )}
                         </ul>
                     </div>

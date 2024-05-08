@@ -11,6 +11,7 @@ import LevelSelector from '../components/pokemonComponents/PokemonLevel'
 import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS'
 import MoveSlotSelector from '../components/pokemonComponents/MoveSlotSelector'
 import StatComponent from "../components/pokemonComponents/StatComponent"
+import HeldItemList from "../components/pokemonComponents/HeldItemList"
 
 const initialPreviouslySavedTeamState : BackEndPokemonTeamInterface = {
     id: 0,
@@ -148,6 +149,10 @@ const TeamCreator : React.FC = () => {
         setCurrentEVs((prevIVs) => ({...prevIVs, [stat] : value}))
     }
 
+    const handleItemSelection = (itemName: string) =>{
+        setHeldItem(itemName)
+    }
+
     const SetsArray = () => {
         if (searchedPokemonReponseData) {
             const APIDatastatsArray = searchedPokemonReponseData?.pokemonBaseStats.map((stat) => stat);
@@ -224,7 +229,7 @@ const TeamCreator : React.FC = () => {
         setPokemonStats([]);
         
     };
-    console.log(pkmApiId, isShiny, level, chosenAbility, nature, teraType, gender, move1, move2, move3, move4, currentEVs, currentIVs, APIStatsArray, pokemonStats)
+    console.log(heldItem)
     
     return (
         <div className="page-container">
@@ -282,6 +287,7 @@ const TeamCreator : React.FC = () => {
                     <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move4} setSelectedMove={setMove4}></MoveSlotSelector>
+                    <HeldItemList handleItemSelection={handleItemSelection}></HeldItemList>
                     </div>
                     </form>
                 </div>
