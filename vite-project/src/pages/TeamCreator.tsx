@@ -1,7 +1,7 @@
 import "./PokemonTeamBuilder.css"
 import React, { useEffect, useState} from 'react'
 import { NavLink as Link } from 'react-router-dom'
-import { BackEndPokemonTeamInterface, MoveSet, MoveSetInitiailState, PokemonBackEndApiCall, PokemonTeamMember, StatImplementation } from '../models/Pokemon'
+import { BackEndPokemonTeamInterface, EVStats, IVStats, MoveSet, MoveSetInitiailState, PokemonBackEndApiCall, PokemonTeamMember, Stat, StatImplementation, initialEVState, initialIVState } from '../models/Pokemon'
 import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
 import GenderSelector from '../components/pokemonComponents/GenderSelector'
 import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector'
@@ -10,6 +10,7 @@ import AbilitiesSelector from '../components/pokemonComponents/AbilitiesSelector
 import LevelSelector from '../components/pokemonComponents/PokemonLevel'
 import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS'
 import MoveSlotSelector from '../components/pokemonComponents/MoveSlotSelector'
+import StatComponent from "../components/pokemonComponents/StatComponent"
 
 const initialPreviouslySavedTeamState : BackEndPokemonTeamInterface = {
     id: 0,
@@ -44,13 +45,24 @@ const TeamCreator : React.FC = () => {
     const [rosterOrder, setRosterOrder] = useState<number>(0);
     const [nature, setNature] = useState<string>('');
     const [pokemonMoveSet, setPokemonMoveSet] = useState<MoveSet>(MoveSetInitiailState);
+    const [pokemonStats, setPokemonStats] = useState<StatImplementation[]>([]);
+
+    // maintain stats identity:
+    const [APIStatsArray, setAPIStatsArray] = useState<Stat[]>([]);
+    const [currentIVs, setCurrentIVs] = useState<IVStats>(initialIVState);
+    const [currentEVs, setCurrentEVs] = useState<EVStats>(initialEVState);
+
+    // pass in pokemon stats instead
+    // const [statsArray, setStatsArray] = useState<StatImplementation[]>([])
+
+    // controls isShiny data via conditional
+    const [sprite, setSprite] = useState<string>('')
+
+    // defines a move for a moveSet interface
     const [move1, setMove1] = useState<string>('');
     const [move2, setMove2] = useState<string>('');
     const [move3, setMove3] = useState<string>('');
     const [move4, setMove4] = useState<string>('');
-    const [pokemonStats, setPokemonStats] = useState<StatImplementation[]>([]);
-    const [sprite, setSprite] = useState<string>('')
-
     // key signature to search local storage for specific key ending in:
     const localStorageSignature = '-pokemonTeam';
     const url : string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
@@ -59,8 +71,14 @@ const TeamCreator : React.FC = () => {
     useEffect(() => {
         loadSpecificTrainerTeam();
     }, [previouslySavedTeam, pokemonTeamId, searchedPokemonReponseData, pkmApiId, isShiny, gender, nature,
-        chosenAbility, teraType, heldItem, rosterOrder, pokemonMoveSet, move1, move2, move3, move4, pokemonStats, sprite,
+        chosenAbility, teraType, heldItem, rosterOrder, pokemonMoveSet, pokemonStats, sprite,
+        currentIVs, currentEVs, move1, move2, move3, move4, 
     ])
+
+    useEffect(() => {
+        if(currentEVs !== initialEVState && currentIVs !== initialIVState)
+        SetsArray()
+    }, [currentEVs, currentIVs, APIStatsArray, pokemonStats])
 
     
     // Load Pokemon Team Item from local storage and sets it to a state variable that we track
@@ -94,6 +112,7 @@ const TeamCreator : React.FC = () => {
             setSearchedPokmonResponseData(responseData);
             setSprite(responseData.pokemonSprite.front_default);
             setPkmApiId(responseData.id);
+            setName(responseData.name);
             clearPageData();
         } catch (error) {
             console.log("Can't find pokemon", error)
@@ -119,6 +138,41 @@ const TeamCreator : React.FC = () => {
     const handleGenderSelection = (gender: boolean) => {
         setGender(gender);
     };
+
+    // handles stat props
+    const handleIVStatsArrary = (stat: string, value: number ) =>{
+        setCurrentIVs((prevIVs) => ({...prevIVs, [stat] : value}))
+    
+    }
+    const handleEVStatsArrary = (stat: string, value: number ) =>{
+        setCurrentEVs((prevIVs) => ({...prevIVs, [stat] : value}))
+    }
+
+    const SetsArray = () => {
+        if (searchedPokemonReponseData) {
+            const APIDatastatsArray = searchedPokemonReponseData?.pokemonBaseStats.map((stat) => stat);
+            if (JSON.stringify(APIDatastatsArray) !== JSON.stringify(APIStatsArray)){
+                setAPIStatsArray(APIDatastatsArray)
+            }
+            const combinedStatsArray  = APIStatsArray.map((stat) => {
+                const evValue = currentEVs[stat.name as keyof EVStats]
+                const ivValue = currentIVs[stat.name as keyof IVStats]
+                const urlParts = stat.url!.split('/');
+                const idString = urlParts[urlParts.length - 2];
+                return {
+                    id: parseInt(idString),
+                    effort: evValue,
+                    individual: ivValue,
+                    name: stat.name,
+                    url: stat.url,
+                    base_stat: stat.baseStat
+                    }
+            })
+            if (JSON.stringify(combinedStatsArray) !== JSON.stringify(pokemonStats)){
+                setPokemonStats(combinedStatsArray!)
+            }
+        }
+    }
 
     const deletePokemon = (rosterOrder : number) => {
         // Filter out the Pokémon with the specified ID from the team
@@ -170,14 +224,14 @@ const TeamCreator : React.FC = () => {
         setPokemonStats([]);
         
     };
-    console.log(pkmApiId, isShiny, level, chosenAbility, nature, teraType, gender, move1, move2, move3, move4)
+    console.log(pkmApiId, isShiny, level, chosenAbility, nature, teraType, gender, move1, move2, move3, move4, currentEVs, currentIVs, APIStatsArray, pokemonStats)
     
     return (
         <div className="page-container">
         <Link to="/">
             <button>home</button>
         </Link>
-        <Link to="signin">
+        <Link to="/signin">
             <button>Logout</button>
         </Link>
         <form onSubmit={handleSearch} className="custom-form">
@@ -222,21 +276,7 @@ const TeamCreator : React.FC = () => {
                     <PokemonNatureSelector setCurrentNature={setNature} currentNature={nature}></PokemonNatureSelector>
                     <AbilitiesSelector abilityUrls={searchedPokemonReponseData.abilities.map(ability => ability.url)} selectedAbility={chosenAbility} setSelectedAbility={setChosenAbility}></AbilitiesSelector>
                     <LevelSelector currentLevel={level} setCurrentLevel={setLevel}></LevelSelector>
-                    {/* <PokemonIVEVRenderer 
-                        hp={currentIVs.hp!}
-                        attack={currentIVs.attack!}
-                        defense={currentIVs.defense!}
-                        special_attack={currentIVs.special_attack!}
-                        special_defense={currentIVs.special_defense!}
-                        speed={currentIVs.speed!}
-                        onChangeHP={(value) => handleIVChange('hp', value!)}
-                        onChangeAttack={(value) => handleIVChange('attack', value!)}
-                        onChangeDefense={(value) => handleIVChange('defense', value!)}
-                        onChangeSpecialAttack={(value) => handleIVChange('special_attack', value!)}
-                        onChangeSpecialDefense={(value) => handleIVChange('special_defense', value!)}
-                        onChangeSpeed={(value) => handleIVChange('speed', value!)}
-                        >
-                    </PokemonIVEVRenderer> */}
+                    <StatComponent currentEVs={currentEVs} currentIVs={currentIVs} handleEVStatsArrary={handleEVStatsArrary} handleIVStatsArrary={handleIVStatsArrary}></StatComponent>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
