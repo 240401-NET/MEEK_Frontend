@@ -71,11 +71,11 @@ export function TrainerPage() {
     
         textContent += "Pokemon:\n\n";
         pokemonTeamMembers.forEach((poke: { pkmApiId: number, name: string, nickname: string, level: number, gender: boolean; isShiny: boolean, teraType: string, heldItem: string, chosenAbility: string; rosterOrder: number, nature: string, pokemonMoveSet: MoveSet, pokemonStats: StatImplementation[]}) => {
-            textContent += `${poke.name}`;
-            textContent += ` ${poke.gender}`;
-            textContent += ` @ ${poke.heldItem}\n`;
-            textContent += `Ability: ${poke.chosenAbility}\n`;
-            textContent += `Shiny: ${poke.isShiny}\n`;
+            textContent += `${poke.name.replace(/-/g, ' ').replace(/(?:^|\s)\S/g, char => char.toUpperCase())}`;
+            textContent += poke.gender ? ' (M)' : ' (F)';
+            textContent += ` @ ${poke.heldItem.replace(/-/g, ' ').replace(/(?:^|\s)\S/g, char => char.toUpperCase())}\n`;
+            textContent += `Ability: ${poke.chosenAbility.replace(/-/g, ' ').replace(/(?:^|\s)\S/g, char => char.toUpperCase())}\n`;
+            textContent += `Shiny: ${poke.isShiny ? 'Yes' : 'No'}\n`;
             textContent += `Tera Type: ${poke.teraType}\n`;
             textContent += `EVs: ${poke.pokemonStats.filter(stat => stat.effort > 0).map((stat) => {
                 let statAbbreviation = stat.name;
@@ -130,7 +130,7 @@ export function TrainerPage() {
             textContent += `${poke.nature} Nature\n`;
             for (const key in poke.pokemonMoveSet) {
                 if (Object.prototype.hasOwnProperty.call(poke.pokemonMoveSet, key) && key !== 'pkmTmId') {
-                  textContent += `- ${poke.pokemonMoveSet[key as keyof typeof poke.pokemonMoveSet]}\n`;
+                  textContent += `- ${poke.pokemonMoveSet[key as keyof typeof poke.pokemonMoveSet].replace(/-/g, ' ').replace(/(?:^|\s)\S/g, char => char.toUpperCase())}\n`;
                 }
               }
         });
@@ -290,7 +290,7 @@ export function TrainerPage() {
                                                 {team.pokemonTeamMembers.map((pokemon) => (
                                                     <div key={pokemon.name} className="pokemon-item">
                                                         <img src={pokemon.isShiny ? url+'shiny/'+`${pokemon.pkmApiId}`+".png" : url+`${pokemon.pkmApiId}`+".png"} alt={pokemon.name} />
-                                                        <p>{pokemon.name}</p>
+                                                        <p>{pokemon.name.charAt(0).toUpperCase()}{pokemon.name.slice(1)}</p>
                                                     </div>
                                                 ))}
                                             </div>
@@ -323,10 +323,10 @@ export function TrainerPage() {
                                                     <tbody>
                                                         {team.pokemonTeamMembers.map((pokemon) => (
                                                             <tr key={pokemon.name}>
-                                                                <td><a href={pokemon.name}><img src={pokemon.isShiny ? url+'shiny/'+`${pokemon.pkmApiId}`+".png" : url+`${pokemon.pkmApiId}`+".png"} alt={pokemon.name} /></a>{pokemon.name}</td>
-                                                                <td>{pokemon.gender ? "female" : "male"}</td>
-                                                                <td>{pokemon.heldItem}</td>
-                                                                <td>{pokemon.chosenAbility}</td>
+                                                                <td><a href={pokemon.name}><img src={pokemon.isShiny ? url+'shiny/'+`${pokemon.pkmApiId}`+".png" : url+`${pokemon.pkmApiId}`+".png"} alt={pokemon.name.charAt(0).toUpperCase()} /></a>{pokemon.name.charAt(0).toUpperCase()}{pokemon.name.slice(1)}</td>
+                                                                <td>{pokemon.gender ? "(F)" : "(M)"}</td>
+                                                                <td>{pokemon.heldItem.replace(/-/g, ' ').replace(/(?:^|\s)\S/g, char => char.toUpperCase())}</td>
+                                                                <td>{pokemon.chosenAbility.replace(/-/g, ' ').replace(/(?:^|\s)\S/g, char => char.toUpperCase())}</td>
                                                                 <td>{pokemon.isShiny.toString()}</td>
                                                                 <td>{pokemon.teraType}</td>
                                                                 <td>{`${pokemon.pokemonStats.filter(stat => stat.effort > 0).map((stat) => {
@@ -386,7 +386,7 @@ export function TrainerPage() {
                                                                         key !== 'pkmTmId' && (
                                                                         <React.Fragment key={key}>
                                                                             {isNaN(Number(key))}
-                                                                            {pokemon.pokemonMoveSet[key as keyof typeof pokemon.pokemonMoveSet]} <br />
+                                                                            {pokemon.pokemonMoveSet[key as keyof typeof pokemon.pokemonMoveSet].replace(/-/g, ' ').replace(/(?:^|\s)\S/g, char => char.toUpperCase())} <br />
                                                                         </React.Fragment>
                                                                         )
                                                                     ))}

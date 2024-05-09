@@ -376,12 +376,12 @@ const TeamCreator : React.FC = () => {
 
     return (
         <div className="page-container">
-        <Link to="/">
-            <button>home</button>
-        </Link>
-        <Link to="/signin">
-            <button>Logout</button>
-        </Link>
+<Link to="/" style={{ textDecoration: 'none' }}>
+    <button style={{ backgroundColor: 'blue', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', cursor: 'pointer', marginTop: '20px', marginLeft: '20px' }}>Home</button>
+</Link>
+<Link to="/signin" style={{ textDecoration: 'none' }}>
+    <button style={{ backgroundColor: 'red', color: 'white', padding: '10px 20px', border: 'none', borderRadius: '20px', cursor: 'pointer', marginTop: '20px', marginLeft: '20px' }}>Logout</button>
+</Link>
         <form onSubmit={handleSearch} className="custom-form">
             <input type="text" value={searchedPokemon} placeholder='Enter Pokemon Name' onChange={(e) => setSearchedPokemon(e.target.value)}className="custom-input" />
             <button type='submit' className="search-button">Search</button>
@@ -436,7 +436,12 @@ const TeamCreator : React.FC = () => {
                     </form>
                 </div>
             )}
-            <button onClick={() => updatePokemonTeam(previouslySavedTeam.name, previouslySavedTeam.pokemonTeamMembers)}>Save Changes</button>
+            <button
+    onClick={() => updatePokemonTeam(previouslySavedTeam.name, previouslySavedTeam.pokemonTeamMembers)}
+    className="save-button"
+>
+    Save Changes
+</button>
 
             <div>
         <audio autoPlay loop>
