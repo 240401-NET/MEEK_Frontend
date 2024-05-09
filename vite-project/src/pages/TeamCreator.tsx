@@ -391,10 +391,10 @@ const TeamCreator : React.FC = () => {
             <h3>Pokemon Team</h3>
             <ul>
                 {previouslySavedTeam.pokemonTeamMembers.map((pokemon) => (
-                    <li key={pokemon.rosterOrder} onClick={() =>loadPokemonOnClick(pokemon)}>
+                    <li key={pokemon.rosterOrder}>
                         {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} : {pokemon.teraType}
-                        <img src={pokemon.isShiny ? url+'shiny/'+`${pokemon.pkmApiId}`+".png" : url+`${pokemon.pkmApiId}`+".png"} alt={pokemon.name} />
-                        <button className="delete-button" onClick={() => deletePokemon(pokemon.rosterOrder)}></button>
+                        <img src={pokemon.isShiny ? url+'shiny/'+`${pokemon.pkmApiId}`+".png" : url+`${pokemon.pkmApiId}`+".png"} alt={pokemon.name}  onClick={() =>loadPokemonOnClick(pokemon)}/>
+                        <button className="delete-button" onClick={() => {deletePokemon(pokemon.rosterOrder), clearPageData()}}></button>
                     </li>
                 ))}
             </ul>
