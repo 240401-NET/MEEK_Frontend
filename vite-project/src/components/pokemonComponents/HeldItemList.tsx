@@ -77,12 +77,12 @@ const HeldItemList : React.FC<itemProps> = ({handleItemSelection}) => {
         setSearchedItem('');
     }
 
-    // const button = document.querySelector("#show-all-items");
-    // button!.addEventListener ("click", onClick, false);
-    // function onClick (event : any) {
-    //     event.preventDefault();
-    //     handleShowAllItems();
-    // }
+    const button = document.querySelector("#show-all-items");
+    button?.addEventListener ("click", onClick, false);
+    function onClick (event : any) {
+        event.preventDefault();
+        handleShowAllItems();
+    }
 
 
     // handlers for opening and closing modal of items.

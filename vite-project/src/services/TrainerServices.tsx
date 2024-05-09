@@ -43,13 +43,12 @@ export const createATeam = async (teamName: string) => {
         })
 }
 
-export const UpdateATeam = async (id: number, name: string, pokemonTeamMembers : PokemonTeamMember[]) => {
+export const UpdateATeam = async (name: string, pokemonTeamMembers : PokemonTeamMember[]) => {
     return await fetch ('http://localhost:5177/Team', {
-        method: 'Put',
+        method: 'POST',
         mode: 'cors',
         credentials: "include",
         body: JSON.stringify({
-            id: id,
             name: name,
             pokemonTeamMembers: pokemonTeamMembers,
         }),

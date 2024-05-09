@@ -44,7 +44,7 @@ export const Home : React.FC = () =>{
                                 </Link>
                                 {/* <button onClick={() => handleGetAllTeams()}>why</button> */}
                                 <br />
-                                <Link to="/pokemonteambuilder">
+                                <Link to="/pokemonteamcreator">
                                     <button>Create New Team</button>
                                 </Link>
                                 <br />

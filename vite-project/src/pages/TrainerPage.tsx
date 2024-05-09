@@ -6,17 +6,18 @@ import { TrainerPageLogic } from '../models/TrainerPageLogic';
 import { NavLink as Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { UseEffectOnce } from '../services/UseEffectOnce';
-import { DeleteATeam, createATeam, getAllTrainerTeams } from '../services/TrainerServices';
-import { BackEndPokemonTeamInterface, MoveSet, PokemonTeamMember, StatImplementation } from '../models/Pokemon';
+import { DeleteATeam, getAllTrainerTeams } from '../services/TrainerServices';
+import { BackEndPokemonTeamInterface, BackEndPokemonTeamInterfaces, MoveSet, PokemonTeamMember, StatImplementation } from '../models/Pokemon';
 import { UserLogout } from '../services/userServices';
 
 export function TrainerPage() {
     const {user, token} = useAuth();
     const navigate = useNavigate();
-    const [teamDatas, setTeamDatas] = useState<BackEndPokemonTeamInterface[]>([])
+    const [teamDatas, setTeamDatas] = useState<BackEndPokemonTeamInterfaces[]>([])
     const [onFirstLoad, setOnFirstLoad] = useState<boolean>(true);
     const [createTeamResponse, setCreateTeamReSponse] = useState<string>('')
     const [ifCreateTeam, setIfCreateTeam] = useState<boolean>(false)
+    const [teamName, setTeamName] = useState<string>("")
     // const [displayedTeams, setDisplayedTeams] = useState<number>(5)
 
     // calls custom use effect function to redirect page and pop up windows alert only once!
@@ -32,41 +33,32 @@ export function TrainerPage() {
 
     useEffect (() => {
         loadTrainerTeams();
-    }, [teamDatas, createTeamResponse])
+    }, [teamDatas])
 
     useEffect(() => {
         if (ifCreateTeam) {
-            try {
-                const obj = JSON.parse(createTeamResponse)
-                localStorage.setItem(`${obj.name}-${obj.id}-pokemonTeam`, createTeamResponse);
-                window.alert(`${teamName} sucessfully created!`)
-            }
-            catch (error) {
-                console.error(error)
-            }
-            finally {
+                // const obj = JSON.parse(createTeamResponse)
+                localStorage.setItem(`${teamName}-pokemonTeam`, teamName);
+                // window.alert(`${teamName} sucessfully created!`)
                 setIfCreateTeam(false)
-                navigate('/pokemonTeamBuilder');
+                navigate('/teamcreator');
             }
-        }
     }, [ifCreateTeam])
     
 
     const loadTrainerTeams = async () => {
         if(onFirstLoad){
             const response = await getAllTrainerTeams();
-            console.log(response);
             if (JSON.stringify(response) !== JSON.stringify(teamDatas)){
                 setTeamDatas(response);
             }
         }
         setOnFirstLoad(false);
-        console.log(teamDatas)
     }
 
     const url : string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
-    const downloadText = (teamDatas: BackEndPokemonTeamInterface) => {
+    const downloadText = (teamDatas: BackEndPokemonTeamInterfaces) => {
         // Extract team data
         const { id, name, pokemonTeamMembers } = teamDatas as { id: number; name: string; pokemonTeamMembers: PokemonTeamMember[] };
         // Create text content
@@ -208,19 +200,17 @@ export function TrainerPage() {
       };
 
     const {logoutUser} = useAuth();
-    const [teamName, setTeamName] = useState<string>('')
 
     //   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-      const handleCreateTeam = async (teamName :string) => {
-        // Handle saving the team to the database
-        console.log('Team Name:', teamName);
-        // Perform your POST request here
-        const response = await createATeam(teamName);
-        console.log(response);
-        console.log(JSON.stringify(response))
-        setCreateTeamReSponse(JSON.stringify(response))
+      const handleCreateTeam = (teamName :string) => {
         setIfCreateTeam(true);
+        setTeamName(teamName);
+        // Handle saving the team to the database
+        // Perform your POST request here
+        // const response = await createATeam(teamName);
+        // console.log(JSON.stringify(response))
+        // setCreateTeamReSponse(JSON.stringify(response))
         // localStorage.setItem(`${response.name}-${response.id}`, createTeamResponse);
         // window.alert(`${teamName} sucessfully created!`)
       };

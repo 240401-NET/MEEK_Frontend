@@ -56,6 +56,11 @@ export interface PokemonTeam {
 }
 
 export interface BackEndPokemonTeamInterface {
+    // id?: number,
+    name: string,
+    pokemonTeamMembers: PokemonTeamMember[]
+}
+export interface BackEndPokemonTeamInterfaces {
     id: number,
     name: string,
     pokemonTeamMembers: PokemonTeamMember[]
