@@ -8,10 +8,12 @@ import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector'
 import { PokemonNatureSelector } from '../components/pokemonComponents/PokemonNature'
 import AbilitiesSelector from '../components/pokemonComponents/AbilitiesSelector'
 import LevelSelector from '../components/pokemonComponents/PokemonLevel'
-import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS'
+// import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS'
 import MoveSlotSelector from '../components/pokemonComponents/MoveSlotSelector'
 import StatComponent from "../components/pokemonComponents/StatComponent"
 import HeldItemList from "../components/pokemonComponents/HeldItemList"
+// import { updatePokemonTeam } from "../utils/PokemonTeamBuilderUtils"
+import { UpdateATeam } from "../services/TrainerServices"
 
 const initialPreviouslySavedTeamState : BackEndPokemonTeamInterface = {
     id: 0,
@@ -22,12 +24,11 @@ const initialPreviouslySavedTeamState : BackEndPokemonTeamInterface = {
 const TeamCreator : React.FC = () => {
     // sets up the initial load state of the webpage:
     const [firstLoad, setFirstLoad] = useState<boolean>(true);
-    const [editMode, setEditMode] = useState<boolean>(true);
+    const [editMode, setEditMode] = useState<boolean>(false);
     const [previouslySavedTeam, setPreviouslySavedTeam] = useState<BackEndPokemonTeamInterface>(initialPreviouslySavedTeamState);
     const [pokemonTeamId, setPokemonTeamId] = useState<number>(0);
     const [pokemonTeamName, setPokemonTeamName] = useState<string>('');
     const [pokemonTeamMembers, setPokemonTeamMembers] = useState<PokemonTeamMember[]>([]);
-    const [currentlySavedPokemonTeamMemembers, setCurrentlySavedPokemonTeamMembers] = useState<PokemonTeamMember[]>([]);
     const [searchedPokemonReponseData, setSearchedPokmonResponseData] = useState<PokemonBackEndApiCall | null>(null)
     const [searchedPokemon, setSearchedPokemon] = useState<string>("");
     const [localStorageKey, setLocalStorageKey] = useState<string>("");
@@ -60,8 +61,8 @@ const TeamCreator : React.FC = () => {
     const [sprite, setSprite] = useState<string>('')
 
     // defines a move for a moveSet interface
-    const [move1, setMove1] = useState<string>('');
-    const [move2, setMove2] = useState<string>('');
+    const [move_1, setMove1] = useState<string>('');
+    const [move_2, setMove2] = useState<string>('');
     const [move3, setMove3] = useState<string>('');
     const [move4, setMove4] = useState<string>('');
     // key signature to search local storage for specific key ending in:
@@ -71,15 +72,30 @@ const TeamCreator : React.FC = () => {
     // use effect call that calls loadspe
     useEffect(() => {
         loadSpecificTrainerTeam();
-    }, [previouslySavedTeam, pokemonTeamId, searchedPokemonReponseData, pkmApiId, isShiny, gender, nature,
+    }, [ pokemonTeamId, pkmApiId, isShiny, gender, nature,
         chosenAbility, teraType, heldItem, rosterOrder, pokemonMoveSet, pokemonStats, sprite,
-        currentIVs, currentEVs, move1, move2, move3, move4, 
+        currentIVs, currentEVs, move_1, move_2, move3, move4
     ])
+    console.log(currentEVs, currentIVs)
+    console.log(pokemonStats)
+    console.log(APIStatsArray)
+    useEffect(() => {
+        if(currentEVs !== initialEVState && currentIVs !== initialIVState){
+            SetsArray();
+            console.log(pokemonStats);
+        }
+    }, [searchedPokemonReponseData, currentEVs, currentIVs, APIStatsArray, pokemonStats])
 
     useEffect(() => {
-        if(currentEVs !== initialEVState && currentIVs !== initialIVState)
-        SetsArray()
-    }, [currentEVs, currentIVs, APIStatsArray, pokemonStats])
+        if (JSON.stringify(newMoveSetState) !== JSON.stringify(pokemonMoveSet))
+            {
+                setPokemonMoveSet(newMoveSetState);
+            }
+    }, [move_1 , move_2, move3, move4])
+
+    useEffect(() => {
+        console.log(previouslySavedTeam)
+    }, [previouslySavedTeam])
 
     
     // Load Pokemon Team Item from local storage and sets it to a state variable that we track
@@ -114,7 +130,6 @@ const TeamCreator : React.FC = () => {
             setSprite(responseData.pokemonSprite.front_default);
             setPkmApiId(responseData.id);
             setName(responseData.name);
-            clearPageData();
         } catch (error) {
             console.log("Can't find pokemon", error)
         }
@@ -147,6 +162,13 @@ const TeamCreator : React.FC = () => {
     }
     const handleEVStatsArrary = (stat: string, value: number ) =>{
         setCurrentEVs((prevIVs) => ({...prevIVs, [stat] : value}))
+    }
+    
+    const newMoveSetState: MoveSet = {
+        move1: move_1,
+        move2: move_2,
+        move3: move3,
+        move4: move4
     }
 
     const handleItemSelection = (itemName: string) =>{
@@ -190,8 +212,11 @@ const TeamCreator : React.FC = () => {
 
         localStorage.setItem(localStorageKey, JSON.stringify(updatedTeam));
     };
-
-    const loadPokemonOnClick = (selectedPokemon : PokemonTeamMember) => {
+    console.log(previouslySavedTeam);
+    const loadPokemonOnClick = (selectedPokemon : PokemonTeamMember, ) => {
+        setPokemonMoveSet(newMoveSetState);
+        setSprite(selectedPokemon.isShiny ? selectedPokemon.data.pokemonSprite.front_shiny : selectedPokemon.data.pokemonSprite.front_default)
+        setSearchedPokmonResponseData(selectedPokemon.data);
         setPkmApiId(selectedPokemon.pkmApiId);
         setName(selectedPokemon.name);
         setNickname(selectedPokemon.nickname);
@@ -207,9 +232,75 @@ const TeamCreator : React.FC = () => {
         setPokemonStats(selectedPokemon.pokemonStats);
         setEditMode(true);
     };
+    console.log(editMode) 
+    const handleSavePokemon = () => {
+        if (searchedPokemonReponseData ) {
+            const editedPokemon = {
+                pkmApiId: searchedPokemonReponseData.id,
+                name: searchedPokemonReponseData.name, 
+                nickname: "",
+                level: level,
+                chosenAbility: chosenAbility,
+                gender: gender,
+                isShiny: isShiny,
+                teraType: teraType,
+                heldItem: heldItem,
+                rosterOrder: rosterOrder,
+                nature: nature,
+                pokemonMoveSet: pokemonMoveSet,
+                pokemonStats: pokemonStats,
+                data: searchedPokemonReponseData
+                }
+            
+            if (editMode && previouslySavedTeam) {
+                const updatedPokemon = previouslySavedTeam.pokemonTeamMembers.map((pokemon) =>
+                    pokemon.nickname  === editedPokemon.nickname ? 
+                    pokemon: editedPokemon)
+                    const updatedTeam = {
+                        ...previouslySavedTeam,
+                        pokemonTeamMembers: updatedPokemon,
+                    }
+                setPreviouslySavedTeam(updatedTeam)
+                localStorage.setItem(localStorageKey, JSON.stringify(updatedTeam))
+            } else {
+                const newPokemon = {
+                    pkmApiId: searchedPokemonReponseData.id,
+                    name: searchedPokemonReponseData.name, 
+                    nickname: "",
+                    level: level,
+                    chosenAbility: chosenAbility,
+                    gender: gender,
+                    isShiny: isShiny,
+                    teraType: teraType,
+                    heldItem: heldItem,
+                    rosterOrder: 6 - (6 - previouslySavedTeam.pokemonTeamMembers.length ) + 1,
+                    nature: nature,
+                    pokemonMoveSet: pokemonMoveSet,
+                    pokemonStats: pokemonStats,
+                    data: searchedPokemonReponseData
+                }
+                const updatedTeam = previouslySavedTeam 
+                ? {
+                    ...previouslySavedTeam,
+                    pokemonTeamMembers: [...(previouslySavedTeam.pokemonTeamMembers || []), newPokemon]
+                }
+                : {
+                    id: pokemonTeamId,
+                    name: pokemonTeamName,
+                    pokemonTeamMembers: [newPokemon],
+                }
+                setPreviouslySavedTeam(updatedTeam)
+                localStorage.setItem(localStorageKey, JSON.stringify(updatedTeam))       
+            }
+            setEditMode(false)
+            // clearPageData();
+            console.log(previouslySavedTeam);
+        }
+    }
 
     const clearPageData = () => {
-        setDisplayPokemon(false);
+        setSearchedPokemon('');
+        setSearchedPokmonResponseData(null);
         setPkmApiId(0);
         setName('');
         setNickname('');
@@ -224,13 +315,22 @@ const TeamCreator : React.FC = () => {
         setPokemonMoveSet(MoveSetInitiailState);
         setMove1('')
         setMove2('')
-        setMove2('')
-        setMove2('')
-        setPokemonStats([]);
+        setMove3('')
+        setMove4('')
+        setCurrentIVs(initialIVState);
+        setCurrentEVs(initialEVState)
         
     };
-    console.log(heldItem)
-    
+    // console.log(newMoveSetState)
+    // console.log(pokemonMoveSet);    
+
+    console.log(searchedPokemonReponseData, pkmApiId, name, nickname, level, chosenAbility, gender, chosenAbility, teraType, nature, pokemonMoveSet, move_1)
+
+    const updatePokemonTeam = async (id: number, name: string, pokemonTeamMembers : PokemonTeamMember[])  => {
+        const response = await UpdateATeam(id, name, pokemonTeamMembers);
+        console.log(response);
+    }
+
     return (
         <div className="page-container">
         <Link to="/">
@@ -240,16 +340,16 @@ const TeamCreator : React.FC = () => {
             <button>Logout</button>
         </Link>
         <form onSubmit={handleSearch} className="custom-form">
-            <input type="text" placeholder='Enter Pokemon Name' onChange={(e) => setSearchedPokemon(e.target.value)}className="custom-input" />
+            <input type="text" value={searchedPokemon} placeholder='Enter Pokemon Name' onChange={(e) => setSearchedPokemon(e.target.value)}className="custom-input" />
             <button type='submit' className="search-button">Search</button>
-            <button type='submit' id = "save-button" className="save-button" >Save</button> {/*onClick={(handleSavePokemon)}*/}
+            <button type='submit' id = "save-button" className="save-button" onClick={(handleSavePokemon)}>Save</button> 
         </form>
         {previouslySavedTeam &&  previouslySavedTeam.pokemonTeamMembers.length > 0 && (
             <form className="pokemon-team-form">
             <h3>Pokemon Team</h3>
             <ul>
                 {previouslySavedTeam.pokemonTeamMembers.map((pokemon) => (
-                    <li key={pokemon.rosterOrder} onClick={() => loadPokemonOnClick(pokemon)}>
+                    <li key={pokemon.rosterOrder} onClick={() =>loadPokemonOnClick(pokemon)}>
                         {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)} : {pokemon.teraType}
                         <img src={pokemon.isShiny ? url+'shiny/'+`${pokemon.pkmApiId}`+".png" : url+`${pokemon.pkmApiId}`+".png"} alt={pokemon.name} />
                         <button className="delete-button" onClick={() => deletePokemon(pokemon.rosterOrder)}></button>
@@ -275,7 +375,7 @@ const TeamCreator : React.FC = () => {
                     </div>
                     <div>
                         {/* Render the GenderSelector component */}
-                        <GenderSelector onSelect={handleGenderSelection} />
+                        <GenderSelector onSelect={setGender} />
                     </div>
                     <TeraTypeSelector setSelectedTeraType={setTeraType} selectedTeraType={teraType}></TeraTypeSelector>
                     <PokemonNatureSelector setCurrentNature={setNature} currentNature={nature}></PokemonNatureSelector>
@@ -283,8 +383,8 @@ const TeamCreator : React.FC = () => {
                     <LevelSelector currentLevel={level} setCurrentLevel={setLevel}></LevelSelector>
                     <StatComponent currentEVs={currentEVs} currentIVs={currentIVs} handleEVStatsArrary={handleEVStatsArrary} handleIVStatsArrary={handleIVStatsArrary}></StatComponent>
                     <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move1} setSelectedMove={setMove1}></MoveSlotSelector>
-                    <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move2} setSelectedMove={setMove2}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move_1} setSelectedMove={setMove1}></MoveSlotSelector>
+                    <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move_2} setSelectedMove={setMove2}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move3} setSelectedMove={setMove3}></MoveSlotSelector>
                     <MoveSlotSelector moveNames={searchedPokemonReponseData.moves.map((move) => move.name)} selectedMove={move4} setSelectedMove={setMove4}></MoveSlotSelector>
                     <HeldItemList handleItemSelection={handleItemSelection}></HeldItemList>
@@ -292,9 +392,9 @@ const TeamCreator : React.FC = () => {
                     </form>
                 </div>
             )}
-
+            <button onClick={() => updatePokemonTeam(previouslySavedTeam.id, previouslySavedTeam.name, previouslySavedTeam.pokemonTeamMembers)}>Save Changes</button>
         </div>
     )
 }
 
-export default TeamCreator;
+export default TeamCreator

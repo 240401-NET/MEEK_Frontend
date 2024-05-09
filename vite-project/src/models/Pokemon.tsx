@@ -47,6 +47,7 @@ export interface PokemonTeamMember {
     nature: string
     pokemonMoveSet: MoveSet,
     pokemonStats: StatImplementation[],
+    data: PokemonBackEndApiCall
 }
 
 export interface PokemonTeam {

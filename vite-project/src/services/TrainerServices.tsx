@@ -1,4 +1,4 @@
-import { PokemonTeamMember } from "../models/Pokemon";
+import { BackEndPokemonTeamInterface, PokemonTeamMember } from "../models/Pokemon";
 
 export const getAllTrainerTeams =  () => {
     return fetch ('http://localhost:5177/Team', {
@@ -43,15 +43,15 @@ export const createATeam = async (teamName: string) => {
         })
 }
 
-export const UpdateATeam = async (id_number : number, teamName: string, updatedPokmonTeamMembersArray : PokemonTeamMember[]) => {
+export const UpdateATeam = async (id: number, name: string, pokemonTeamMembers : PokemonTeamMember[]) => {
     return await fetch ('http://localhost:5177/Team', {
         method: 'Put',
         mode: 'cors',
         credentials: "include",
         body: JSON.stringify({
-            id: id_number,
-            name : teamName,
-            pokemonTeamMembers: updatedPokmonTeamMembersArray,
+            id: id,
+            name: name,
+            pokemonTeamMembers: pokemonTeamMembers,
         }),
         headers: {
             "Content-type": "application/json"
