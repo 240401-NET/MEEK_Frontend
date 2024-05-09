@@ -125,7 +125,7 @@ const HeldItemList : React.FC<itemProps> = ({handleItemSelection}) => {
              >
                  Show All Items
              </button>
-         </div> 
+         
             )}
 {showAllItems && (
     <div className='modal'>

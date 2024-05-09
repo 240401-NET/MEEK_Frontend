@@ -3,7 +3,7 @@ import React  from 'react'
 import { useAuth } from '../context/AuthContext'
 import { NavLink as Link } from 'react-router-dom'
 import { UserLogout } from '../services/userServices'
-import { getAllTrainerTeams, createATeam, UpdateATeam, DeleteATeam } from '../services/TrainerServices'
+// import { getAllTrainerTeams, createATeam, UpdateATeam, DeleteATeam } from '../services/TrainerServices'
 import musicFile from "../assets/musicFour.mp3";
 // import { getAllTrainerTeams, createATeam, UpdateATeam, DeleteATeam } from '../services/TrainerServices'
 // import { CreateTeamInterface } from '../models/TrainerApiInterface'

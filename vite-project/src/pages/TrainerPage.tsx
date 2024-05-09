@@ -208,7 +208,7 @@ export function TrainerPage() {
 
       const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
         e.preventDefault(); // Prevent default form submission behavior
-        handleCreateTeam(teamName || "Default Team Name"); // Call function to handle team creation
+        handleCreateTeam(); // Call function to handle team creation
         setTeamName(''); // Clear the input field after submission
     };
 
