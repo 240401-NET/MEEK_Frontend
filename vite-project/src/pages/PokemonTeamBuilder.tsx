@@ -1,3 +1,4 @@
+
 // import React, { useEffect, useState} from 'react'
 // import { Pokemon } from '../models/Pokemon'
 // import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
@@ -14,6 +15,24 @@
 // import './PokemonTeamBuilder.css'
 // import musicFile from "../assets/music.mp3";
 // // import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
+
+import React, { useEffect, useState} from 'react'
+import { Pokemon } from '../models/Pokemon'
+import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
+import { PokemonTeam } from '../models/PokemonTeamsInterface';
+import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector';
+import AbilitiesSelector from '../components/pokemonComponents/AbilitiesSelector';
+import MoveSlotSelector from '../components/pokemonComponents/MoveSlotSelector';
+import {PokemonNatureSelector} from '../components/pokemonComponents/PokemonNature';
+import LevelSelector from '../components/pokemonComponents/PokemonLevel';
+import PokemonIVEVRenderer from '../components/pokemonComponents/PokemonIVEVS';
+import GenderSelector from '../components/pokemonComponents/GenderSelector';
+import { NavLink as Link } from 'react-router-dom';
+import HeldItemList from '../components/pokemonComponents/HeldItemList';
+import './PokemonTeamBuilder.css'
+import musicFile from "../assets/musicTwo.mp3";
+// import SpriteSelector from '../components/pokemonComponents/SpriteSelector';
+
 
 // const PokemonTeamBuilder: React.FC = () => {
 //     const [pokemonData , setPokemonData] = useState<Pokemon | null>(null)

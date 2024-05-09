@@ -3,6 +3,7 @@ import "./HomePage.css"
 import { useAuth } from '../context/AuthContext'
 import { SignupFormInterface } from '../models/UserInterfaces'
 import { NavLink as Link } from 'react-router-dom'
+import musicFile from "../assets/music.mp3";
 
 export const SignUp : React.FC<SignupFormInterface> = () => {
     const {register} = useAuth();
@@ -81,6 +82,12 @@ export const SignUp : React.FC<SignupFormInterface> = () => {
                     </form>
                 </div>
             </div>
+            <div>
+        <audio autoPlay loop>
+          <source src={musicFile} type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
         </>
     )
 }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './modal.css'
 import './TrainerPage.css';
 import Search from '../assets/search.png';
 import { TrainerPageLogic } from '../models/TrainerPageLogic';
@@ -9,6 +8,7 @@ import { UseEffectOnce } from '../services/UseEffectOnce';
 import { DeleteATeam, getAllTrainerTeams, getTrainerTeamById } from '../services/TrainerServices';
 import { BackEndPokemonTeamInterface, BackEndPokemonTeamInterfaces, MoveSet, PokemonTeamMember, StatImplementation } from '../models/Pokemon';
 import { UserLogout } from '../services/userServices';
+import musicFile from "../assets/musicThree.mp3";
 
 export function TrainerPage() {
     const {user, token} = useAuth();
@@ -206,6 +206,12 @@ export function TrainerPage() {
         return () => clearInterval(intervalId); // Cleanup the interval on component unmount
       };
 
+      const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        e.preventDefault(); // Prevent default form submission behavior
+        handleCreateTeam(teamName || "Default Team Name"); // Call function to handle team creation
+        setTeamName(''); // Clear the input field after submission
+    };
+
     const {logoutUser} = useAuth();
 
     //   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -233,14 +239,14 @@ export function TrainerPage() {
 
       
     return (
-        <>
-        <div>
-            <Link to='/login' id="loginBtn">
-                <button onClick={ () => {UserLogout(), logoutUser()}}>Logout</button>
-            </Link>
-        </div>
-        <div className='body'>
-            <main className="table" id="pokemon_table">
+   <>
+        <div className="containerTwo">
+        <div className="logout-container">
+           <Link to='/login' id="loginBtn">
+               <button className="logout-button" onClick={() => {UserLogout(); logoutUser();}}>Logout</button>
+           </Link>
+       </div>
+        <main className="table" id="pokemon_table">
                 <section className="table__header">
                     <h1>Pokemon Teams</h1>
                     <div className="input-group">
@@ -248,13 +254,20 @@ export function TrainerPage() {
                         <img src={Search} alt="" />
                     </div>
                     <div className="input-group">
-                        <input 
-                            type="text" 
-                            placeholder='CREATE TEAM BY ENTERING TEAM NAME' 
-                            onChange={(e) => setTeamName(e.target.value)}
-                            />
-                        <button type="submit" onClick={() => handleCreateTeam()}><img src={Search} alt="" /></button>
-                    </div>
+
+            <input
+                type="text"
+                placeholder="CREATE TEAM BY ENTERING TEAM NAME"
+                value={teamName}
+                onChange={(e) => setTeamName(e.target.value)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        handleSubmit(e);
+                    }
+                }}
+            />
+            <img src={Search} alt="" />
+        </div>
                 </section>
                 <section className="table__body">
                     <table>
@@ -390,8 +403,22 @@ export function TrainerPage() {
                         </tbody>
                     </table>
                 </section>
-                {startIndex < teamDatas.length ? <button onClick={() => setStartIndex(startIndex + 5)}>Next</button> : ''}
-                {startIndex >= 5 ? <button onClick={() => setStartIndex(startIndex - 5)}>Prev</button> : ''}
+                {startIndex + 5 < teamDatas.length && 
+    <button 
+        className="pagination-button" 
+        onClick={() => setStartIndex(startIndex + 5)}
+    >
+        Next
+    </button>
+}
+{startIndex >= 5 ? 
+    <button 
+        className="pagination-button" 
+        onClick={() => setStartIndex(startIndex - 5)}
+    >
+        Prev
+    </button> 
+: ''}
                 {/* <button className="button" onClick={() => setModalOpen(true)}>
                     Create New Team
                 </button>   
@@ -401,7 +428,13 @@ export function TrainerPage() {
                     onSave={handleSaveTeam}
                 /> */}
             </main>
-        </div> 
+        </div>
+        <div>
+        <audio autoPlay loop>
+          <source src={musicFile} type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
         </> 
     );
 }
