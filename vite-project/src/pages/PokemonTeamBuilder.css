@@ -8,6 +8,21 @@
     background-repeat: repeat-y; /* Repeat vertically */
     background-size: cover;
 }
+.home-button {
+  position: right;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  background-color: #fa0404;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 .custom-form {
     margin: 10px auto;
     margin-top: 10px;
