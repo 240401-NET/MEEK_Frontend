@@ -1,12 +1,17 @@
 import React, { useEffect, useState} from 'react';
 import '../../pages/ItemsAndMovesModel.css';
 
+
 interface HeldItem {
     name: string
     url: string
 }
 
-const HeldItemList : React.FC = () => {
+interface itemProps {
+    handleItemSelection: (itemName: string) => void
+}
+
+const HeldItemList : React.FC<itemProps> = ({handleItemSelection}) => {
     
     // useState statements to set intial state of all these state variables
     const [heldItems, setItems] = useState<HeldItem[]>([]);
@@ -60,6 +65,16 @@ const HeldItemList : React.FC = () => {
         }
     }
 
+    const [modalSearch, setModalSearch] = useState<string>('');
+
+    const handleModalSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setModalSearch(e.target.value);
+    };
+
+    const filteredHeldItems = heldItems.filter(item =>
+    item.name.toLowerCase().includes(modalSearch.toLowerCase())
+    );
+
     // Event handler for specific search input
     const handleItemSearch = (e : React.ChangeEvent<HTMLInputElement>) => {
         setSearchedItem(e.target.value)
@@ -68,10 +83,18 @@ const HeldItemList : React.FC = () => {
         item.name.toLowerCase().includes(searchedItem.toLowerCase())
     )
 
-    const handleItemSelection = (itemName : string) => {
+    const handleItemSelections = (itemName : string) => {
         setSelectedItem(itemName);
         setSearchedItem('');
     }
+
+    const button = document.querySelector("#show-all-items");
+    button!.addEventListener ("click", onClick, false);
+    function onClick (event : any) {
+        event.preventDefault();
+        handleShowAllItems();
+    }
+
 
     // handlers for opening and closing modal of items.
     const handleShowAllItems = () => {
@@ -84,7 +107,7 @@ const HeldItemList : React.FC = () => {
     // returns html text that we want to render on the screen
     return (
         <div>
-            <input type="text" placeholder='Search for holdable item...' value={searchedItem} onChange={handleItemSearch}/>
+           
             {searchedItem && (
                 <ul>
                     {filterSearchedItems.map((item, index) => (
@@ -95,26 +118,47 @@ const HeldItemList : React.FC = () => {
                 </ul>
             )}
             {!searchedItem && (
-                <div>
-                    <button onClick={handleShowAllItems}>Show All Items</button>
-                </div>  
+             <div>
+             <button 
+                 id="show-all-items"
+                 onClick={handleShowAllItems}
+                 className="show-all-items-button"
+             >
+                 Show All Items
+             </button>
+         </div> 
             )}
-            {showAllItems && (
-                <div className='modal'>
-                    <div className='modal-content'>
-                        <span className="close" onClick={handleCloseModal}>&times;</span>
-                        <h2>All Items</h2>
-                        <ul>
-                            {heldItems.map((item, index) =>
-                                <li key={index} onClick={() => {handleCloseModal(), handleItemSelection(item.name) }}>{item.name}</li>
-                            )}
-                        </ul>
-                    </div>
-                </div>
-            )}
+{showAllItems && (
+    <div className='modal'>
+        <div className='modal-content-container'>
+            <div className='modal-content'>
+                <span className="close" onClick={handleCloseModal}>&times;</span>
+                <h2>All Hold Items</h2>
+                <input type="text" placeholder="Search holdable items..." value={modalSearch} onChange={handleModalSearch} />
+                <ul className='held-items'>
+                    {filteredHeldItems.map((item, index) => {
+                        // Split the item name by spaces and hyphens
+                        const words = item.name.split(/[\s-]/);
+                        // Capitalize the first letter of each word
+                        const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+                        // Join the capitalized words back together
+                        const capitalizedItemName = capitalizedWords.join(' ');
+                        return (
+                            <li key={index} onClick={() => {handleCloseModal(), handleItemSelection(item.name), handleItemSelections(item.name) }}>
+                                {capitalizedItemName}
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
+        </div>
+    </div>
+)}
+
 
             
-            <p>Selected item: {selectedItem}</p>
+<p>Selected Item: {selectedItem.split(/[\s-]/).map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</p>
+
         </div>
     )
 }
