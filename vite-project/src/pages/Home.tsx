@@ -1,10 +1,9 @@
 import './Home.css'
-import "./HomePage.css"
-import "./TrainerPage.css"
 import React  from 'react'
 import { useAuth } from '../context/AuthContext'
 import { NavLink as Link } from 'react-router-dom'
 import { UserLogout } from '../services/userServices'
+import musicFile from "../assets/musicFour.mp3";
 // import { getAllTrainerTeams, createATeam, UpdateATeam, DeleteATeam } from '../services/TrainerServices'
 // import { CreateTeamInterface } from '../models/TrainerApiInterface'
 
@@ -40,7 +39,7 @@ export const Home : React.FC = () =>{
                         <div className='form-box'>
                             <div className='btn-group'>
                                 <Link to ="/trainer">
-                                    <button>View all teams</button>
+                                    <button>View All Teams</button>
                                 </Link>
                                 <br />
                                 <Link to="/pokemonteambuilder">
@@ -76,7 +75,14 @@ export const Home : React.FC = () =>{
                 </>
 
             )}
+            <div>
+        <audio autoPlay loop>
+          <source src={musicFile} type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
             </div>
         </>
+        
     )
 }
