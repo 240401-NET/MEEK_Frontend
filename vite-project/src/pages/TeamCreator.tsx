@@ -14,6 +14,7 @@ import StatComponent from "../components/pokemonComponents/StatComponent"
 import HeldItemList from "../components/pokemonComponents/HeldItemList"
 // import { updatePokemonTeam } from "../utils/PokemonTeamBuilderUtils"
 import { UpdateATeam, createATeam } from "../services/TrainerServices"
+import musicFile from "../assets/musicTwo.mp3";
 
 const initialPreviouslySavedTeamState : BackEndPokemonTeamInterface = {
     id: 0,
@@ -436,6 +437,13 @@ const TeamCreator : React.FC = () => {
                 </div>
             )}
             <button onClick={() => updatePokemonTeam(previouslySavedTeam.name, previouslySavedTeam.pokemonTeamMembers)}>Save Changes</button>
+
+            <div>
+        <audio autoPlay loop>
+          <source src={musicFile} type="audio/mp3" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
         </div>
     )
 }
