@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
 interface Props {
-    onSelect: (gender: string) => void;
+    onSelect: (gender: boolean) => void;
 }
 
 const GenderSelector: React.FC<Props> = ({ onSelect }) => {
-    const [selectedGender, setSelectedGender] = useState<string>("Random");
+    const [selectedGender, setSelectedGender] = useState<boolean>(false);
 
-    const handleGenderSelection = (gender: string) => {
+    const handleGenderSelection = (gender: boolean) => {
         setSelectedGender(gender);
         onSelect(gender);
     }
 
     useEffect(() => {
-        setSelectedGender("Random");
+        setSelectedGender(false);
     }, []);
 return (
   <div className="gender-selection">
@@ -22,8 +22,8 @@ return (
       <input
         type="radio"
         value="Male"
-        checked={selectedGender === "Male"}
-        onChange={() => handleGenderSelection("Male")}
+        checked={selectedGender === false}
+        onChange={() => handleGenderSelection(false)}
       />
       Male
     </label>
@@ -31,19 +31,10 @@ return (
       <input
         type="radio"
         value="Female"
-        checked={selectedGender === "Female"}
-        onChange={() => handleGenderSelection("Female")}
+        checked={selectedGender === true}
+        onChange={() => handleGenderSelection(true)}
       />
       Female
-    </label>
-    <label className="gender-option">
-      <input
-        type="radio"
-        value="Random"
-        checked={selectedGender === "Random"}
-        onChange={() => handleGenderSelection("Random")}
-      />
-      Random
     </label>
   </div>
 );

@@ -153,7 +153,7 @@
 .pokemon-form {
 
     margin: 10px auto;
-    max-width: 1000px;
+    max-width: 1500px;
     max-height: 2000px;
     padding: 20px;
     background-color: rgba(249, 247, 247, 0.8); /* Adjust the alpha value (0.8) to change the opacity */
@@ -404,6 +404,7 @@
     margin-bottom: 10px;
     margin-right: 10px;
     margin-top: 10px;
+    flex-wrap: wrap;
   }
   
   .stat-input-container input[type="number"] {

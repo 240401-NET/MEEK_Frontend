@@ -2,7 +2,7 @@ import React from "react";
 import '../../pages/PokemonTeamBuilder.css';
 
 
-interface IVProp {
+interface StatProp {
     hp: number | 31;
     attack: number | 31;
     defense: number | 31;
@@ -17,7 +17,7 @@ interface IVProp {
     onChangeSpeed : (value: number) => void;
 }
 
-const PokemonIVEVRenderer : React.FC<IVProp> = ({
+const PokemonIVEVRenderer : React.FC<StatProp> = ({
     hp, attack, defense, special_attack, special_defense, speed, 
     onChangeHP, onChangeAttack, onChangeDefense, onChangeSpecialAttack, onChangeSpecialDefense, onChangeSpeed
 }) => {

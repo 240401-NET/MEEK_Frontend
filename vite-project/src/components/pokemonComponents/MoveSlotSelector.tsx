@@ -26,12 +26,12 @@ const MoveSlotSelector : React.FC<MoveSlotProps> = ({moveNames, selectedMove, se
     const filterMoves = moveNames.filter(move => 
         move.toLowerCase().includes(searchedMove.toLowerCase())
     )
-    const handleShowAllMoves = () => {
-        setShowAllMoves(true);
-    }
-    const handleCloseModal = () => {
-        setShowAllMoves(false);
-    }
+    // const handleShowAllMoves = () => {
+    //     setShowAllMoves(true);
+    // }
+    // const handleCloseModal = () => {
+    //     setShowAllMoves(false);
+    // }
 
     return (  
 <div className="move-selector">

@@ -8,9 +8,10 @@ import { HomePageRenderer } from './pages/HomePage.tsx';
 import { TrainerPage } from './pages/TrainerPage.tsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import DisplayPokemon from './components/testComponents/DisplayPokemon.tsx';
-import PokemonTeamBuilder from './pages/PokemonTeamBuilder.tsx';
+// import PokemonTeamBuilder from './pages/PokemonTeamBuilder.tsx';
 // import PokemonTeamCreator from './components/pokemonComponents/PokemonTeamCreator.tsx';
 import { AuthProvider } from './context/AuthContext.tsx';
+import TeamCreator from './pages/TeamCreator.tsx'
 
 function App() {
 
@@ -23,7 +24,8 @@ function App() {
           <Route path='/login' element={<Login username={''} password={''} />}></Route>
           <Route path='/signup' element={<SignUp username={''} email={''} password={''} />}></Route>a
           <Route path='/trainer' element={<TrainerPage />}></Route>
-          <Route path='/pokemonTeamBuilder' element={<PokemonTeamBuilder/>}></Route>
+          {/* <Route path='/pokemonTeamBuilder' element={<PokemonTeamBuilder/>}></Route> */}
+          <Route path='/teamcreator' element={<TeamCreator></TeamCreator>}></Route>
           {/* <Route path='/show' element = {<PokemonTeamCreator/>}></Route> */}
         </Routes>
       </AuthProvider>

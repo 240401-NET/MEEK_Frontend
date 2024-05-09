@@ -5,18 +5,20 @@ import { TrainerPageLogic } from '../models/TrainerPageLogic';
 import { NavLink as Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { UseEffectOnce } from '../services/UseEffectOnce';
-import { DeleteATeam, createATeam, getAllTrainerTeams } from '../services/TrainerServices';
-import { BackEndPokemonTeamInterface, MoveSet, PokemonTeamMember, StatImplementation } from '../models/Pokemon';
+import { DeleteATeam, getAllTrainerTeams, getTrainerTeamById } from '../services/TrainerServices';
+import { BackEndPokemonTeamInterface, BackEndPokemonTeamInterfaces, MoveSet, PokemonTeamMember, StatImplementation } from '../models/Pokemon';
 import { UserLogout } from '../services/userServices';
 import musicFile from "../assets/musicThree.mp3";
 
 export function TrainerPage() {
     const {user, token} = useAuth();
     const navigate = useNavigate();
-    const [teamDatas, setTeamDatas] = useState<BackEndPokemonTeamInterface[]>([])
+    const [teamDatas, setTeamDatas] = useState<BackEndPokemonTeamInterfaces[]>([])
     const [onFirstLoad, setOnFirstLoad] = useState<boolean>(true);
-    const [createTeamResponse, setCreateTeamReSponse] = useState<string>('')
+    const [editTeamResponse, setEditTeamReSponse] = useState<string>('')
+    const [ifEditTeam, setIfEditTeam] = useState<boolean>(false)
     const [ifCreateTeam, setIfCreateTeam] = useState<boolean>(false)
+    const [teamName, setTeamName] = useState<string>("")
     // const [displayedTeams, setDisplayedTeams] = useState<number>(5)
 
     // calls custom use effect function to redirect page and pop up windows alert only once!
@@ -32,41 +34,35 @@ export function TrainerPage() {
 
     useEffect (() => {
         loadTrainerTeams();
-    }, [teamDatas, createTeamResponse])
+    }, [teamDatas])
 
     useEffect(() => {
         if (ifCreateTeam) {
-            try {
-                const obj = JSON.parse(createTeamResponse)
-                localStorage.setItem(`${obj.name}-${obj.id}`, createTeamResponse);
-                window.alert(`${teamName} sucessfully created!`)
-            }
-            catch (error) {
-                console.error(error)
-            }
-            finally {
+                // const obj = JSON.parse(createTeamResponse)
+                // window.alert(`${teamName} sucessfully created!`)
                 setIfCreateTeam(false)
-                navigate('/pokemonTeamBuilder');
+                navigate('/teamcreator');
             }
+        else if (ifEditTeam) {
+            setIfEditTeam(false)
+            navigate('/teamcreator');
         }
-    }, [ifCreateTeam])
+    }, [ifCreateTeam, ifEditTeam])
     
 
     const loadTrainerTeams = async () => {
         if(onFirstLoad){
             const response = await getAllTrainerTeams();
-            console.log(response);
             if (JSON.stringify(response) !== JSON.stringify(teamDatas)){
                 setTeamDatas(response);
             }
         }
         setOnFirstLoad(false);
-        console.log(teamDatas)
     }
 
     const url : string = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
-    const downloadText = (teamDatas: BackEndPokemonTeamInterface) => {
+    const downloadText = (teamDatas: BackEndPokemonTeamInterfaces) => {
         // Extract team data
         const { id, name, pokemonTeamMembers } = teamDatas as { id: number; name: string; pokemonTeamMembers: PokemonTeamMember[] };
         // Create text content
@@ -169,8 +165,11 @@ export function TrainerPage() {
         setExpandedRow(prevExpandedRow => (prevExpandedRow === id ? undefined : id));
     };
 
-    const editTeam = (id: number) => {
-        console.log(`Editing team with ID ${id}`);
+    const editTeam = async(id: number) => {
+       const response = await getTrainerTeamById(id)
+       setEditTeamReSponse(JSON.stringify(response))
+       localStorage.setItem(`${response.name}-${response.id}-pokemonTeam`, editTeamResponse)
+       setIfCreateTeam(true);
     };
 
     const deleteTeam = async (id: number) => {
@@ -214,19 +213,16 @@ export function TrainerPage() {
     };
 
     const {logoutUser} = useAuth();
-    const [teamName, setTeamName] = useState<string>('')
 
     //   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-      const handleCreateTeam = async (teamName :string) => {
-        // Handle saving the team to the database
-        console.log('Team Name:', teamName);
-        // Perform your POST request here
-        const response = await createATeam(teamName);
-        console.log(response);
-        console.log(JSON.stringify(response))
-        setCreateTeamReSponse(JSON.stringify(response))
+      const handleCreateTeam = () => {
         setIfCreateTeam(true);
+        // Handle saving the team to the database
+        // Perform your POST request here
+        // const response = await createATeam(teamName);
+        // console.log(JSON.stringify(response))
+        // setCreateTeamReSponse(JSON.stringify(response))
         // localStorage.setItem(`${response.name}-${response.id}`, createTeamResponse);
         // window.alert(`${teamName} sucessfully created!`)
       };
@@ -258,6 +254,7 @@ export function TrainerPage() {
                         <img src={Search} alt="" />
                     </div>
                     <div className="input-group">
+
             <input
                 type="text"
                 placeholder="CREATE TEAM BY ENTERING TEAM NAME"
@@ -300,7 +297,7 @@ export function TrainerPage() {
                                         </td>
                                         <td>
                                         <button className="view-button" onClick={() => toggleRow(team.id)}title="View Team"></button>
-                                        <a href="http://localhost:5173/#/Pokemonteambuilder" title="Edit Team"><button className="edit-button" onClick={() => editTeam(team.id)}></button></a>
+                                        <a title="Edit Team"><button className="edit-button" onClick={() => editTeam(team.id)}></button></a>
                                         <button className="delete-button" onClick={() => deleteTeam(team.id)}title="Delete Team"></button>
                                         <button className="download-button" onClick={() => downloadText(team)} title="Export Team"></button>
                                         </td>

@@ -1,7 +1,7 @@
 import { PokemonTeamMember } from "../models/Pokemon";
 
-export const getAllTrainerTeams = async () => {
-    return await fetch ('http://localhost:5177/Team', {
+export const getAllTrainerTeams =  () => {
+    return fetch ('http://localhost:5177/Team', {
         mode: 'cors',
         credentials: "include",
         headers: {
@@ -18,14 +18,32 @@ export const getAllTrainerTeams = async () => {
         })
 }
 
-export const createATeam = async (teamName: string) => {
+export const getTrainerTeamById =  (id : number) => {
+    return fetch (`http://localhost:5177/Team/id=${id}`, {
+        mode: 'cors',
+        credentials: "include",
+        headers: {
+            "Content-type": "application/json"
+            }
+        })
+        .then (response => {
+           return response.json();
+        })
+        .catch (error => {
+            // window.alert("Signin unsuccessful. Please try again!")
+            console.log(error);
+            throw error;
+        })
+}
+
+export const createATeam = async (teamName: string, pokemonTeamMembers : PokemonTeamMember[]) => {
     return await fetch ('http://localhost:5177/Team', {
         method: 'POST',
         mode: 'cors',
         credentials: "include",
         body: JSON.stringify({
             name : teamName,
-            pokemonTeamMembers: [],
+            pokemonTeamMembers: pokemonTeamMembers,
 
         }),
         headers: {
@@ -43,15 +61,14 @@ export const createATeam = async (teamName: string) => {
         })
 }
 
-export const UpdateATeam = async (id_number : number, teamName: string, updatedPokmonTeamMembersArray : PokemonTeamMember[]) => {
+export const UpdateATeam = async (name: string, pokemonTeamMembers : PokemonTeamMember[]) => {
     return await fetch ('http://localhost:5177/Team', {
-        method: 'Put',
+        method: 'POST',
         mode: 'cors',
         credentials: "include",
         body: JSON.stringify({
-            id: id_number,
-            name : teamName,
-            pokemonTeamMembers: updatedPokmonTeamMembersArray,
+            name: name,
+            pokemonTeamMembers: pokemonTeamMembers,
         }),
         headers: {
             "Content-type": "application/json"

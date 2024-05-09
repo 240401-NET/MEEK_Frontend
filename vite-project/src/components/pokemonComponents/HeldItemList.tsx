@@ -89,7 +89,7 @@ const HeldItemList : React.FC<itemProps> = ({handleItemSelection}) => {
     }
 
     const button = document.querySelector("#show-all-items");
-    button!.addEventListener ("click", onClick, false);
+    button?.addEventListener ("click", onClick, false);
     function onClick (event : any) {
         event.preventDefault();
         handleShowAllItems();
@@ -118,7 +118,6 @@ const HeldItemList : React.FC<itemProps> = ({handleItemSelection}) => {
                 </ul>
             )}
             {!searchedItem && (
-             <div>
              <button 
                  id="show-all-items"
                  onClick={handleShowAllItems}
