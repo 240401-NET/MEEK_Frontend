@@ -1,7 +1,7 @@
 import "./PokemonTeamBuilder.css"
 import React, { useEffect, useState} from 'react'
 import { NavLink as Link, Navigate, useNavigate } from 'react-router-dom'
-import { BackEndPokemonTeamInterface, EVStats, IVStats, MoveSet, MoveSetInitiailState, PokemonBackEndApiCall, PokemonTeamMember, Stat, StatImplementation, initialEVState, initialIVState } from '../models/Pokemon'
+import { BackEndPokemonTeamInterface, BackEndPokemonTeamInterfaces, EVStats, IVStats, MoveSet, MoveSetInitiailState, PokemonBackEndApiCall, PokemonTeamMember, Stat, StatImplementation, initialEVState, initialIVState } from '../models/Pokemon'
 import { fetchPokemonDataFromAPI } from '../models/PokemonAPICall'
 import GenderSelector from '../components/pokemonComponents/GenderSelector'
 import TeraTypeSelector from '../components/pokemonComponents/TeraTypeSelector'
@@ -13,9 +13,10 @@ import MoveSlotSelector from '../components/pokemonComponents/MoveSlotSelector'
 import StatComponent from "../components/pokemonComponents/StatComponent"
 import HeldItemList from "../components/pokemonComponents/HeldItemList"
 // import { updatePokemonTeam } from "../utils/PokemonTeamBuilderUtils"
-import { UpdateATeam } from "../services/TrainerServices"
+import { UpdateATeam, createATeam } from "../services/TrainerServices"
 
 const initialPreviouslySavedTeamState : BackEndPokemonTeamInterface = {
+    id: 0,
     name: "",
     pokemonTeamMembers: []
 }
@@ -32,6 +33,7 @@ const TeamCreator : React.FC = () => {
     const [searchedPokemonReponseData, setSearchedPokmonResponseData] = useState<PokemonBackEndApiCall | null>(null)
     const [searchedPokemon, setSearchedPokemon] = useState<string>("");
     const [localStorageKey, setLocalStorageKey] = useState<string>("");
+    const [updateMode, setUpdateMode] = useState<boolean>(false);
 
     // Pokemon States: Everything that defines what a pokemon teammember is:
     const [pkmApiId, setPkmApiId] = useState<number>(0);
@@ -89,20 +91,22 @@ const TeamCreator : React.FC = () => {
             }
     }, [move_1 , move_2, move3, move4])
 
-    // useEffect(() => {
-    //     console.log(previouslySavedTeam)
-    // }, [previouslySavedTeam])
+    useEffect(() => {
+        console.log(previouslySavedTeam)
+    }, [previouslySavedTeam, searchedPokemon])
 
     
     // Load Pokemon Team Item from local storage and sets it to a state variable that we track
     const loadSpecificTrainerTeam = () => {
         if(firstLoad) {
-            let itemValue: string = "";
             for (let key in localStorage) {
                 if (key.endsWith(localStorageSignature)) {
-                itemValue = localStorage.getItem(key)!
-                //   setPreviouslySavedTeam(itemValue);
+                let itemValue = localStorage.getItem(key)!
+                setPreviouslySavedTeam(JSON.parse(itemValue));
+                let checkkey = localStorage.getItem(`${previouslySavedTeam.id}-${previouslySavedTeam.name}-${localStorageSignature}`)
+                if (checkkey)
                 setLocalStorageKey(itemValue);
+                setUpdateMode(true);
                 }
             }
             setFirstLoad(false);
@@ -110,15 +114,16 @@ const TeamCreator : React.FC = () => {
             handlePokemonTeamIdAndName();
         }
     }
+    console.log(updateMode);
 
     const handlePokemonTeamIdAndName = () => {
         if(pokemonTeamName === '') {
-            // setPokemonTeamId(previouslySavedTeam.id);
+            setPokemonTeamId(previouslySavedTeam.id)
             setPokemonTeamName(localStorageKey);
-            // setPokemonTeamMembers(previouslySavedTeam.pokemonTeamMembers);
+            setPokemonTeamMembers(previouslySavedTeam.pokemonTeamMembers);
         }
     }
-
+    console.log(localStorageKey);
     const pokemonSearch = async (pokemonName : string) => {
         try {
             const responseData = await fetchPokemonDataFromAPI(pokemonName);
@@ -211,7 +216,13 @@ const TeamCreator : React.FC = () => {
 
         setPreviouslySavedTeam(updatedTeam);
 
-        localStorage.setItem(localStorageKey, JSON.stringify(updatedTeam));
+        if(updateMode) {
+            localStorage.setItem(localStorageKey, JSON.stringify(updatedTeam))
+            } else {
+            localStorage.setItem(localStorageSignature, JSON.stringify(updatedTeam))
+            }
+            
+        clearPageData();
     };
     // console.log(previouslySavedTeam);
 
@@ -266,7 +277,11 @@ const TeamCreator : React.FC = () => {
                         pokemonTeamMembers: updatedPokemon,
                     }
                 setPreviouslySavedTeam(updatedTeam)
-                localStorage.setItem(localStorageKey, JSON.stringify(updatedTeam))
+                if(updateMode) {
+                    localStorage.setItem(localStorageKey, JSON.stringify(updatedTeam))
+                    } else {
+                        localStorage.setItem(localStorageSignature, JSON.stringify(updatedTeam))
+                    }
             } else {
                 const newPokemon = {
                     pkmApiId: searchedPokemonReponseData.id,
@@ -290,11 +305,16 @@ const TeamCreator : React.FC = () => {
                     pokemonTeamMembers: [...(previouslySavedTeam.pokemonTeamMembers || []), newPokemon]
                 }
                 : {
+                    id: 0,
                     name: localStorageKey,
                     pokemonTeamMembers: [newPokemon],
                 }
                 setPreviouslySavedTeam(updatedTeam)
-                localStorage.setItem(localStorageKey, JSON.stringify(updatedTeam))       
+                if(updateMode) {
+                localStorage.setItem(localStorageKey, JSON.stringify(updatedTeam))
+                } else {
+                    localStorage.setItem(localStorageSignature, JSON.stringify(updatedTeam))
+                }
             }
             setEditMode(false)
             clearPageData();
@@ -328,13 +348,29 @@ const TeamCreator : React.FC = () => {
     // console.log(pokemonMoveSet);    
 
     const updatePokemonTeam = async (name: string, pokemonTeamMembers : PokemonTeamMember[])  => {
-        if (name === "") {
+        if(updateMode)
+            {
+                const response = await UpdateATeam(name, pokemonTeamMembers);
+                console.log(response);
+                for (let key in localStorage) {
+                    if (key.endsWith(localStorageSignature)) {
+                    localStorage.removeItem(key!)
+                    }
+            }
+        }
+            else if (name === "") {
             const getTeamName = window.prompt("Please enter a team name!")
             name = getTeamName!
+            const response = await createATeam(name, pokemonTeamMembers);
+            console.log(response);
+            for (let key in localStorage) {
+                if (key.endsWith(localStorageSignature)) {
+                localStorage.removeItem(key!)
+                //   setPreviouslySavedTeam(itemValue);
+                }
+            }
+            navigate("/trainer")
         }
-        const response = await UpdateATeam(name, pokemonTeamMembers);
-        console.log(response);
-        navigate("/trainer")
     }
 
     return (
